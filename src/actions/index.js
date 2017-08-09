@@ -17,7 +17,7 @@ export const fetchIndex = () => async (dispatch, getState) => {
         .then(objectToCamel)
       dispatch(receiveIndex(Object.assign({}, index)))
     } catch (e) {
-      dispatch(failedReceiveIndex())
+      dispatch(failedReceiveIndex(e))
     }
   } else {
     dispatch(receiveIndex(state.index))
@@ -34,6 +34,7 @@ export const receiveIndex = (indexData) => ({
   receivedAt: Date.now()
 })
 
-export const failedReceiveIndex = () => ({
-  type: type.FAILED_INDEX_DATA
+export const failedReceiveIndex = (error) => ({
+  type: type.FAILED_INDEX_DATA,
+  error
 })
