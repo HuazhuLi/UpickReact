@@ -3,8 +3,7 @@
  */
 import React from 'react'
 import { render } from 'react-dom'
-import { browserHistory } from 'react-router'
-import { Route } from 'react-router-dom'
+import { Route, Router } from 'react-router-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
@@ -35,11 +34,24 @@ store.subscribe(() => {
   // todo
 })
 
+const Home = () => (
+  <div>{Date.now()}</div>
+)
+
+const About = () => (
+  <div>{'About'}</div>
+)
+
+const Topics = () => (
+  <div>{'Topics'}</div>
+)
 render(
   <AppContainer>
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <Route path={'/entry'}><Entry/></Route>
+        <div>
+          <Route exact path="/" component={Entry}/>
+        </div>
       </ConnectedRouter>
     </Provider>
   </AppContainer>,

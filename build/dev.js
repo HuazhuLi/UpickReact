@@ -66,7 +66,7 @@ const app = express()
 app.use('/static', express.static(path.resolve(__dirname, '../static')))
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
-  publicPath: webpackConfig.output.publicPath,
+  publicPath: webpackConfig.output.publicPath
   // quiet: true
 })
 
@@ -102,6 +102,10 @@ compiler.plugin('compilation', function (compilation) {
 app.use(devMiddleware)
 
 app.use(hotMiddleware)
+
+app.get('/*', (req, res) => {
+  res.end(devMiddleware.fileSystem.readFileSync(path.join(webpackConfig.output.path, 'index.html')))
+})
 
 const port = 8080
 
