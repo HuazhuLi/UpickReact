@@ -4,15 +4,14 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { browserHistory } from 'react-router'
-import { Route, HashRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 
-import reducers from './reducers'
-
+import * as reducers from './reducers'
 import Entry from './pages/entry'
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -31,14 +30,17 @@ const store = createStore(
   applyMiddleware(middleware)
 )
 
+store.subscribe(() => {
+  console.log(store.getState())
+  // todo
+})
+
 render(
   <AppContainer>
     <Provider store={store}>
-      <HashRouter>
-        <Route path={'/'}>
-          <Route path={'entry'} component={Entry}/>
-        </Route>
-      </HashRouter>
+      <ConnectedRouter history={history}>
+        <Route path={'/entry'}><Entry/></Route>
+      </ConnectedRouter>
     </Provider>
   </AppContainer>,
   document.getElementById('root')

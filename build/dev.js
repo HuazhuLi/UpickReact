@@ -67,7 +67,7 @@ app.use('/static', express.static(path.resolve(__dirname, '../static')))
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
-  quiet: true
+  // quiet: true
 })
 
 const hotMiddleware = require('webpack-hot-middleware')(compiler, {

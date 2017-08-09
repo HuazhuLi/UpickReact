@@ -1,7 +1,7 @@
 /**
  * Created by faraway on 17-7-30.
  */
-import './main.styl'
+import './loading.styl'
 const loadingRoot = document.createElement('DIV')
 
 loadingRoot.setAttribute('id', 'loading')
