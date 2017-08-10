@@ -110,9 +110,11 @@ export function searchInfo (state = {
           isFetchingSearchInfo: true
         }
       case type.RECEIVE_SEARCH_INFO:
+        console.log(action)
         return {
           isFetchingSearchInfo: false,
-          searchInfo: action.searchInfo
+          searchInfo: action.searchInfo,
+          updatedTime: action.receivedAt
         }
       case type.FAILED_SEARCH_INFO:
         return {

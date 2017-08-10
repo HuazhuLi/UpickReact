@@ -25,9 +25,11 @@ export const fetchIndex = () => async (dispatch, getState) => {
     } catch (e) {
       dispatch(failedReceiveIndex(e))
     }
-  } else {
-    dispatch(receiveIndex(state.index.indexData))
   }
+  // 我发现什么都不做也可以这里。。
+  // } else {
+  //   dispatch(receiveIndex(state.index.indexData))
+  // }
 }
 
 export const requestIndex = () => ({
@@ -51,7 +53,7 @@ export const failedReceiveIndex = (error) => ({
 export const fetchSearchResult = (keyword) => async (dispatch) => {
   dispatch(requestSearch(keyword))
   try {
-    const searchResult = axios.post(
+    const searchResult = await axios.post(
       `${r}/shops/list`,
       {
         'key_word': keyword,
@@ -66,6 +68,7 @@ export const fetchSearchResult = (keyword) => async (dispatch) => {
       .then(res => res.status === 200 && res.data)
       .then(data => data.status === 200 && data.data)
       .then(objectToCamel)
+      .then(data => data.shopList)
       .catch((e) => {
         throw e
       })
@@ -92,12 +95,15 @@ export const failedReceiveSearch = (keyword, error) => ({
 })
 
 /**
- * 搜索结果相关
+ * 搜索信息相关
  */
 export const fetchSearchInfo = () => async (dispatch, getState) => {
   dispatch(requestSearchInfo())
   const state = getState()
-  if (Date.now() - state.searchInfo.updatedTime >= 3600 * 1000 * 0.2) {
+  /**
+   * 10 minutes
+   */
+  if (Date.now() - state.searchInfo.updatedTime >= 60 * 1000 * 10) {
     try {
       const searchInfoHot = await axios.get(`${r}/shops/hot_records`)
         .then(res => res.status === 200 && res.data)
@@ -115,6 +121,8 @@ export const fetchSearchInfo = () => async (dispatch, getState) => {
         .catch((e) => {
           throw e
         })
+      console.log(searchInfoHot)
+      console.log(searchInfoHistory)
       dispatch(receiveSearchInfo({ searchInfoHot, searchInfoHistory }))
     } catch (e) {
       dispatch(failedReceiveSearchInfo(e))

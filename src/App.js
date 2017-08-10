@@ -11,6 +11,7 @@ import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-r
 import createHistory from 'history/createHashHistory'
 import thunk from 'redux-thunk'
 
+import * as actions from './actions'
 import * as reducers from './reducers'
 import Entry from './pages/entry'
 
@@ -29,6 +30,12 @@ const store = createStore(
   }),
   applyMiddleware(reduxRouter, thunk)
 )
+
+window.actions = actions
+window.dispatch = function (action) {
+  store.dispatch(action)
+}
+window.store = store
 
 render(
   <AppContainer>
