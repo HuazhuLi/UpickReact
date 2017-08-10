@@ -20,7 +20,7 @@ export const fetchIndex = () => async (dispatch, getState) => {
       dispatch(failedReceiveIndex(e))
     }
   } else {
-    dispatch(receiveIndex(state.index))
+    dispatch(receiveIndex(state.index.indexData))
   }
 }
 

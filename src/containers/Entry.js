@@ -27,7 +27,7 @@ class Entry extends Component {
       >
         <EntryHeader slogan={indexData.slogan} style={{ flexShrink: '0' }}/>
         <Splitter content={'分类'} style={{ flexShrink: '0' }}/>
-        <Classify style={{ flexGrow: '1' }}/>
+        <Classify types={indexData.shopTypes} style={{ flexGrow: '1' }}/>
         <Splitter content={'热门商家'} style={{ flexShrink: '0' }}/>
         <PopularShops shops={indexData.popularShops} style={{ flexShrink: '0' }}/>
       </div>
