@@ -1,16 +1,17 @@
 /**
  * Created by faraway on 17-7-30.
  */
-import './loading.styl'
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import style from './loading.styl'
 const loadingRoot = document.createElement('DIV')
 
-loadingRoot.setAttribute('id', 'loading')
+loadingRoot.setAttribute('class', style['loading'])
 loadingRoot.innerHTML = `
-<div class="animating">
-  <div class="three-balls">
-    <div class="ball light"></div>
-    <div class="ball light-dark"></div>
-    <div class="ball dark"></div>
+<div class="${style['animating']}">
+  <div class="${style['three-balls']}">
+    <div class="${style['ball']} ${style['light']}"></div>
+    <div class="${style['ball']} ${style['light-dark']}"></div>
+    <div class="${style['ball']} ${style['dark']}"></div>
   </div>
 </div>
 <h1>Loading...</h1>
@@ -20,12 +21,12 @@ document.body.appendChild(loadingRoot)
 
 export function startLoading () {
   setTimeout(() => {
-    loadingRoot.classList.add('show')
+    loadingRoot.classList.add(style['show'])
   }, 0)
 }
 
 export function stopLoading () {
   setTimeout(() => {
-    loadingRoot.classList.remove('show')
+    loadingRoot.classList.remove(style['show'])
   }, 0)
 }

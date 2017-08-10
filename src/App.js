@@ -3,12 +3,12 @@
  */
 import React from 'react'
 import { render } from 'react-dom'
-import { Route, Router } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
-import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createHashHistory'
 
 import * as reducers from './reducers'
 import Entry from './pages/entry'
@@ -34,23 +34,22 @@ store.subscribe(() => {
   // todo
 })
 
-const Home = () => (
-  <div>{Date.now()}</div>
+const Topics = () => (
+  <div>Topics</div>
 )
 
 const About = () => (
-  <div>{'About'}</div>
+  <div>About</div>
 )
 
-const Topics = () => (
-  <div>{'Topics'}</div>
-)
 render(
   <AppContainer>
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <div>
           <Route exact path="/" component={Entry}/>
+          <Route path="/topics" component={Topics}/>
+          <Route path="/about" component={About}/>
         </div>
       </ConnectedRouter>
     </Provider>

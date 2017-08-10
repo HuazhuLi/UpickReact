@@ -4,6 +4,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import EntryHeader from '../components/EntryHeader'
+
 class Entry extends Component {
   static mapStateToProps ({ index }) {
     return { index }
@@ -11,7 +13,10 @@ class Entry extends Component {
   render () {
     const { indexData } = this.props.index
     return (
-      <div className="">{indexData.shopTypes.join(' ')}</div>
+      <div>
+        <EntryHeader/>
+        <div className="">{indexData.shopTypes.join(' ')}</div>
+      </div>
     )
   }
 }

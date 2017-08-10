@@ -32,10 +32,16 @@ module.exports = merge(baseWebpackConfig, {
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1
+              importLoaders: 1,
+              modules: 1
             }
           },
-          // 'postcss-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
           'stylus-loader'
         ]
       }
