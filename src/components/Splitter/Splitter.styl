@@ -1,0 +1,30 @@
+.dot-line {
+  /* webkit based ignore inline's transform */
+  display: inline-block;
+  transform: rotateY(0);
+  margin: 0 4px;
+  &.rotate {
+    transform: rotateY(180deg);
+  }
+  &:before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background-color: #38363f;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin: 0 2px;
+    transform: scale(.8);
+  }
+  &:after {
+    content: "";
+    display: inline-block;
+    margin: 1px 2.1px;
+    height: 1.2px;
+    width: 16.5px;
+    background-color: #38363f;
+    vertical-align: middle;
+    transform: scale(.8);
+  }
+}

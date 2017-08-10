@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 
 import EntryHeader from '../components/EntryHeader'
 
+import { fetchIndex } from '../actions'
+
 class Entry extends Component {
   static mapStateToProps ({ index }) {
     return { index }
@@ -14,10 +16,14 @@ class Entry extends Component {
     const { indexData } = this.props.index
     return (
       <div>
-        <EntryHeader/>
+        <EntryHeader slogan={indexData.slogan}/>
         <div className="">{indexData.shopTypes.join(' ')}</div>
       </div>
     )
+  }
+  componentWillMount () {
+    const { dispatch } = this.props
+    dispatch(fetchIndex())
   }
 }
 export default connect(Entry.mapStateToProps)(Entry)

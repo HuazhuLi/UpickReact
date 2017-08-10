@@ -4,18 +4,18 @@
 import * as type from './consts'
 import axios from 'axios'
 import objectToCamel from '../plugins/camel'
-const r = '/api/v1'
+const r = '/api/v2'
 
 export const fetchIndex = () => async (dispatch, getState) => {
   dispatch(requestIndex())
   const state = getState()
-  if (state.index.receivedAt - Date.now() >= 3600 * 1000 * 0.2) {
+  if (Date.now() - state.index.updatedTime >= 3600 * 1000 * 0.2) {
     try {
-      const index = await axios.get(`${r}/index`)
+      const indexData = await axios.get(`${r}/index`)
         .then(res => res.status === 200 && res.data)
         .then(data => data.status === 200 && data.data)
         .then(objectToCamel)
-      dispatch(receiveIndex(Object.assign({}, index)))
+      dispatch(receiveIndex(Object.assign({}, indexData)))
     } catch (e) {
       dispatch(failedReceiveIndex(e))
     }

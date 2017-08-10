@@ -6,13 +6,13 @@ import * as type from '../actions/consts'
 
 export function index (state = {
   indexData: {
-    slogan: '让校内坑店无处遁形',
+    slogan: 'Loading...',
     shopTypes: ['生活服务', '玩的', '健身', '喝的', '美食'],
     popularShops: []
   },
   isLoadingIndex: false,
   updatedTime: 0,
-  errorInfo: null
+  errorInfo: {}
 }, action) {
   return Object.assign({}, state, (function () {
     /**
@@ -21,7 +21,6 @@ export function index (state = {
     switch (action.type) {
       case type.REQUEST_INDEX_DATA:
         return {
-          indexData: null,
           isLoadingIndex: true
         }
       case type.RECEIVE_INDEX_DATA:
@@ -32,7 +31,6 @@ export function index (state = {
         }
       case type.FAILED_INDEX_DATA:
         return {
-          indexData: null,
           isLoadingIndex: false,
           errorInfo: action.error
         }

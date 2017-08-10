@@ -74,13 +74,13 @@ const hotMiddleware = require('webpack-hot-middleware')(compiler, {
   log: () => {}
 })
 
-// app.use((req, res, next) => {
-//   req.headers.host = 'iknowhust-question.hustonline.net'
-//   next()
-// })
+app.use((req, res, next) => {
+  req.headers.host = 'debug.upick.hustonline.net'
+  next()
+})
 
 const proxyTable = {
-  // '/api': 'http://iknowhust-question.hustonline.net/'
+  '/api': 'http://debug.upick.hustonline.net/'
 }
 
 Object.keys(proxyTable).forEach(function (context) {
