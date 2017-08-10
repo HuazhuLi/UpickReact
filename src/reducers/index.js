@@ -145,7 +145,6 @@ export function globalAlarm (state = {
           show: true
         }
       case type.HIDE_GLOBAL_ALARM:
-        console.log(state)
         return {
           show: false
         }

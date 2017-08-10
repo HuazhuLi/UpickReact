@@ -14,6 +14,7 @@ import thunk from 'redux-thunk'
 import * as actions from './actions'
 import * as reducers from './reducers'
 import Entry from './pages/entry'
+import GlobalAlarm from './components/GlobalAlarm'
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
@@ -43,6 +44,7 @@ render(
       <ConnectedRouter history={history}>
         <div style={{height: '100%'}}>
           <Route exact path="/" component={Entry}/>
+          <GlobalAlarm/>
         </div>
       </ConnectedRouter>
     </Provider>

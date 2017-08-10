@@ -4,7 +4,7 @@
 import * as type from './consts'
 import axios from 'axios'
 import objectToCamel from '../plugins/camel'
-const r = '/api/v2'
+const r = '/api/v1'
 
 /**
  * 主页的index的
@@ -24,6 +24,7 @@ export const fetchIndex = () => async (dispatch, getState) => {
       dispatch(receiveIndex(Object.assign({}, indexData)))
     } catch (e) {
       dispatch(failedReceiveIndex(e))
+      // dispatch(throwGlobalAlarm(2500, undefined, '获取主页信息失败！'))
     }
   }
   // 我发现什么都不做也可以这里。。
@@ -167,7 +168,7 @@ export const updateGlobalAlarmTimer = (timer) => ({
   timer
 })
 
-export const showGlobalAlarm = (alarmColor, alarmValue) => ({
+export const showGlobalAlarm = (alarmColor = '#FF305D', alarmValue = 'Error!') => ({
   type: type.SHOW_GLOBAL_ALARM,
   alarmColor,
   alarmValue
