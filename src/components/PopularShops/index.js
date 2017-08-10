@@ -1,4 +1,4 @@
 /**
  * Created by faraway on 17-8-10.
  */
-export { default } from './Splitter'
+export { default } from './PopularShops'

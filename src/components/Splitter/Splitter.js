@@ -16,12 +16,14 @@ DotLine.propTypes = {
 }
 
 const Splitter = (props) => (
-  <div>
+  <h2 className={style['splitter-h2']} style={props.style}>
     <DotLine rotate={false}/>
     {props.content}
     <DotLine rotate={true}/>
-  </div>
+  </h2>
 )
 Splitter.propTypes = {
   content: PropTypes.string.isRequired
 }
+
+export default Splitter

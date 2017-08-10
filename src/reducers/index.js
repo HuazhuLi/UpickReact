@@ -7,7 +7,7 @@ import * as type from '../actions/consts'
 export function index (state = {
   indexData: {
     slogan: 'Loading...',
-    shopTypes: ['生活服务', '玩的', '健身', '喝的', '美食'],
+    shopTypes: ['...', '...', '...', '...', '...'],
     popularShops: []
   },
   isLoadingIndex: false,

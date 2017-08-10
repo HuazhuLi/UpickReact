@@ -33,12 +33,11 @@ const store = createStore(
 render(
   <AppContainer>
     <Provider store={store}>
-      <Entry/>
-      {/*<ConnectedRouter history={history}>*/}
-      {/*<div>*/}
-      {/*<Route exact path="/" component={Entry}/>*/}
-      {/*</div>*/}
-      {/*</ConnectedRouter>*/}
+      <ConnectedRouter history={history}>
+        <div style={{height: '100%'}}>
+          <Route exact path="/" component={Entry}/>
+        </div>
+      </ConnectedRouter>
     </Provider>
   </AppContainer>,
   document.getElementById('root')

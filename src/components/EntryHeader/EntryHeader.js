@@ -27,7 +27,7 @@ Slogan.propTypes = {
  */
 const EntryHeader = (props) => {
   return (
-    <header>
+    <header style={props.style}>
       <img src={waveImg} className={style['wave-image']}/>
       <h1 className={style['h1-with-Logo']}/>
       <Slogan slogan={props.slogan}/>
