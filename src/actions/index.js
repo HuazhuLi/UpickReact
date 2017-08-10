@@ -144,3 +144,35 @@ export const failedReceiveSearchInfo = (error) => ({
   type: type.FAILED_SEARCH_INFO,
   error
 })
+
+/**
+ * return {thunk}
+ * @param alarmDuration
+ * @param alarmColor
+ * @param alarmValue
+ */
+export const throwGlobalAlarm = (alarmDuration, alarmColor, alarmValue) => async (dispatch, getState) => {
+  /**
+   * 把不纯的操作放在这里
+   */
+  clearTimeout(getState().globalAlarm.timer)
+  dispatch(showGlobalAlarm(alarmColor, alarmValue))
+  dispatch(updateGlobalAlarmTimer(setTimeout(() => {
+    dispatch(hideGlobalAlarm())
+  }, alarmDuration)))
+}
+
+export const updateGlobalAlarmTimer = (timer) => ({
+  type: type.UPDATE_GLOBAL_ALARM_TIMER,
+  timer
+})
+
+export const showGlobalAlarm = (alarmColor, alarmValue) => ({
+  type: type.SHOW_GLOBAL_ALARM,
+  alarmColor,
+  alarmValue
+})
+
+export const hideGlobalAlarm = () => ({
+  type: type.HIDE_GLOBAL_ALARM
+})

@@ -110,7 +110,6 @@ export function searchInfo (state = {
           isFetchingSearchInfo: true
         }
       case type.RECEIVE_SEARCH_INFO:
-        console.log(action)
         return {
           isFetchingSearchInfo: false,
           searchInfo: action.searchInfo,
@@ -120,6 +119,35 @@ export function searchInfo (state = {
         return {
           isFetchingSearchInfo: false,
           errorInfo: action.error
+        }
+      default:
+        return {}
+    }
+  })())
+}
+
+export function globalAlarm (state = {
+  timer: -1,
+  alarmValue: 'Error!',
+  alarmColor: '#FF305D',
+  show: false
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case type.UPDATE_GLOBAL_ALARM_TIMER:
+        return {
+          timer: action.timer
+        }
+      case type.SHOW_GLOBAL_ALARM:
+        return {
+          alarmValue: action.alarmValue,
+          alarmColor: action.alarmColor,
+          show: true
+        }
+      case type.HIDE_GLOBAL_ALARM:
+        console.log(state)
+        return {
+          show: false
         }
       default:
         return {}
