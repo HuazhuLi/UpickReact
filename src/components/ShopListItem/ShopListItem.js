@@ -8,7 +8,7 @@ import style from './ShopListItem.styl'
 
 const ShopListItem = (props) => (
   <li>
-    <a onClick={() => props.onShopClick(props.shop)}>
+    <a onClick={() => props.onShopClick(props.shop)} className={style['']}>
       <div>
         <img src={props.shop.imgs[0].msrc} alt={props.shop.shopName}/>
       </div>
