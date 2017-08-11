@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 
 import SearchInfoComponent from '../components/SearchInfo'
 
@@ -15,8 +16,12 @@ class SearchInfo extends Component {
     }
   }
   render () {
+    const { dispatch } = this.props
     return (
-      <SearchInfoComponent {...this.props.searchInfo}/>
+      <SearchInfoComponent
+        {...this.props.searchInfo}
+        onKeywordClick={(keyword) => dispatch(push(`/search/${keyword}`))}
+      />
     )
   }
   componentWillMount () {

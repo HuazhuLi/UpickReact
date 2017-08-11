@@ -17,10 +17,22 @@ class Search extends Component {
    */
   render () {
     const { dispatch } = this.props
+    console.log(this.props)
     return (
-      <div>
-        <SearchInput onSubmit={(value) => { dispatch(push(`/search/${value}`)) }}/>
-        <Switch>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%'
+      }}>
+        <SearchInput
+          onSubmit={(value) => { dispatch(push(`/search/${value}`)) }}
+          style={{
+            flexShrink: '0'
+          }}
+        />
+        <Switch style={{
+          flexShrink: '0'
+        }}>
           <Route path={`${this.props.match.path}/:keyword`} component={SearchResult}/>
           <Route exact path={''} component={SearchInfo}/>
         </Switch>

@@ -70,7 +70,8 @@ export function searchResult (state = {
       case type.REQUEST_SEARCH:
         return {
           keyword: action.keyword,
-          isSearching: true
+          isSearching: true,
+          searchResult: []
         }
       case type.RECEIVE_SEARCH:
         return {

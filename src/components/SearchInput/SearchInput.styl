@@ -1,0 +1,33 @@
+.search-input-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  padding: 1.5rem 1.5rem .5rem;
+  font-size: 0;
+  background-color: #fff;
+  .search-input {
+    flex-grow: 1;
+    height: 1.7rem;
+    line-height: 1.7rem;
+    border: none;
+    border-radius: .85rem;
+    background-color: #e0e0e0;
+    padding: 0 1rem;
+    margin-right: .5rem;
+    color: #717171;
+  }
+  .search-button {
+    width: 3.4rem;
+    height: 1.7rem;
+    border: none;
+    border-radius: .85rem;
+    font-size: .8rem;
+    color: #fff;
+    background-color: #ffac00;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    &[disabled] {
+      background-color: #bbb;
+    }
+  }
+}

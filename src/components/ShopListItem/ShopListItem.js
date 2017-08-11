@@ -7,20 +7,23 @@ import React from 'react'
 import style from './ShopListItem.styl'
 
 const ShopListItem = (props) => (
-  <li>
-    <a onClick={() => props.onShopClick(props.shop)} className={style['']}>
-      <div>
-        <img src={props.shop.imgs[0].msrc} alt={props.shop.shopName}/>
+  <li className={style['shop-list-item-wrapper']} style={props.style}>
+    <a
+      onClick={() => props.onShopClick(props.shop)}
+      className={style['shop-item-a']}
+    >
+      <div className={style['left-image']}>
+        <img src={props.shop.imgs[0].msrc || props.shop.imgs[0].src} alt={props.shop.shopName}/>
       </div>
-      <div>
-        <h2>
-          <span>{props.shop.shopName}</span>
-          <span>{props.shop.shopScore}</span>
+      <div className={style['right-content']}>
+        <h2 className={style['title-score']}>
+          <span className={style['title']}>{props.shop.shopName}</span>
+          <span className={style['score']}>{props.shop.shopScore.toFixed(1) + '分'}</span>
         </h2>
-        <ul>
+        <ul className={style['tags-list']}>
           {
             (props.shop.shopTags || []).map((shopTag, i) => (
-              <li key={i}>{shopTag}</li>
+              <li key={i} className={style['tags-list-item']}>{shopTag}</li>
             ))
           }
         </ul>

@@ -1,0 +1,73 @@
+.shop-list-item-wrapper {
+  padding 0.5rem 1.5rem
+  border-bottom: 1px solid #f2f2f2;
+  background-color #ffffff
+  .shop-item-a {
+    display flex
+    flex-direction row
+    .left-image {
+      height 3.6rem
+      width 3.6rem
+      flex-shrink 0
+      img {
+        height 100%
+        width 100%
+        border-radius 0.2rem
+      }
+    }
+    .right-content {
+      display flex
+      position relative
+      flex-direction column
+      flex-grow 1
+      padding .2rem 0 .3rem 1rem
+      box-sizing border-box
+      overflow hidden
+      .title-score {
+        font-size 0.8rem
+        font-weight 500
+        display flex
+        flex-direction row
+        margin 0
+        flex-shrink 0
+        overflow hidden
+        .title {
+          flex-grow 1
+          padding-right: 1rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .score {
+          flex-shrink 0
+          color: #ff841b;
+          width: 2.4rem;
+        }
+      }
+      .tags-list {
+        list-style none
+        margin 0
+        padding 0
+        font-size 0.6rem
+        height 1.1rem
+        overflow hidden
+        flex-grow 1
+        position: absolute;
+        bottom: .3rem;
+        .tags-list-item {
+          display inline-block
+          color #717171
+          height 1.1rem
+          line-height 1.1rem
+          border-radius .55rem
+          background-color #ffd273
+          padding 0 .5rem
+          margin-right .5rem
+          &.negative {
+            background-color #e8e8e8
+          }
+        }
+      }
+    }
+  }
+}

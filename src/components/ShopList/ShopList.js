@@ -3,8 +3,13 @@
  */
 import React from 'react'
 
+import style from './ShopList.styl'
+
 const ShopList = (props) => (
-  <ul>
+  <ul
+    className={`${style['shop-list']} ${props.children.length > 0 ? style['show-bottom-tip'] : ''}`}
+    style={props.style}
+  >
     {props.children}
   </ul>
 )
