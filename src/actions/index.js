@@ -4,7 +4,7 @@
 import * as type from './consts'
 import axios from 'axios'
 import objectToCamel from '../plugins/camel'
-const r = '/api/v1'
+const r = '/api/v2'
 
 /**
  * 主页的index的
@@ -23,8 +23,8 @@ export const fetchIndex = () => async (dispatch, getState) => {
         })
       dispatch(receiveIndex(Object.assign({}, indexData)))
     } catch (e) {
-      dispatch(failedReceiveIndex(e))
-      // dispatch(throwGlobalAlarm(2500, undefined, '获取主页信息失败！'))
+      // dispatch(failedReceiveIndex(e))
+      dispatch(throwGlobalAlarm(2500, undefined, '获取主页信息失败！'))
     }
   }
   // 我发现什么都不做也可以这里。。
@@ -75,7 +75,8 @@ export const fetchSearchResult = (keyword) => async (dispatch) => {
       })
     dispatch(receiveSearch(keyword, searchResult))
   } catch (e) {
-    dispatch(failedReceiveSearch(keyword, e))
+    // dispatch(failedReceiveSearch(keyword, e))
+    dispatch(throwGlobalAlarm(2500, undefined, '搜索失败：网络错误！'))
   }
 }
 
@@ -126,7 +127,8 @@ export const fetchSearchInfo = () => async (dispatch, getState) => {
       console.log(searchInfoHistory)
       dispatch(receiveSearchInfo({ searchInfoHot, searchInfoHistory }))
     } catch (e) {
-      dispatch(failedReceiveSearchInfo(e))
+      // dispatch(failedReceiveSearchInfo(e))
+      dispatch(throwGlobalAlarm(2500, undefined, '获取信息失败！'))
     }
   }
 }
@@ -147,6 +149,7 @@ export const failedReceiveSearchInfo = (error) => ({
 })
 
 /**
+ * 抛出一个全局警示
  * return {thunk}
  * @param alarmDuration
  * @param alarmColor
