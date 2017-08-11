@@ -112,6 +112,7 @@ export const fetchSearchInfo = () => async (dispatch, getState) => {
         .then(data => data.status === 200 && data.data)
         .then(objectToCamel)
         .then(data => data.hotRecords)
+        .then(searchHistory => searchHistory.map(s => s.searchWord))
         .catch((e) => {
           throw e
         })
@@ -128,6 +129,7 @@ export const fetchSearchInfo = () => async (dispatch, getState) => {
       dispatch(receiveSearchInfo({ searchInfoHot, searchInfoHistory }))
     } catch (e) {
       // dispatch(failedReceiveSearchInfo(e))
+      console.log(e)
       dispatch(throwGlobalAlarm(2500, undefined, '获取信息失败！'))
     }
   }

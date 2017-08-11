@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import { render } from 'react-dom'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
@@ -13,7 +13,9 @@ import thunk from 'redux-thunk'
 
 import * as actions from './actions'
 import * as reducers from './reducers'
+
 import Entry from './pages/entry'
+import Search from './pages/search'
 import GlobalAlarm from './components/GlobalAlarm'
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -43,7 +45,11 @@ render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <div style={{height: '100%'}}>
-          <Route exact path="/" component={Entry}/>
+          <Switch>
+            <Route path={'/search/:keyword'} component={Search}/>
+            <Route path={'/search'} component={Search}/>
+            <Route exact path={'/'} component={Entry}/>
+          </Switch>
           <GlobalAlarm/>
         </div>
       </ConnectedRouter>

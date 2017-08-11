@@ -30,12 +30,14 @@ const EntryHeader = (props) => {
     <header style={props.style}>
       <img src={waveImg} className={style['wave-image']}/>
       <h1 className={style['h1-with-Logo']}/>
+      <a className={style['search-button']} onClick={() => props.onSearchButtonClick()}/>
       <Slogan slogan={props.slogan}/>
     </header>
   )
 }
 EntryHeader.propTypes = {
-  slogan: PropTypes.string.isRequired
+  slogan: PropTypes.string.isRequired,
+  onSearchButtonClick: PropTypes.func.isRequired
 }
 
 export default EntryHeader
