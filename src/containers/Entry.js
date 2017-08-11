@@ -10,7 +10,7 @@ import Classify from '../components/Classify'
 import Splitter from '../components/Splitter'
 import PopularShops from '../components/PopularShops'
 
-import { fetchIndex, fetchSearchInfo } from '../actions'
+import { fetchIndex } from '../actions'
 
 class Entry extends Component {
   static mapStateToProps ({ index }) {
@@ -40,9 +40,17 @@ class Entry extends Component {
           }}
         />
         <Splitter content={'分类'} style={{ flexShrink: '0' }}/>
-        <Classify types={indexData.shopTypes} style={{ flexGrow: '1' }}/>
+        <Classify
+          types={indexData.shopTypes}
+          style={{ flexGrow: '1' }}
+          onTypesClick={(type) => dispatch(push(`/list/${type}`))}
+        />
         <Splitter content={'热门商家'} style={{ flexShrink: '0' }}/>
-        <PopularShops shops={indexData.popularShops} style={{ flexShrink: '0' }}/>
+        <PopularShops
+          shops={indexData.popularShops}
+          style={{ flexShrink: '0' }}
+          onShopClick={(shop) => dispatch(push(`/detail/${shop.shopName}`))}
+        />
       </div>
     )
   }

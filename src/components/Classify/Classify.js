@@ -12,10 +12,10 @@ const ShopTypesSplitter = () => (
 )
 
 const LinkWithSingleShop = (props) => (
-  <Link className={style['link-with-shop']} to={props.to}>
+  <a className={style['link-with-shop']} onClick={() => props.onClick()}>
     <div className={style['bg-element']} style={{ backgroundPosition: `${props.order * 3.652}rem center` }}/>
     <div className={style['title']}>{props.content}</div>
-  </Link>
+  </a>
 )
 
 /**
@@ -29,6 +29,9 @@ const Classify = (props) => (
       props.types
         .reduce(
           (chunks, types) => {
+            /**
+             * 每块3个
+             */
             if (chunks[chunks.length - 1].length >= 3) {
               chunks.push([])
             }
@@ -50,7 +53,13 @@ const Classify = (props) => (
                 .map(
                   (type, iInLine) =>
                     (iInLine + 1) % 2
-                      ? <LinkWithSingleShop key={iInLine} to={`/list/${type}`} order={i * 3 + iInLine / 2} content={type}/>
+                      ? <LinkWithSingleShop
+                        key={iInLine}
+                        to={`/list/${type}`}
+                        order={i * 3 + iInLine / 2}
+                        content={type}
+                        onClick={() => props.onTypesClick(type)}
+                      />
                       : <ShopTypesSplitter key={iInLine}/>
                 )
             }
@@ -61,7 +70,8 @@ const Classify = (props) => (
 )
 
 Classify.propTypes = {
-  types: PropTypes.arrayOf(PropTypes.string).isRequired
+  types: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onTypesClick: PropTypes.func.isRequired
 }
 
 export default Classify

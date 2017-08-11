@@ -13,7 +13,7 @@ const PopularShops = (props) => (
       {
         props.shops.map((shop, i) => (
           <li className={style['popular-shop-list-item']} key={i}>
-            <Link to={`/detail/${shop.shopName}`} className={style['popular-shop-list-link']}>{shop.shopName}</Link>
+            <a onClick={() => props.onShopClick(shop)} className={style['popular-shop-list-link']}>{shop.shopName}</a>
           </li>
         ))
       }
@@ -23,7 +23,8 @@ const PopularShops = (props) => (
 PopularShops.propTypes = {
   shops: PropTypes.arrayOf(PropTypes.shape({
     shopName: PropTypes.string
-  })).isRequired
+  })).isRequired,
+  onShopClick: PropTypes.func.isRequired
 }
 
 export default PopularShops

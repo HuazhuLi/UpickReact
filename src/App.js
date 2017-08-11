@@ -46,7 +46,6 @@ render(
       <ConnectedRouter history={history}>
         <div style={{height: '100%'}}>
           <Switch>
-            <Route path={'/search/:keyword'} component={Search}/>
             <Route path={'/search'} component={Search}/>
             <Route exact path={'/'} component={Entry}/>
           </Switch>

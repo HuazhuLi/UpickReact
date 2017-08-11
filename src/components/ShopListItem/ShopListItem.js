@@ -19,7 +19,7 @@ const ShopListItem = (props) => (
         </h2>
         <ul>
           {
-            props.shop.shopTags.map((shopTag, i) => (
+            (props.shop.shopTags || []).map((shopTag, i) => (
               <li key={i}>{shopTag}</li>
             ))
           }
