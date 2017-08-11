@@ -6,9 +6,9 @@ import * as type from '../actions/consts'
 
 export function index (state = {
   indexData: {
-    slogan: 'Loading...',
+    slogan: '...',
     shopTypes: ['...', '...', '...', '...', '...'],
-    popularShops: []
+    popularShops: new Array(6).fill({ shopName: '...' })
   },
   isLoadingIndex: false,
   updatedTime: 0,

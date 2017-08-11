@@ -54,8 +54,8 @@
     "webpack-merge": "^4.1.0"
   },
   "scripts": {
-    "dev": "node ./build/dev.js",
-    "build": "node ./build/build.js"
+    "dev": "NODE_ENV=development node ./build/dev.js",
+    "build": "NODE_ENV=production node ./build/build.js"
   },
   "author": "Faraway <hzylovelyl@gmail.com>",
   "license": "ISC",

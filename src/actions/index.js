@@ -76,7 +76,6 @@ export const fetchSearchResult = (keyword) => async (dispatch) => {
     dispatch(receiveSearch(keyword, searchResult))
   } catch (e) {
     // dispatch(failedReceiveSearch(keyword, e))
-    console.log(e)
     dispatch(throwGlobalAlarm(2500, undefined, '搜索失败：网络错误！'))
   }
 }
