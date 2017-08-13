@@ -154,3 +154,12 @@ export function globalAlarm (state = {
     }
   })())
 }
+
+export function shopsByType (state = {
+  shopsByType: [],
+  isLoadingShopsByType: false
+}, action) {
+  return Object.assign({}, state, (function () {
+
+  })())
+}

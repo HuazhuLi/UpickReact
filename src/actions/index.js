@@ -26,11 +26,10 @@ export const fetchIndex = () => async (dispatch, getState) => {
       // dispatch(failedReceiveIndex(e))
       dispatch(throwGlobalAlarm(2500, undefined, '获取主页信息失败！'))
     }
+  } else {
+    // 我发现什么都不做也可以这里。。
+    dispatch(receiveIndex(state.index.indexData))
   }
-  // 我发现什么都不做也可以这里。。
-  // } else {
-  //   dispatch(receiveIndex(state.index.indexData))
-  // }
 }
 
 export const requestIndex = () => ({
@@ -76,6 +75,7 @@ export const fetchSearchResult = (keyword) => async (dispatch) => {
     dispatch(receiveSearch(keyword, searchResult))
   } catch (e) {
     // dispatch(failedReceiveSearch(keyword, e))
+    console.log(e)
     dispatch(throwGlobalAlarm(2500, undefined, '搜索失败：网络错误！'))
   }
 }
@@ -132,6 +132,8 @@ export const fetchSearchInfo = () => async (dispatch, getState) => {
       console.log(e)
       dispatch(throwGlobalAlarm(2500, undefined, '获取信息失败！'))
     }
+  } else {
+    dispatch(receiveSearchInfo(state.searchInfo.searchInfo))
   }
 }
 
@@ -152,7 +154,7 @@ export const failedReceiveSearchInfo = (error) => ({
 
 /**
  * 抛出一个全局警示
- * return {thunk}
+ * @returns {thunk}
  * @param alarmDuration
  * @param alarmColor
  * @param alarmValue
@@ -181,4 +183,59 @@ export const showGlobalAlarm = (alarmColor = '#FF305D', alarmValue = 'Error!') =
 
 export const hideGlobalAlarm = () => ({
   type: type.HIDE_GLOBAL_ALARM
+})
+
+/**
+ * @returns {thunk}
+ * @param type {string}
+ */
+export const fetchShopsByType = (type) => async (dispatch) => {
+  dispatch(requestShopsByTypes())
+  // http://debug.upick.hustonline.net/api/v2/shops/list
+  try {
+    /**
+     * @type shopList {Array.<object>}
+     * @type subtypes {Array.<string>}
+     */
+    const { shopList, subtypes } = await axios.post(
+      `${r}/shops/list`,
+      {
+        'shop_type': type,
+        'request_type': 1
+      },
+      {
+        headers: {
+          'content-type': 'application/json'
+        }
+      }
+    )
+      .then(res => res.status === 200 && res.data)
+      .then(data => data.status === 200 && data.data)
+      .then(objectToCamel)
+      /**
+       * 如果返回对象不包括下面两个属性，就会抛出错误
+       */
+      .then(({ shopList, subtypes }) => ({ shopList, subtypes }))
+      .catch((e) => {
+        throw e
+      })
+    const shopsBySubtypes = subtypes.map((subtype) => (
+      {
+        subtype,
+        shopList: shopList.filter((shop) => shop.subtype === subtype)
+      }
+    ))
+    dispatch(receiveShopsByTypes(shopsBySubtypes))
+  } catch (e) {
+    dispatch(throwGlobalAlarm(2500, undefined, '获取店铺列表失败！'))
+  }
+}
+
+export const requestShopsByTypes = () => ({
+  type: type.REQUEST_SHOPS_BY_TYPES
+})
+
+export const receiveShopsByTypes = (shopsBySubtypes) => ({
+  type: type.RECEIVE_SHOPS_BY_TYPES,
+  shopsBySubtypes
 })

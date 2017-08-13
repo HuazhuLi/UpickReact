@@ -27,13 +27,14 @@ const NoSuchShops = connect(() => ({}))((props) => (
 class SearchResult extends Component {
   static mapStateToProps = function ({ searchResult }) {
     return {
-      searchResult: searchResult.searchResult
+      searchResult: searchResult.searchResult,
+      isSearching: searchResult.isSearching
     }
   }
   render () {
     return (
-      (this.props.searchResult || []).length > 0
-        ? <ShopList>
+      (this.props.searchResult || []).length > 0 || this.props.isSearching
+        ? <ShopList inLoadingStatus={this.props.isSearching} style={{ flexGrow: '1' }}>
           {
             this.props.searchResult.map((shop, i) => (
               <ShopListItem key={i} shop={shop} onShopClick={() => { console.log('Shop Click!') }}/>

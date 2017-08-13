@@ -28,6 +28,11 @@
   transition opacity 0s 1s, z-index 0s
   z-index -1
   opacity 0
+  &.no-fixed {
+    position relative
+    z-index 0
+    transition all 0s 0s
+  }
   &.show {
     opacity 1
     z-index 99999
@@ -68,11 +73,11 @@
     }
     .ball.light-dark {
       background-color: #ff7c1b;
-      animation-delay: 0.6s;
+      animation-delay: -1.2s;
     }
     .ball.dark {
       background-color: #F05323;
-      animation-delay: 1.2s;
+      animation-delay: -0.6s;
     }
   }
 }

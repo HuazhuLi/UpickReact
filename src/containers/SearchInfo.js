@@ -12,7 +12,8 @@ import { fetchSearchInfo } from '../actions'
 class SearchInfo extends Component {
   static mapStateToProps = function ({ searchInfo }) {
     return {
-      searchInfo: searchInfo.searchInfo
+      searchInfo: searchInfo.searchInfo,
+      isFetchingSearchInfo: searchInfo.isFetchingSearchInfo
     }
   }
   render () {
@@ -20,7 +21,9 @@ class SearchInfo extends Component {
     return (
       <SearchInfoComponent
         {...this.props.searchInfo}
+        inLoadingStatus={this.props.isFetchingSearchInfo}
         onKeywordClick={(keyword) => dispatch(push(`/search/${keyword}`))}
+        style={{ flexGrow: '1', overflow: 'auto' }}
       />
     )
   }

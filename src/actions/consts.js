@@ -32,3 +32,14 @@ export const FAILED_SEARCH_INFO = 'FAILED_SEARCH_INFO'
 export const SHOW_GLOBAL_ALARM = 'SHOW_GLOBAL_ALARM'
 export const HIDE_GLOBAL_ALARM = 'HIDE_GLOBAL_ALARM'
 export const UPDATE_GLOBAL_ALARM_TIMER = 'UPDATE_GLOBAL_ALARM_TIMER'
+
+/**
+ * NOTE:
+ * 由于失败action被全局警示代替，这里不再使用
+ */
+
+/**
+ * 关于获取店铺的警告
+ */
+export const REQUEST_SHOPS_BY_TYPES = 'REQUEST_SHOPS_BY_TYPES'
+export const RECEIVE_SHOPS_BY_TYPES = 'RECEIVE_SHOPS_BY_TYPES'
