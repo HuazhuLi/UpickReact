@@ -17,7 +17,6 @@ class Search extends Component {
    */
   render () {
     const { dispatch } = this.props
-    console.log(this.props)
     return (
       <div style={{
         display: 'flex',

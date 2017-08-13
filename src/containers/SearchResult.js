@@ -3,11 +3,26 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 
 import ShopList from '../components/ShopList'
 import ShopListItem from '../components/ShopListItem'
+import Result from '../components/Result'
 
 import { fetchSearchResult } from '../actions'
+
+/**
+ * 没有相关店铺的一个子容器
+ */
+const NoSuchShops = connect(() => ({}))((props) => (
+  <Result
+    onButtonClick={() => props.dispatch(push('/add'))}
+    buttonTitle={'添加新店'}
+    text={'到添加新店里面提醒我们吧！'}
+    title={'没有找到该店铺哦～'}
+    status={0}
+  />
+))
 
 class SearchResult extends Component {
   static mapStateToProps = function ({ searchResult }) {
@@ -17,13 +32,15 @@ class SearchResult extends Component {
   }
   render () {
     return (
-      <ShopList>
-        {
-          this.props.searchResult.map((shop, i) => (
-            <ShopListItem key={i} shop={shop} onShopClick={() => { console.log('Shop Click!') }}/>
-          ))
-        }
-      </ShopList>
+      (this.props.searchResult || []).length > 0
+        ? <ShopList>
+          {
+            this.props.searchResult.map((shop, i) => (
+              <ShopListItem key={i} shop={shop} onShopClick={() => { console.log('Shop Click!') }}/>
+            ))
+          }
+        </ShopList>
+        : <NoSuchShops/>
     )
   }
   componentWillMount () {
