@@ -6,6 +6,12 @@ import axios from 'axios'
 import objectToCamel from '../plugins/camel'
 const r = '/api/v2'
 
+function wait (timeToWait) {
+  return function (data) {
+    return new Promise((resolve) => setTimeout(() => resolve(data), timeToWait))
+  }
+}
+
 /**
  * 主页的index的
  */
@@ -69,13 +75,13 @@ export const fetchSearchResult = (keyword) => async (dispatch) => {
       .then(data => data.status === 200 && data.data)
       .then(objectToCamel)
       .then(data => data.shopList)
+      .then(wait(300))
       .catch((e) => {
         throw e
       })
     dispatch(receiveSearch(keyword, searchResult))
   } catch (e) {
     // dispatch(failedReceiveSearch(keyword, e))
-    console.log(e)
     dispatch(throwGlobalAlarm(2500, undefined, '搜索失败：网络错误！'))
   }
 }
@@ -121,11 +127,10 @@ export const fetchSearchInfo = () => async (dispatch, getState) => {
         .then(data => data.status === 200 && data.data)
         .then(objectToCamel)
         .then(data => data.searchHistory)
+        .then(wait(300))
         .catch((e) => {
           throw e
         })
-      console.log(searchInfoHot)
-      console.log(searchInfoHistory)
       dispatch(receiveSearchInfo({ searchInfoHot, searchInfoHistory }))
     } catch (e) {
       // dispatch(failedReceiveSearchInfo(e))
@@ -216,6 +221,7 @@ export const fetchShopsByType = (type) => async (dispatch) => {
        * 如果返回对象不包括下面两个属性，就会抛出错误
        */
       .then(({ shopList, subtypes }) => ({ shopList, subtypes }))
+      .then(wait(300))
       .catch((e) => {
         throw e
       })
