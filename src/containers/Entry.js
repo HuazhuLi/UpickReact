@@ -33,7 +33,7 @@ class Entry extends Component {
           onSearchButtonClick={() => {
             /**
              * 这里是我最疑惑的一点，到底是应该用Link，
-             * 还是应该用action
+             * 还是应该用action，毕竟v4提倡声明式的路由
              */
             dispatch(push('/search'))
             // dispatch(fetchSearchInfo())
