@@ -77,6 +77,9 @@ export const fetchSearchResult = (keyword) => async (dispatch) => {
       .then(data => data.shopList)
       .then(wait(300))
       .catch((e) => {
+        /**
+         * 避免 `uncaught` error
+         */
         throw e
       })
     dispatch(receiveSearch(keyword, searchResult))
@@ -134,7 +137,6 @@ export const fetchSearchInfo = () => async (dispatch, getState) => {
       dispatch(receiveSearchInfo({ searchInfoHot, searchInfoHistory }))
     } catch (e) {
       // dispatch(failedReceiveSearchInfo(e))
-      console.log(e)
       dispatch(throwGlobalAlarm(2500, undefined, '获取信息失败！'))
     }
   } else {

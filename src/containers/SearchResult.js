@@ -33,6 +33,9 @@ class SearchResult extends Component {
   }
   render () {
     return (
+      /**
+       * 当加载没有完成或者结果不为空时显示店铺列表
+       */
       (this.props.searchResult || []).length > 0 || this.props.isSearching
         ? <ShopList inLoadingStatus={this.props.isSearching} style={{ flexGrow: '1' }}>
           {
