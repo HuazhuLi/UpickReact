@@ -155,11 +155,47 @@ export function globalAlarm (state = {
   })())
 }
 
-export function shopsByType (state = {
-  shopsByType: [],
-  isLoadingShopsByType: false
+export function shopsByTypes (state = {
+  shopsByType: {},
+  // {
+  //   shopType: '',
+  //   shopsBySubtypes: [
+  //     {
+  //       subtype: '',
+  //       shopList: []
+  //     }
+  //   ]
+  // }
+  isLoadingShopsByType: false,
+  currentShopType: ''
 }, action) {
   return Object.assign({}, state, (function () {
-
+    switch (action.type) {
+      // case type.REQUEST_SHOPS_BY_TYPES:
+      //   return {
+      //     isLoadingShopsByType: true
+      //   }
+      // case type.RECEIVE_SHOPS_BY_TYPES:
+      //   if (needLoadType) {
+      //     return {
+      //       isLoadingShopsByType: false
+      //     }
+      //   }
+      case type.REQUEST_SHOPS_BY_TYPES:
+        return {
+          isLoadingShopsByType: true
+        }
+      case type.RECEIVE_SHOPS_BY_TYPES:
+        return {
+          isLoadingShopsByType: false,
+          shopsByType: Object.assign({}, state.shopsByType, {
+            [action.shopType]: action.shopsBySubtypes
+          })
+        }
+      case type.SET_CURRENT_SHOP_TYPE:
+        return {
+          currentShopType: action.shopType
+        }
+    }
   })())
 }

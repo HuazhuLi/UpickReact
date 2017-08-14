@@ -196,9 +196,14 @@ export const hideGlobalAlarm = () => ({
  * @returns {thunk}
  * @param type {string}
  */
-export const fetchShopsByType = (type) => async (dispatch) => {
-  dispatch(requestShopsByTypes())
+export const fetchShopsByType = (type) => async (dispatch, getState) => {
+  dispatch(requestShopsByTypes(type))
   // http://debug.upick.hustonline.net/api/v2/shops/list
+  const { shopsByTypes } = getState()
+  if (type in shopsByTypes.shopsByType) {
+    dispatch(receiveShopsByTypes(type, shopsByTypes.shopsByType[type]))
+    return
+  }
   try {
     /**
      * @type shopList {Array.<object>}
@@ -233,17 +238,24 @@ export const fetchShopsByType = (type) => async (dispatch) => {
         shopList: shopList.filter((shop) => shop.subtype === subtype)
       }
     ))
-    dispatch(receiveShopsByTypes(shopsBySubtypes))
+    dispatch(receiveShopsByTypes(type, shopsBySubtypes))
   } catch (e) {
     dispatch(throwGlobalAlarm(2500, undefined, '获取店铺列表失败！'))
   }
 }
 
-export const requestShopsByTypes = () => ({
-  type: type.REQUEST_SHOPS_BY_TYPES
+export const requestShopsByTypes = (shopType) => ({
+  type: type.REQUEST_SHOPS_BY_TYPES,
+  shopType
 })
 
-export const receiveShopsByTypes = (shopsBySubtypes) => ({
+export const receiveShopsByTypes = (shopType, shopsBySubtypes) => ({
   type: type.RECEIVE_SHOPS_BY_TYPES,
-  shopsBySubtypes
+  shopsBySubtypes,
+  shopType
+})
+
+export const setCurrentShopType = (shopType) => ({
+  type: type.SET_CURRENT_SHOP_TYPE,
+  shopType
 })
