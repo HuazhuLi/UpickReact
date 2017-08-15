@@ -8,11 +8,15 @@ import style from './ListTopBar.styl'
 
 const ListTopBar = (props) => (
   <div className={style['top-bar']} style={props.style}>
-    <a className={style['search-link']}/>
+    <a className={style['search-link']} onClick={() => props.onSearchButtonClick()}/>
     <div className={style['subtypes-selector']}>
       {
-        (props.subtypes || []).map((subtype) => (
-          <div key={subtype} className={style['subtype']}>{subtype}</div>
+        (props.subtypes || []).map((subtype, i) => (
+          <div
+            key={subtype}
+            className={`${style['subtype']} ${props.activeIndex === i ? style['active'] : ''}`}
+            onClick={() => props.onSubtypeClick(i, subtype)}
+          >{subtype}</div>
         ))
       }
     </div>
@@ -20,7 +24,9 @@ const ListTopBar = (props) => (
 )
 ListTopBar.propTypes = {
   subtypes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  activeIndex: PropTypes.number.isRequired
+  activeIndex: PropTypes.number.isRequired,
+  onSubtypeClick: PropTypes.func.isRequired,
+  onSearchButtonClick: PropTypes.func.isRequired
 }
 
 export default ListTopBar

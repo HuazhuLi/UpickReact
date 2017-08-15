@@ -35,11 +35,19 @@ class SwipeShopList extends Component {
           subtypes={subtypes}
           style={{ flexShrink: '0' }}
           activeIndex={this.state.currentSubtypeIndex}
+          onSubtypeClick={(index) => {
+            this.setState({
+              currentSubtypeIndex: index
+            })
+          }}
+          onSearchButtonClick={() => this.props.dispatch(push('/search'))}
         />
         <SwipeableViews
           style={{ flexGrow: '1', overflowY: 'auto' }}
           ref={(a) => { this.swipeInstance = a }}
           resistance={true}
+          index={this.state.currentSubtypeIndex}
+          onChangeIndex={(to, from) => this.setState({ currentSubtypeIndex: to })}
         >
           {
             subtypes.map((subtype, i) => (
