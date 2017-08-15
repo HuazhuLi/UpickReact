@@ -1,6 +1,8 @@
 .top-bar {
   display flex
   flex-direction row
+  height 2rem
+  border-bottom: 1px solid #f2f2f2;
   .search-link {
     flex-shrink: 0;
     width: 3rem;
@@ -12,6 +14,7 @@
   .subtypes-selector {
     overflow auto
     flex-grow 1
+    white-space nowrap
   }
   .subtype {
     display: inline-block;

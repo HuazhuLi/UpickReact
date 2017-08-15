@@ -232,14 +232,15 @@ export const fetchShopsByType = (type) => async (dispatch, getState) => {
       .catch((e) => {
         throw e
       })
-    const shopsBySubtypes = subtypes.map((subtype) => (
+    const shopsBySubtypes = subtypes.reduce((ret, subtype) => (
       {
-        subtype,
-        shopList: shopList.filter((shop) => shop.subtype === subtype)
+        ...ret,
+        [subtype]: shopList.filter((shop) => shop.subtype === subtype)
       }
-    ))
+    ), {})
     dispatch(receiveShopsByTypes(type, shopsBySubtypes))
   } catch (e) {
+    console.log(e)
     dispatch(throwGlobalAlarm(2500, undefined, '获取店铺列表失败！'))
   }
 }

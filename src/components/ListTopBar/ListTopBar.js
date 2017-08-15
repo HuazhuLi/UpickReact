@@ -1,7 +1,7 @@
 /**
  * Created by faraway on 17-8-15.
  */
-import { React } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import style from './ListTopBar.styl'
@@ -11,8 +11,8 @@ const ListTopBar = (props) => (
     <a className={style['search-link']}/>
     <div className={style['subtypes-selector']}>
       {
-        props.subtypes.map((subtype) => (
-          <div className={style['subtype']}>{subtype}</div>
+        (props.subtypes || []).map((subtype) => (
+          <div key={subtype} className={style['subtype']}>{subtype}</div>
         ))
       }
     </div>

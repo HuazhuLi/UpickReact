@@ -6,7 +6,11 @@ import { connect } from 'react-redux'
 
 import SwipeShopList from '../containers/SwipeShopList'
 
+// import ListTopBar from '../components/ListTopBar'
+
 import { setCurrentShopType, fetchShopsByType } from '../actions'
+
+// const ListTopBarContainer = connect(() => ({}))()
 
 class List extends Component {
   componentWillMount () {
@@ -23,10 +27,7 @@ class List extends Component {
   }
   render () {
     return (
-      <div>
-        <SwipeShopList/>
-        <div>asdfghjkl</div>
-      </div>
+      <SwipeShopList/>
     )
   }
 }
