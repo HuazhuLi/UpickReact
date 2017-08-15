@@ -188,7 +188,7 @@ export function shopsByTypes (state = {
       case type.RECEIVE_SHOPS_BY_TYPES:
         return {
           isLoadingShopsByType: false,
-          shopsByType: Object.assign({}, state.shopsByType, {
+          shopsByTypes: Object.assign({}, state.shopsByTypes, {
             [action.shopType]: action.shopsBySubtypes
           })
         }
