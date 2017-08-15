@@ -18,16 +18,36 @@ class SwipeShopList extends Component {
       currentShopType: shopsByTypes.currentShopType
     }
   }
+  constructor (props) {
+    super(props)
+    this.swipeInstance = {}
+    this.state = {
+      listHeight: 0,
+      currentSubtypeIndex: 0
+    }
+  }
   render () {
     const type = this.props.currentShopType
     const subtypes = Object.keys(this.props.shopsByTypes[type] || {})
     return (
-      <div>
-        <ListTopBar subtypes={subtypes}/>
-        <SwipeableViews>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <ListTopBar
+          subtypes={subtypes}
+          style={{ flexShrink: '0' }}
+          activeIndex={this.state.currentSubtypeIndex}
+        />
+        <SwipeableViews
+          style={{ flexGrow: '1', overflowY: 'auto' }}
+          ref={(a) => { this.swipeInstance = a }}
+          resistance={true}
+        >
           {
-            subtypes.map((subtype) => (
-              <ShopList inLoadingStatus={this.props.isLoadingShopsByType} key={subtype}>
+            subtypes.map((subtype, i) => (
+              <ShopList
+                inLoadingStatus={this.props.isLoadingShopsByType}
+                key={subtype}
+                style={{ height: this.state.listHeight + 'px' }}
+              >
                 {
                   this.props.shopsByTypes[type][subtype].map((shop, i) => (
                     <ShopListItem shop={shop} key={i} onShopClick={() => {}}/>
@@ -39,6 +59,11 @@ class SwipeShopList extends Component {
         </SwipeableViews>
       </div>
     )
+  }
+  componentDidMount () {
+    this.setState({
+      listHeight: this.swipeInstance.containerNode.parentNode.clientHeight
+    })
   }
 }
 

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import style from './ListTopBar.styl'
 
 const ListTopBar = (props) => (
-  <div className={style['top-bar']}>
+  <div className={style['top-bar']} style={props.style}>
     <a className={style['search-link']}/>
     <div className={style['subtypes-selector']}>
       {
@@ -19,7 +19,8 @@ const ListTopBar = (props) => (
   </div>
 )
 ListTopBar.propTypes = {
-  subtypes: PropTypes.arrayOf(PropTypes.string).isRequired
+  subtypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  activeIndex: PropTypes.number.isRequired
 }
 
 export default ListTopBar
