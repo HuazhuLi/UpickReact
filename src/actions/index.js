@@ -200,8 +200,8 @@ export const fetchShopsByType = (type) => async (dispatch, getState) => {
   dispatch(requestShopsByTypes(type))
   // http://debug.upick.hustonline.net/api/v2/shops/list
   const { shopsByTypes } = getState()
-  if (type in shopsByTypes.shopsByType) {
-    dispatch(receiveShopsByTypes(type, shopsByTypes.shopsByType[type]))
+  if (type in shopsByTypes.shopsByTypes) {
+    dispatch(receiveShopsByTypes(type, shopsByTypes.shopsByTypes[type]))
     return
   }
   try {

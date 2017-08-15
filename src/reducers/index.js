@@ -156,7 +156,7 @@ export function globalAlarm (state = {
 }
 
 export function shopsByTypes (state = {
-  shopsByType: {},
+  shopsByTypes: {},
   // {
   //   shopType: '',
   //   shopsBySubtypes: [

@@ -1,0 +1,28 @@
+.top-bar {
+  display flex
+  flex-direction row
+  .search-link {
+    flex-shrink: 0;
+    width: 3rem;
+    background-image: url('../../assets/search-colorful.png');
+    background-repeat: no-repeat;
+    background-size: auto 1.2rem;
+    background-position: 50%;
+  }
+  .subtypes-selector {
+    overflow auto
+    flex-grow 1
+  }
+  .subtype {
+    display: inline-block;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: .75rem;
+    padding: 0 .7rem;
+    box-sizing: border-box;
+    &.active {
+      border-bottom: .2rem solid #ffac00;
+      color: #ffac00;
+    }
+  }
+}
