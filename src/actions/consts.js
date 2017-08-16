@@ -39,8 +39,15 @@ export const UPDATE_GLOBAL_ALARM_TIMER = 'UPDATE_GLOBAL_ALARM_TIMER'
  */
 
 /**
- * 关于获取店铺的警告
+ * 关于获取店铺的actions
  */
 export const REQUEST_SHOPS_BY_TYPES = 'REQUEST_SHOPS_BY_TYPES'
 export const RECEIVE_SHOPS_BY_TYPES = 'RECEIVE_SHOPS_BY_TYPES'
 export const SET_CURRENT_SHOP_TYPE = 'SET_CURRENT_SHOP_TYPE'
+
+/**
+ * 关于店铺详情的actions
+ */
+export const REQUEST_SHOP_COMMENT = 'REQUEST_SHOP_COMMENT'
+export const RECEIVE_SHOP_COMMENT = 'RECEIVE_SHOP_COMMENT'
+export const SET_CURRENT_SHOP = 'SET_CURRENT_SHOP'

@@ -196,6 +196,40 @@ export function shopsByTypes (state = {
         return {
           currentShopType: action.shopType
         }
+      default:
+        return {}
+    }
+  })())
+}
+
+export function shopDetail (state = {
+  isLoadingShopDetail: false,
+  currentShop: '',
+  shops: {
+    // shopName as key
+    // with comments
+  }
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case type.RECEIVE_SHOP_COMMENT:
+        return {
+          isLoadingShopDetail: false,
+          shops: {
+            ...state.shops,
+            [action.shop.shopName]: action.shop
+          }
+        }
+      case type.REQUEST_SHOP_COMMENT:
+        return {
+          isLoadingShopDetail: true
+        }
+      case type.SET_CURRENT_SHOP:
+        return {
+          currentShop: action.shopName
+        }
+      default:
+        return {}
     }
   })())
 }

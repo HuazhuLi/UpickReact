@@ -260,3 +260,61 @@ export const setCurrentShopType = (shopType) => ({
   type: type.SET_CURRENT_SHOP_TYPE,
   shopType
 })
+
+/**
+ * 店铺详情不从店铺列表中直接获取的原因：
+ * 1.防止以后店铺列表缩小内容范围，导致数据不足
+ * 2.懒
+ */
+export const fetchShopDetail = (shopName) => async (dispatch, getState) => {
+  dispatch(requestShopDetail(shopName))
+  const { shopDetail } = getState()
+  if (shopName in shopDetail.shops) {
+    dispatch(receiveShopDetail(shopName, shopDetail.shops[shopName]))
+  } else {
+    try {
+      const shop = await axios.get(`${r}/shops`, {
+        params: {
+          'shop_name': shopName
+        }
+      })
+        .then(res => res.status === 200 && res.data)
+        .then(data => data.status === 200 && data.data)
+        .then(objectToCamel)
+        .catch((e) => {
+          throw e
+        })
+      const { commentList } = await axios.post(`${r}/shops/comments`, {
+        'request_type': 2,
+        'shop_name': shopName
+      })
+        .then(res => res.status === 200 && res.data)
+        .then(data => data.status === 200 && data.data)
+        .then(objectToCamel)
+        .catch((e) => {
+          throw e
+        })
+      shop.comments = commentList
+      console.log(shop)
+      dispatch(receiveShopDetail(shopName, shop))
+    } catch (e) {
+      dispatch(throwGlobalAlarm(2500, undefined, '获取店铺信息失败！'))
+    }
+  }
+}
+
+export const requestShopDetail = (shopName) => ({
+  type: type.REQUEST_SHOP_COMMENT,
+  shopName
+})
+
+export const receiveShopDetail = (shopName, shop) => ({
+  type: type.RECEIVE_SHOP_COMMENT,
+  shopName,
+  shop
+})
+
+export const setCurrentShop = (shopName) => ({
+  type: type.SET_CURRENT_SHOP,
+  shopName
+})
