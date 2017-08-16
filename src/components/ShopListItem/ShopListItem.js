@@ -18,7 +18,7 @@ const ShopListItem = (props) => (
       <div className={style['right-content']}>
         <h2 className={style['title-score']}>
           <span className={style['title']}>{props.shop.shopName}</span>
-          <span className={style['score']}>{props.shop.shopScore.toFixed(1) + '分'}</span>
+          <span className={style['score']}>{(props.shop.shopScore === 10 ? 10 : props.shop.shopScore.toFixed(1)) + '分'}</span>
         </h2>
         <ul className={style['tags-list']}>
           {
