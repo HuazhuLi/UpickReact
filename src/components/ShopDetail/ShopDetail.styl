@@ -1,0 +1,137 @@
+.title {
+  flex-shrink 0
+  padding 1rem 1.5rem
+  h1 {
+    margin 0
+    font-size 1rem
+
+    display flex
+
+    span:not(.mark) {
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+    // display inline-block
+    }
+    .mark {
+      margin-left 0.8rem
+      color #ffac00
+      flex-shrink 0
+      display inline
+      /**
+       * 太 Dirty 了！！！！，用scale强行baseline一波
+       */
+      transform scale((24/28))
+      transform-origin 50% 100%
+    }
+  }
+}
+.time-location {
+  padding 0 1.5rem
+  font-size 0.75rem
+  flex-shrink 0
+  > div {
+    display flex
+    flex-direction row
+  }
+  span {
+    height 1.2rem
+    line-height 1.2rem
+    display inline-block
+    vertical-align top
+    flex-shrink 0
+  }
+  .icon {
+    height 1.2rem
+    width 1.1rem
+    margin-right 0.6rem
+    &.clock {
+      background-image url('../../assets/icons.png')
+      background-size auto 100%
+    }
+    &.loc {
+      background-image url('../../assets/icons.png')
+      background-position -1.09rem
+      background-size auto 100%
+    }
+  }
+  .name {
+    text-align justify
+    text-align-last justify
+    width 3.6rem
+  }
+  .time, .location {
+    margin 0 0 0.3rem 0
+  }
+  .value {
+    font-size 0.7rem
+    color #717171
+  }
+  p.value {
+    margin 0
+  }
+  .colon {
+    margin-right 0.5rem
+  }
+  .time {
+    ul {
+      display inline-block
+      list-style none
+      margin 0
+      padding 0
+      li {
+        vertical-align middle
+        line-height 1.2rem
+        height 1.2rem
+      }
+    }
+  }
+  .location {
+    vertical-align middle
+    p {
+      margin 0
+      line-height 1.2rem
+    }
+  }
+}
+.images {
+  flex-shrink 0
+  padding 0 1.5rem
+  height 5rem
+  box-sizing border-box
+  overflow hidden
+  img {
+    margin-right 0.4rem
+    height 4rem
+    width 4rem
+    background-color #e8e8e8
+    border-radius 0.3rem
+  }
+}
+.tags {
+  flex-shrink 0
+  padding 0 1.5rem
+  margin-bottom 0.7rem
+  overflow hidden
+  ul {
+    list-style none
+    padding 0
+    margin 0
+    height (h = 1.1)rem
+    font-size 0.6rem
+    overflow hidden
+    li {
+      color #717171
+      display inline-block
+      height h rem
+      line-height h rem
+      border-radius (h / 2)rem
+      background-color #FFD273
+      padding 0 0.5rem
+      margin-right 0.5rem
+    }
+    li.negative {
+      background-color #e8e8e8
+    }
+  }
+}

@@ -17,6 +17,7 @@ import * as reducers from './reducers'
 import Entry from './pages/entry'
 import Search from './pages/search'
 import List from './pages/list'
+import Detail from './pages/detail'
 import GlobalAlarm from './components/GlobalAlarm'
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -49,6 +50,7 @@ render(
           <Switch>
             <Route path={'/search'} component={Search}/>
             <Route path={'/list/:type'} component={List}/>
+            <Route path={'/detail/:shopName'} component={Detail}/>
             <Route exact path={'/'} component={Entry}/>
           </Switch>
           <GlobalAlarm/>

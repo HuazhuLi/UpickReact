@@ -1,0 +1,120 @@
+.comments {
+  flex-grow 1
+  display flex
+  flex-direction column
+}
+.top-bar {
+  flex-shrink 0
+  padding 0 1.5rem 8px
+  height 1.2rem
+  border-bottom 1px #f2f2f2 solid
+  span {
+    vertical-align top
+  }
+  .icon.comment {
+    margin-right 0.6rem
+    display inline-block
+    height 1.2rem
+    width 1.1rem
+    background-size auto 100%
+    background-position -2.15rem
+    background-image url('../../assets/icons.png')
+  }
+  .text {
+    display inline-block
+    height 1.2rem
+    width 3.6rem
+    font-size 0.74rem
+    line-height 1.2rem
+    text-align center
+    padding-bottom 6px
+    &.active {
+      border-bottom #FFAC00 solid 2px
+    }
+  }
+}
+.comments-list {
+  flex-grow 1
+  list-style none
+  padding 0
+  margin 0
+  overflow auto
+  li {
+    position relative
+    padding 1rem 1.5rem
+    display flex
+    border-bottom 1px solid #f2f2f2
+    > img {
+      width 3rem
+      height @width
+      margin-right 1rem
+      flex-shrink 0
+    }
+    &:last-child {
+      margin-bottom 4rem
+    }
+  }
+}
+.comment-value {
+  flex-grow 1
+  .name {
+    display flex
+    height 2rem
+    flex-direction row
+    .name-date {
+      flex-grow 1
+      height 2rem
+      span {
+        display block
+      }
+      .span-date {
+        font-size 0.7rem
+        color #717171
+      }
+      .span-name {
+        font-size 0.75rem
+      }
+    }
+    .like, .dislike {
+      width 3rem
+      font-size 0.7rem
+      color #717171
+      .value {
+        margin 0 0.2rem
+      }
+    }
+    .icon {
+      display inline-block
+      height 1.2rem
+      width 1.08rem
+      background-size auto 100%
+      background-image url('../../assets/icons.png')
+      background-repeat no-repeat
+      &.like {
+        background-position ((-4) * 1.0948 + 0.05)rem
+      }
+      &.dislike {
+        background-position ((-6) * 1.0948 + 0.05)rem
+      }
+      &.liked {
+        background-position ((-3) * 1.0948)rem
+      }
+      &.disliked {
+        background-position ((-5) * 1.0948 + 0.05)rem
+      }
+    }
+    .value {
+      vertical-align top
+      height 1.2rem
+      line-height 1.2rem
+    }
+  }
+  .text {
+    p {
+      margin 0
+      margin-top 0.5rem
+      color #717171
+      font-size 0.7rem
+    }
+  }
+}

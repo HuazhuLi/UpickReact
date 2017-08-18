@@ -295,7 +295,6 @@ export const fetchShopDetail = (shopName) => async (dispatch, getState) => {
           throw e
         })
       shop.comments = commentList
-      console.log(shop)
       dispatch(receiveShopDetail(shopName, shop))
     } catch (e) {
       dispatch(throwGlobalAlarm(2500, undefined, '获取店铺信息失败！'))
