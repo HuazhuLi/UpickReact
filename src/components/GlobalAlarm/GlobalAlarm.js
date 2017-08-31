@@ -27,7 +27,7 @@ class GlobalAlarm extends Component {
   }
 }
 // GlobalAlarm.propTypes = {
-//   color: PropTypes.string.isRequired,
+//   color: PropTypes.string.isRequired
 //   value: PropTypes.string.isRequired
 // }
 

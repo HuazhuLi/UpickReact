@@ -10,7 +10,7 @@ import SwipeShopList from '../containers/SwipeShopList'
 
 import { setCurrentShopType, fetchShopsByType } from '../actions'
 
-// const ListTopBarContainer = connect(() => ({}))()
+// const ListTopBarContainer = connect(()     =>)()
 
 class List extends Component {
   componentWillMount () {

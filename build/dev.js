@@ -1,54 +1,5 @@
-// /**
-//  * Created by faraway on 17-8-4.
-//  */
-//
-// const express = require('express')
-// const webpack = require('webpack')
-// const webpackConfig = require('../config/webpack.config.dev')
-//
-// const compiler = webpack(webpackConfig)
-// const app = express()
-//
-// const devMiddleware = require('webpack-dev-middleware')(compiler, {
-//   quiet: true,
-//   publicPath: webpackConfig.output.publicPath
-// })
-//
-// const hotMiddleware = require('webpack-hot-middleware')(compiler, {
-//   log: () => {}
-// })
-//
-// // force page reload when html-webpack-plugin template changes
-// compiler.plugin('compilation', function (compilation) {
-//   compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-//     hotMiddleware.publish({ action: 'reload' })
-//     cb()
-//   })
-// })
-// // serve webpack bundle output
-// app.use(devMiddleware)
-//
-// // enable hot-reload and state-preserving
-// // compilation error display
-// app.use(hotMiddleware)
-//
-// const readyPromise = new Promise((resolve) => {
-//   devMiddleware.waitUntilValid(() => {
-//     resolve()
-//   })
-// })
-//
-// const server = app.listen(8080)
-//
-// module.exports = {
-//   ready: readyPromise,
-//   close: () => {
-//     server.close()
-//   }
-// }
-
 /**
- * Created by faraway on 17-7-17.
+ * Created by faraway on 17-8-4.
  */
 
 const webpack = require('webpack')
@@ -80,8 +31,8 @@ app.use((req, res, next) => {
 })
 
 const proxyTable = {
-  '/api': 'http://debug.upick.hustonline.net/',
-  '/shop_images': 'http://debug.upick.hustonline.net/'
+  '/api': 'http://dev.upick.hustonline.net/',
+  '/shop_images': 'http://dev.upick.hustonline.net/'
 }
 
 Object.keys(proxyTable).forEach(function (context) {
