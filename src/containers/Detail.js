@@ -17,6 +17,14 @@ class Detail extends Component {
     comments: shopDetail.comments,
     isLoadingShopDetail: shopDetail.isLoadingShopDetail
   })
+  constructor (props) {
+    super(props)
+    this.state = {
+      sortFunc: (comment1, comment2) => comment1.issueTime - comment2.issueTime,
+      currentPosition: 0,
+      collapsed: false
+    }
+  }
   render () {
     if ((!this.props.isLoadingShopDetail && this.props.shop)) {
       /**
@@ -26,11 +34,38 @@ class Detail extends Component {
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <ShopDetail
             shop={this.props.shop}
+            collapsed={this.state.collapsed}
             style={{ flexShrink: 0 }}
           />
           <ShopComments
-            comments={this.props.shop.comments}
+            comments={this.props.shop.comments.sort(this.state.sortFunc)}
+            activeIndex={this.state.currentPosition}
             style={{ flexGrow: 1 }}
+            onNewClick={() =>
+              this.setState({
+                sortFunc: (comment1, comment2) => comment1.issueTime - comment2.issueTime,
+                currentPosition: 0
+              })}
+            onHotClick={() =>
+              this.setState({
+                sortFunc: (comment1, comment2) => comment1.likeNumber - comment2.likeNumber,
+                currentPosition: 1
+              })
+            }
+            onScrollIsGreat={() => {
+              if (this.state.collapsed === false) {
+                this.setState({
+                  collapsed: true
+                })
+              }
+            }}
+            onScrollIsNotGreat={() => {
+              if (this.state.collapsed === true) {
+                this.setState({
+                  collapsed: false
+                })
+              }
+            }}
           />
         </div>
       )

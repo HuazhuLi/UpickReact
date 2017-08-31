@@ -34,14 +34,14 @@ const ShopDetail = (props) => (
         <p className={style['value']}>{props.shop.shopAddress}</p>
       </div>
     </div>
-    <div className={style['images']}>
+    <div className={style['images']} style={{height: props.collapsed ? '0px' : 'auto'}}>
       {
         props.shop.imgs.map((img, i) => (
           <img key={i} src={img.msrc || img.src} alt={props.shop.shopName}/>
         ))
       }
     </div>
-    <div className={style['tags']}>
+    <div className={style['tags']} style={{height: props.collapsed ? '0px' : undefined}}>
       <ul>
         {
           props.shop.shopTags.map((tag) => (
@@ -62,7 +62,8 @@ ShopDetail.propTypes = {
       msrc: PropTypes.string,
       src: PropTypes.string
     }))
-  })
+  }),
+  collapsed: PropTypes.bool.isRequired
 }
 
 export default ShopDetail

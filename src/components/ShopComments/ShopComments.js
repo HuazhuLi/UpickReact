@@ -10,10 +10,28 @@ const ShopComments = (props) => (
   <div style={props.style} className={style['comments']}>
     <div className={style['top-bar']}>
       <span className={style['icon'] + ' ' + style['comment']}/>
-      <span className={style['text'] + ' ' + style['active']}>最新评论</span>
-      <span className={style['text']}>最热评论</span>
+      <span
+        className={style['text'] + ' ' + (props.activeIndex === 0 ? style['active'] : '')}
+        onClick={() => props.onNewClick()}
+        children={'最新评论'}
+      />
+      <span
+        className={style['text'] + ' ' + (props.activeIndex === 1 ? style['active'] : '')}
+        onClick={() => props.onHotClick()}
+        children={'最热评论'}
+      />
     </div>
-    <ul className={style['comments-list']}>
+    <ul
+      className={style['comments-list']}
+      onScroll={(event) => {
+        const thisUL = event.target
+        if (thisUL.scrollTop >= thisUL.firstChild.clientHeight * 3) {
+          props.onScrollIsGreat()
+        } else {
+          props.onScrollIsNotGreat()
+        }
+      }}
+    >
       {
         props.comments.map((comment, i) => (
           <li key={i}>
@@ -22,7 +40,7 @@ const ShopComments = (props) => (
               <div className={style['name']}>
                 <div className={style['name-date']}>
                   <span className={style['span-name']}>{comment.authorNickname}</span>
-                  <span className={style['span-date']}>{new Date(comment.issueTime * 1000).toLocaleDateString()}</span>
+                  <span className={style['span-date']}>{new Date(comment.issueTime).toLocaleDateString()}</span>
                 </div>
                 <div className={style['like']}>
                   <span className={style['icon'] + ' ' + style['like']}/>
@@ -52,7 +70,11 @@ ShopComments.propTypes = {
     likeNumber: PropTypes.number,
     dislikeNumber: PropTypes.number,
     text: PropTypes.string
-  })).isRequired
+  })).isRequired,
+  onNewClick: PropTypes.func.isRequired,
+  onHotClick: PropTypes.func.isRequired,
+  onScrollIsGreat: PropTypes.func.isRequired,
+  onScrollIsNotGreat: PropTypes.func.isRequired
 }
 
 export default ShopComments

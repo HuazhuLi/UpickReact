@@ -21,13 +21,14 @@ class SwipeShopList extends Component {
   }
   constructor (props) {
     super(props)
-    this.swipeInstance = null
+    this.swipeWrapper = null
     this.state = {
       listHeight: 0,
       currentSubtypeIndex: 0
     }
   }
   render () {
+    const { dispatch } = this.props
     const type = this.props.currentShopType
     const subtypes = Object.keys(this.props.shopsByTypes[type] || {})
     if (this.props.isLoadingShopsByType) {
@@ -46,38 +47,41 @@ class SwipeShopList extends Component {
             }}
             onSearchButtonClick={() => this.props.dispatch(push('/search'))}
           />
-          <SwipeableViews
+          <div
             style={{ flexGrow: '1', overflowY: 'auto' }}
             ref={(a) => {
               /**
-               * 仅仅在第一次setState
+               * 仅仅在第一次setState, 否则会不断爆栈
                */
-              if (!this.swipeInstance) {
-                this.swipeInstance = a
+              if (!this.swipeWrapper) {
+                this.swipeWrapper = a
                 this.setState({
-                  listHeight: this.swipeInstance.containerNode.parentNode.clientHeight
+                  listHeight: this.swipeWrapper.clientHeight
                 })
               }
             }}
-            resistance={true}
-            index={this.state.currentSubtypeIndex}
-            onChangeIndex={(to, from) => this.setState({ currentSubtypeIndex: to })}
           >
-            {
-              subtypes.map((subtype, i) => (
-                <ShopList
-                  key={subtype}
-                  style={{ height: this.state.listHeight + 'px' }}
-                >
-                  {
-                    this.props.shopsByTypes[type][subtype].map((shop, i) => (
-                      <ShopListItem shop={shop} key={i} onShopClick={() => {}}/>
-                    ))
-                  }
-                </ShopList>
-              ))
-            }
-          </SwipeableViews>
+            <SwipeableViews
+              resistance={true}
+              index={this.state.currentSubtypeIndex}
+              onChangeIndex={(to, from) => this.setState({ currentSubtypeIndex: to })}
+            >
+              {
+                subtypes.map((subtype, i) => (
+                  <ShopList
+                    key={subtype}
+                    style={{ height: this.state.listHeight + 'px' }}
+                  >
+                    {
+                      this.props.shopsByTypes[type][subtype].map((shop, i) => (
+                        <ShopListItem shop={shop} key={i} onShopClick={() => dispatch(push(`/detail/${shop.shopName}`))}/>
+                      ))
+                    }
+                  </ShopList>
+                ))
+              }
+            </SwipeableViews>
+          </div>
         </div>
       )
     }
