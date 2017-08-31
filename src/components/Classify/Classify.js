@@ -12,7 +12,7 @@ const ShopTypesSplitter = () => (
 
 const LinkWithSingleShop = (props) => (
   <a className={style['link-with-shop']} onClick={() => props.onClick()}>
-    <div className={style['bg-element']} style={{ backgroundPosition: `${props.order * 3.652}rem center` }}/>
+    <div className={style['bg-element']} style={{ backgroundPosition: `-${props.order * 3.652}rem center` }}/>
     <div className={style['title']}>{props.content}</div>
   </a>
 )
