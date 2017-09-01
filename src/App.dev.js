@@ -34,21 +34,13 @@ const store = createStore(
 )
 
 const renderFullPage = () => {
-  const Entry = require('./pages/entry').default
-  const Search = require('./pages/search').default
-  const List = require('./pages/list').default
-  const Detail = require('./pages/detail').default
   const GlobalAlarm = require('./components/GlobalAlarm').default
+  const RootRoute = require('./routes').default
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <div style={{height: '100%'}}>
-          <Switch>
-            <Route path={'/search'} component={Search}/>
-            <Route path={'/list/:type'} component={List}/>
-            <Route path={'/detail/:shopName'} component={Detail}/>
-            <Route exact path={'/'} component={Entry}/>
-          </Switch>
+          <RootRoute/>
           <GlobalAlarm/>
         </div>
       </ConnectedRouter>

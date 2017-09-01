@@ -6,9 +6,9 @@ import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import { push } from 'react-router-redux'
 
-import SearchResult from '../containers/SearchResult'
-import SearchInfo from '../containers/SearchInfo'
-import SearchInput from '../components/SearchInput'
+import SearchResult from './SearchResult'
+import SearchInfo from './SearchInfo'
+import SearchInput from '../components/SearchInput/index'
 
 class Search extends Component {
   /**

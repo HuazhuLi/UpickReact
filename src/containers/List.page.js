@@ -4,9 +4,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import SwipeShopList from '../containers/SwipeShopList'
+import SwipeShopList from './SwipeShopList'
 
-import { setCurrentShopType, fetchShopsByType } from '../actions'
+import { setCurrentShopType, fetchShopsByType } from '../actions/index'
 
 class List extends Component {
   componentWillMount () {
