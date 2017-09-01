@@ -29,12 +29,9 @@ class Search extends Component {
             flexShrink: '0'
           }}
         />
-        <Switch style={{
-          flexShrink: '0'
-        }}>
-          <Route path={`${this.props.match.path}/:keyword`} component={SearchResult}/>
-          <Route exact path={''} component={SearchInfo}/>
-        </Switch>
+        {
+          this.props.children
+        }
       </div>
     )
   }

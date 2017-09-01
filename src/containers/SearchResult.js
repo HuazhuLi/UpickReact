@@ -32,6 +32,7 @@ class SearchResult extends Component {
     }
   }
   render () {
+    const { dispatch } = this.props
     return (
       /**
        * 当加载没有完成或者结果不为空时显示店铺列表
@@ -40,7 +41,7 @@ class SearchResult extends Component {
         ? <ShopList inLoadingStatus={this.props.isSearching} style={{ flexGrow: '1' }}>
           {
             this.props.searchResult.map((shop, i) => (
-              <ShopListItem key={i} shop={shop} onShopClick={() => { console.log('Shop Click!') }}/>
+              <ShopListItem key={i} shop={shop} onShopClick={() => dispatch(push(`/detail/${shop.shopName}`)) }/>
             ))
           }
         </ShopList>
