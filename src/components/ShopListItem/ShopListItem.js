@@ -23,7 +23,7 @@ const ShopListItem = (props) => (
         <ul className={style['tags-list']}>
           {
             (props.shop.shopTags || []).map((shopTag, i) => (
-              <li key={i} className={style['tags-list-item']}>{shopTag}</li>
+              <li key={i} className={style['tags-list-item'] + ' ' + (shopTag.positive ? '' : style['negative'])}>{shopTag.tagName}</li>
             ))
           }
         </ul>
