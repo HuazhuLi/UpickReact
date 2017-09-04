@@ -26,7 +26,7 @@ const hotMiddleware = require('webpack-hot-middleware')(compiler, {
 })
 
 app.use((req, res, next) => {
-  req.headers.host = 'debug.upick.hustonline.net'
+  req.headers.host = 'dev.upick.hustonline.net'
   next()
 })
 
