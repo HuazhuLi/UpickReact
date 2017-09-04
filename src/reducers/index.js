@@ -1,9 +1,18 @@
 /**
  * Created by faraway on 17-8-9.
  */
-
 import * as type from '../actions/consts'
+import { normalize, schema as Schema } from 'normalizr'
 
+const shopSchema = new Schema.Entity('shops')
+const keywordSchema = new Schema.Entity('keyword')
+
+const searchResultSchema = new Schema.Entity('searchResult', {
+  keyword: keywordSchema,
+  shopList: [ shopSchema ]
+})
+
+const TYPE = type
 export function index (state = {
   indexData: {
     slogan: '...',
@@ -11,7 +20,6 @@ export function index (state = {
     popularShops: new Array(6).fill({ shopName: '...' })
   },
   isLoadingIndex: false,
-  updatedTime: 0,
   errorInfo: {}
 }, action) {
   return Object.assign({}, state, (function () {
@@ -19,20 +27,23 @@ export function index (state = {
      * 立即执行函数
      */
     switch (action.type) {
-      case type.REQUEST_INDEX_DATA:
+      case TYPE.INDEX_DATA.REQUEST:
         return {
           isLoadingIndex: true
         }
-      case type.RECEIVE_INDEX_DATA:
-        return {
-          indexData: action.indexData,
-          isLoadingIndex: false,
-          updatedTime: action.receivedAt
+      case TYPE.INDEX_DATA.SUCCESS:
+        if (action.error) {
+          return {
+            isLoadingIndex: false
+          }
         }
-      case type.FAILED_INDEX_DATA:
         return {
-          isLoadingIndex: false,
-          errorInfo: action.error
+          indexData: action.payload,
+          isLoadingIndex: false
+        }
+      case TYPE.INDEX_DATA.FAILURE:
+        return {
+          isLoadingIndex: false
         }
       default:
         return {}
@@ -40,52 +51,53 @@ export function index (state = {
   })())
 }
 
-export function searchResult (state = {
-  keyword: '',
-  searchResult: [
-    // {
-    //   'subtype': '食堂',
-    //   'open_time': '06:30-09:00;10:50-13:00;16:30-19:30',
-    //   'shop_address': '东小门以北50米左右',
-    //   'shop_area': '',
-    //   'shop_name': '东教工食堂',
-    //   'shop_tags': ['分量足', '价格实惠', '太贵', '座位太少', '干净', '服务热情'],
-    //   'shop_score': 8.5,
-    //   'imgs': [
-    //     {
-    //       'src': 'shop_images/shop-41394f62-105d-11e7-8fe3-525400b76a89.jpg',
-    //       'height': 2304,
-    //       'msrc': 'shop_images/mshop-41394f62-105d-11e7-8fe3-525400b76a89.jpg',
-    //       'width': 3456
-    //     }
-    //   ],
-    //   'shop_type': '美食'
-    // }
-  ],
+export function shops (state = {
   isSearching: false,
-  errorInfo: {}
+  isLoadingShopsByType: false,
+  shopTypes: {
+    // '美食': {
+    //   '食堂': []
+    // }
+  },
+  keyword: '',
+  search: {
+    '': {
+      id: '',
+      keyword: '',
+      shopList: []
+    }
+    // 'hehe': []
+  },
+  shops: []
 }, action) {
   return Object.assign({}, state, (function () {
     switch (action.type) {
-      case type.REQUEST_SEARCH:
+      // 下面是搜索相关
+      case TYPE.SEARCH.REQUEST:
         return {
-          keyword: action.keyword,
-          isSearching: true,
-          searchResult: []
+          keyword: '',
+          isSearching: true
         }
-      case type.RECEIVE_SEARCH:
+      case TYPE.SEARCH.SUCCESS:
+        const normalizedData = normalize(action.payload, searchResultSchema).entities
         return {
-          keyword: action.keyword,
+          keyword: action.payload.keyword,
           isSearching: false,
-          searchResult: action.searchResult
+          search: {
+            ...state.search,
+            ...normalizedData.searchResult
+          },
+          shops: {
+            ...state.shops,
+            ...normalizedData.shops
+          }
         }
-      case type.FAILED_SEARCH:
+      case TYPE.SEARCH.FAILURE:
         return {
-          keyword: action.keyword,
-          isSearching: false,
-          searchResult: [],
-          errorInfo: action.error
+          keyword: '',
+          isSearching: false
         }
+      // 下面是店铺by type 相关
       default:
         return {}
     }
@@ -128,29 +140,26 @@ export function searchInfo (state = {
 }
 
 export function globalAlarm (state = {
-  timer: -1,
   alarmValue: 'Error!',
-  alarmColor: '#FF305D',
-  show: false
+  alarmColor: '#FF305D'
 }, action) {
   return Object.assign({}, state, (function () {
-    switch (action.type) {
-      case type.UPDATE_GLOBAL_ALARM_TIMER:
-        return {
-          timer: action.timer
-        }
-      case type.SHOW_GLOBAL_ALARM:
-        return {
-          alarmValue: action.alarmValue,
-          alarmColor: action.alarmColor,
-          show: true
-        }
-      case type.HIDE_GLOBAL_ALARM:
-        return {
-          show: false
-        }
-      default:
-        return {}
+    if (action.type === type.SHOW_GLOBAL_ALARM) {
+      return {
+        ...action.payload
+      }
+    }
+    if (action.error) {
+      console.log(action)
+      let alarmValue
+      if (action.payload.name === 'InternalError') {
+        alarmValue = '操作失败: 未知错误！'
+      } else {
+        alarmValue = '操作失败: 网络错误！'
+      }
+      return {
+        alarmValue
+      }
     }
   })())
 }

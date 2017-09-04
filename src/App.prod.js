@@ -3,7 +3,6 @@
  */
 import React from 'react'
 import { render } from 'react-dom'
-import { Route, Switch } from 'react-router-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'

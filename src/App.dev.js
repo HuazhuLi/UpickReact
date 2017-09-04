@@ -3,24 +3,29 @@
  */
 import React from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
-import { Route, Switch } from 'react-router-dom'
+
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { Provider } from 'react-redux'
-import { AppContainer } from 'react-hot-loader'
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createHashHistory'
+
 import thunk from 'redux-thunk'
+import { apiMiddleware } from 'redux-api-middleware'
+
+import { AppContainer } from 'react-hot-loader'
 
 import * as reducers from './reducers'
+import * as actions from './actions'
 
-// Create a history of your choosing (we're using a browser history in this case)
+// Create a history of your choosing (we're using a hash history in this case)
 const history = createHistory()
 
 // Build the middleware for intercepting and dispatching navigation actions
 const reduxRouter = routerMiddleware(history)
 
 const root = document.getElementById('root')
+
 // Add the reducer to your store on the `router` key
 // Also apply our middleware for navigating
 const store = createStore(
@@ -29,7 +34,7 @@ const store = createStore(
     router: routerReducer
   }),
   composeWithDevTools(
-    applyMiddleware(thunk, reduxRouter)
+    applyMiddleware(thunk, reduxRouter, apiMiddleware)
   )
 )
 
@@ -69,5 +74,7 @@ if (module.hot) {
     reRender()
   })
 }
+
+window.throwGlobalAlarm = () => store.dispatch(actions.throwGlobalAlarm(5000, undefined, Date.now()))
 
 export default reRender

@@ -5,6 +5,8 @@
   "dependencies": {
     "axios": "^0.16.2",
     "history": "^4.6.3",
+    "humps": "^2.0.1",
+    "normalizr": "latest",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -15,6 +17,7 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "react-swipeable-views": "^0.12.5",
     "redux": "^3.7.2",
+    "redux-api-middleware": "^2.0.0-beta.3",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {

@@ -25,10 +25,10 @@ const NoSuchShops = connect(() => ({}))((props) => (
 ))
 
 class SearchResult extends Component {
-  static mapStateToProps = function ({ searchResult }) {
+  static mapStateToProps = function ({ shops }) {
     return {
-      searchResult: searchResult.searchResult,
-      isSearching: searchResult.isSearching
+      searchResult: shops.search[shops.keyword].shopList.map(id => shops.shops[id]),
+      isSearching: shops.isSearching
     }
   }
   render () {
