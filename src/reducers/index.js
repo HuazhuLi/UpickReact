@@ -12,6 +12,14 @@ const searchResultSchema = new Schema.Entity('searchResult', {
   shopList: [ shopSchema ]
 })
 
+const shopsBySubtypeSchema = new Schema.Entity('shopsBySubtype', {
+  shopList: [ shopSchema ]
+})
+
+const shopsByTypesSchema = [new Schema.Entity('shopsByType', {
+  shopsBySubtypes: [ shopsBySubtypeSchema ]
+})]
+
 const TYPE = type
 export function index (state = {
   indexData: {
@@ -54,11 +62,15 @@ export function index (state = {
 export function shops (state = {
   isSearching: false,
   isLoadingShopsByType: false,
-  shopTypes: {
+  shopsByType: {
     // '美食': {
-    //   '食堂': []
+    //   shopBySubtype: []
     // }
   },
+  shopsBySubtype: {
+
+  },
+  currentShopType: '',
   keyword: '',
   search: {
     '': {
@@ -68,7 +80,7 @@ export function shops (state = {
     }
     // 'hehe': []
   },
-  shops: []
+  shops: {}
 }, action) {
   return Object.assign({}, state, (function () {
     switch (action.type) {
@@ -79,17 +91,17 @@ export function shops (state = {
           isSearching: true
         }
       case TYPE.SEARCH.SUCCESS:
-        const normalizedData = normalize(action.payload, searchResultSchema).entities
+        const normalizedSearchData = normalize(action.payload, searchResultSchema).entities
         return {
           keyword: action.payload.keyword,
           isSearching: false,
           search: {
             ...state.search,
-            ...normalizedData.searchResult
+            ...normalizedSearchData.searchResult
           },
           shops: {
             ...state.shops,
-            ...normalizedData.shops
+            ...normalizedSearchData.shops
           }
         }
       case TYPE.SEARCH.FAILURE:
@@ -98,6 +110,44 @@ export function shops (state = {
           isSearching: false
         }
       // 下面是店铺by type 相关
+      case TYPE.SHOPS_BY_TYPES.REQUEST:
+        return {
+          isLoadingShopsByType: true
+        }
+      case TYPE.SHOPS_BY_TYPES.CHANGE_TYPE:
+        return {
+          currentShopType: action.shopType
+        }
+      case TYPE.SHOPS_BY_TYPES.SUCCESS:
+        const normalizedTypesData = normalize([
+          {
+            id: action.payload.shopType,
+            shopsBySubtypes: action.payload.subtypes
+              .map(subtype => ({
+                id: subtype,
+                shopList: action.payload.shopList.filter(shop => shop.subtype === subtype)
+              }))
+          }
+        ], shopsByTypesSchema).entities
+        return {
+          shops: {
+            ...state.shops,
+            ...normalizedTypesData.shops
+          },
+          shopsByType: {
+            ...state.shopsByType,
+            ...normalizedTypesData.shopsByType
+          },
+          shopsBySubtype: {
+            ...state.shopsBySubtype,
+            ...normalizedTypesData.shopsBySubtype
+          },
+          isLoadingShopsByType: false
+        }
+      case TYPE.SHOPS_BY_TYPES.FAILURE:
+        return {
+          isLoadingShopsByType: false
+        }
       default:
         return {}
     }

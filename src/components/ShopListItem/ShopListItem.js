@@ -13,7 +13,7 @@ const ShopListItem = (props) => (
       className={style['shop-item-a']}
     >
       <div className={style['left-image']}>
-        <img src={props.shop.imgs[0].msrc || props.shop.imgs[0].src} alt={props.shop.shopName}/>
+        <img src={props.shop.imgs[0] ? props.shop.imgs[0].msrc || props.shop.imgs[0].src : '' } alt={props.shop.shopName}/>
       </div>
       <div className={style['right-content']}>
         <h2 className={style['title-score']}>

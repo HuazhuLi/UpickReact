@@ -51,13 +51,9 @@ export const fetchIndex = () => (
  */
 export const fetchSearchResult = (keyword) => ({
   [CALL_API]: {
-    endpoint: `${r}/shops/list`,
-    method: POST,
+    endpoint: `${r}/shops/list?key_word=${keyword}&request_type=3`,
+    method: GET,
     credentials: 'include',
-    body: JSON.stringify({
-      'key_word': keyword,
-      'request_type': 3
-    }),
     headers: {
       'content-type': 'application/json'
     },
@@ -134,11 +130,6 @@ export const receiveSearchInfo = (searchInfo) => ({
   receivedAt: Date.now()
 })
 
-export const failedReceiveSearchInfo = (error) => ({
-  type: type.FAILED_SEARCH_INFO,
-  error
-})
-
 /**
  * 抛出一个全局警示
  * @param alarmColor
@@ -154,19 +145,37 @@ export const throwGlobalAlarm = (alarmColor, alarmValue) => ({
 
 export const fetchShopsByType = (type) => ({
   [CALL_API]: {
-    endpoint: `${r}/shops/list`,
-    method: POST,
+    endpoint: `${r}/shops/list?shop_type=${type}&request_type=1`,
+    method: GET,
     // 带上/接受 cookie
     credentials: 'include',
-    body: JSON.stringify({
-      'shop_type': type,
-      'request_type': 1
-    }),
     headers: {
       'content-type': 'application/json'
     },
-    types: []
+    types: [
+      TYPE.SHOPS_BY_TYPES.REQUEST,
+      {
+        type: TYPE.SHOPS_BY_TYPES.SUCCESS,
+        payload: (action, state, res) => {
+          if (res.status !== 200) throw new Error('API Error!')
+          return res
+            .json()
+            .then(camelizeKeys)
+            .then(({data}) => ({
+              shopType: type,
+              id: type,
+              ...data
+            }))
+        }
+      },
+      TYPE.SHOPS_BY_TYPES.FAILURE
+    ]
   }
+})
+
+export const setCurrentShopType = (shopType) => ({
+  type: TYPE.SHOPS_BY_TYPES.CHANGE_TYPE,
+  shopType
 })
 
 // /**

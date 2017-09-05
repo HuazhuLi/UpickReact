@@ -12,11 +12,9 @@ import ListTopBar from '../components/ListTopBar'
 import Loading from '../components/Loading'
 
 class SwipeShopList extends Component {
-  static mapStateToProps = function ({ shopsByTypes }) {
+  static mapStateToProps = function ({ shops }) {
     return {
-      shopsByTypes: shopsByTypes.shopsByTypes,
-      isLoadingShopsByType: shopsByTypes.isLoadingShopsByType,
-      currentShopType: shopsByTypes.currentShopType
+      ...shops
     }
   }
   constructor (props) {
@@ -30,7 +28,8 @@ class SwipeShopList extends Component {
   render () {
     const { dispatch } = this.props
     const type = this.props.currentShopType
-    const subtypes = Object.keys(this.props.shopsByTypes[type] || {})
+    const subtypes = (this.props.shopsByType[type] || {}).shopsBySubtypes || []
+    console.log(subtypes)
     if (this.props.isLoadingShopsByType) {
       return <Loading/>
     } else {
@@ -73,9 +72,11 @@ class SwipeShopList extends Component {
                     style={{ height: this.state.listHeight + 'px' }}
                   >
                     {
-                      this.props.shopsByTypes[type][subtype].map((shop, i) => (
-                        <ShopListItem shop={shop} key={i} onShopClick={() => dispatch(push(`/detail/${shop.shopName}`))}/>
-                      ))
+                      this.props.shopsBySubtype[subtype].shopList
+                        .map(id => this.props.shops[id])
+                        .map((shop, i) => (
+                          <ShopListItem shop={shop} key={i} onShopClick={() => dispatch(push(`/detail/${shop.shopName}`))}/>
+                        ))
                     }
                   </ShopList>
                 ))
