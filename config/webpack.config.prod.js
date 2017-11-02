@@ -17,9 +17,17 @@ module.exports = merge(baseWebpackConfig, {
     rules: [
       {
         test: /\.(css|styl)$/,
+        exclude: /\.min\.css$/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader?modules', 'postcss-loader', 'stylus-loader']
+        })
+      },
+      {
+        test: /\.min\.css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader', 'stylus-loader']
         })
       }
     ]

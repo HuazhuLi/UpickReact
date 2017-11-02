@@ -13,6 +13,6 @@ import { startLoading, stopLoading } from './plugins/loading'
     await import('./App.js')
     stopLoading()
   } catch (e) {
-    alert(`发生了十分严重的问题: "${e.message}", 对此我们感到十分抱歉!\n请将这个界面截图发送给开发者: 微信号: Farawaaay。谢谢您的支持！`)
+    alert(`发生了十分严重的问题: \n"${e.message}"\n 对此我们感到十分抱歉!\n请将这个界面截图发送给开发者: 微信号: Farawaaay。谢谢您的支持！`)
   }
 })()

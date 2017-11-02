@@ -12,7 +12,7 @@ const ShopList = (props) => (
   props.inLoadingStatus === true
     ? <Loading/>
     : <ul
-      className={`${style['shop-list']} ${props.children.length > 0 ? style['show-bottom-tip'] : ''}`}
+      className={`${style['shop-list']} ${props.children.length > 0 ? style['show-bottom-tip'] : ''} ${props.className}`}
       style={props.style}
     >
       {props.children}

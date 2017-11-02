@@ -4,7 +4,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import SwipeableViews from 'react-swipeable-views'
+import Swiper from 'react-id-swiper'
+
+import 'swiper/dist/css/swiper.min.css'
 
 import ShopList from '../components/ShopList'
 import ShopListItem from '../components/ShopListItem'
@@ -17,14 +19,15 @@ class SwipeShopList extends Component {
       ...shops
     }
   }
-  constructor (props) {
-    super(props)
-    this.swipeWrapper = null
-    this.state = {
-      listHeight: 0,
-      currentSubtypeIndex: 0
-    }
+
+  swipeWrapper = null
+  swiper = null
+
+  state = {
+    listHeight: 0,
+    currentSubtypeIndex: 0
   }
+
   render () {
     const { dispatch } = this.props
     const type = this.props.currentShopType
@@ -38,10 +41,11 @@ class SwipeShopList extends Component {
             subtypes={subtypes}
             style={{ flexShrink: '0' }}
             activeIndex={this.state.currentSubtypeIndex}
-            onSubtypeClick={(index) => {
-              this.setState({
-                currentSubtypeIndex: index
-              })
+            onSubtypeClick={index => {
+              // this.setState({
+              //   currentSubtypeIndex: index
+              // })
+              this.swiper.slideTo(index)
             }}
             onSearchButtonClick={() => this.props.dispatch(push('/search'))}
           />
@@ -59,10 +63,12 @@ class SwipeShopList extends Component {
               }
             }}
           >
-            <SwipeableViews
-              resistance={true}
-              index={this.state.currentSubtypeIndex}
-              onChangeIndex={(to, from) => this.setState({ currentSubtypeIndex: to })}
+            <Swiper
+              ref={reactSwiper => { this.swiper = reactSwiper && reactSwiper.swiper }}
+              on={{
+                slideChange: () => this.setState({ currentSubtypeIndex: this.swiper.activeIndex })
+              }}
+              lazy={true}
             >
               {
                 subtypes.map((subtype, i) => (
@@ -80,7 +86,7 @@ class SwipeShopList extends Component {
                   </ShopList>
                 ))
               }
-            </SwipeableViews>
+            </Swiper>
           </div>
         </div>
       )

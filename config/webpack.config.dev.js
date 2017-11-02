@@ -26,7 +26,21 @@ module.exports = merge(baseWebpackConfig, {
   module: {
     rules: [
       {
+        test: /\.min\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      },
+      {
         test: /\.(css|styl)$/,
+        exclude: /\.min\.css$/,
         use: [
           'style-loader',
           {
