@@ -14,10 +14,15 @@ import { fetchIndex } from '../actions'
 
 class Entry extends Component {
   static mapStateToProps ({ index }) {
-    return { index }
+    return {
+      value: index.value,
+      // 主页之前已经有加载，这里略去
+      // isFetching: index.isFetching
+      error: index.error
+    }
   }
   render () {
-    const { indexData } = this.props.index
+    const indexData = this.props.value
     const { dispatch } = this.props
     return (
       <div

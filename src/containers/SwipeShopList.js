@@ -53,7 +53,7 @@ class SwipeShopList extends Component {
             style={{ flexGrow: '1', overflowY: 'auto' }}
             ref={(a) => {
               /**
-               * 仅仅在第一次setState, 否则会不断爆栈
+               * 仅仅在第一次setState, 否则会爆栈
                */
               if (!this.swipeWrapper) {
                 this.swipeWrapper = a

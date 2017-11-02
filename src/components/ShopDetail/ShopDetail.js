@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import style from './ShopDetail.styl'
 
-const ShopDetail = (props) => (
+const ShopDetail = props => (
   <div style={props.style}>
     <div className={style['title']}>
       <h1>
@@ -34,9 +34,9 @@ const ShopDetail = (props) => (
         <p className={style['value']}>{props.shop.shopAddress}</p>
       </div>
     </div>
-    <div className={style['images']} style={{height: props.collapsed ? '0px' : 'auto'}}>
+    <div className={style['images']} style={{height: props.collapsed ? '0px' : undefined}}>
       {
-        props.shop.imgs.map((img, i) => (
+        props.shop.imgs.slice(0, 3).map((img, i) => (
           <img key={i} src={img.msrc || img.src} alt={props.shop.shopName}/>
         ))
       }
@@ -45,7 +45,7 @@ const ShopDetail = (props) => (
       <ul>
         {
           props.shop.shopTags.map((tag) => (
-            <li key={tag} className={style['negative']}>{tag}</li>
+            <li key={tag.tagName} className={style['negative']}>{tag.tagName}</li>
           ))
         }
       </ul>
@@ -57,7 +57,10 @@ ShopDetail.propTypes = {
     shopName: PropTypes.string,
     shopScore: PropTypes.number,
     shopAddress: PropTypes.string,
-    shopTags: PropTypes.arrayOf(PropTypes.string),
+    shopTags: PropTypes.arrayOf(PropTypes.shape({
+      hitNumber: PropTypes.number,
+      tagName: PropTypes.string
+    })),
     imgs: PropTypes.arrayOf(PropTypes.shape({
       msrc: PropTypes.string,
       src: PropTypes.string

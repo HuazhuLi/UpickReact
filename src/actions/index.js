@@ -18,6 +18,27 @@ function wait (timeToWait) {
   }
 }
 
+/**
+ * 大都相同
+ * @param {object} action
+ * @param {object} state
+ * @param {object} res
+ */
+
+function payload (action, state, res) {
+  if (res.status !== 200) {
+    // dispatch(throwGlobalAlarm(5000, undefined, 'API Error!'))
+    throw new Error('API Error!')
+  }
+  return res
+    .json()
+    .then(camelizeKeys)
+    // eslint-disable no-sequences
+    .then(({ data }) => { console.log(data); return data })
+}
+/**
+  * 获取主页内容
+  */
 export const fetchIndex = () => (
   {
     [CALL_API]: {
@@ -28,16 +49,7 @@ export const fetchIndex = () => (
         TYPE.INDEX_DATA.REQUEST,
         {
           type: TYPE.INDEX_DATA.SUCCESS,
-          payload: (action, state, res) => {
-            if (res.status !== 200) {
-              // dispatch(throwGlobalAlarm(5000, undefined, 'API Error!'))
-              throw new Error('API Error!')
-            }
-            return res
-              .json()
-              .then(camelizeKeys)
-              .then(({ data }) => data)
-          }
+          payload
         },
         TYPE.INDEX_DATA.FAILURE
       ]
@@ -46,9 +58,51 @@ export const fetchIndex = () => (
 )
 
 /**
+ * 获取热门搜索
+ */
+export const fetchSearchHot = () => (
+  {
+    [CALL_API]: {
+      endpoint: `${r}/shops/hot_records`,
+      credentials: 'include',
+      method: GET,
+      types: [
+        TYPE.SEARCH_HOT.REQUEST,
+        {
+          type: TYPE.SEARCH_HOT.SUCCESS,
+          payload
+        },
+        TYPE.SEARCH_HOT.FAILURE
+      ]
+    }
+  }
+)
+
+/**
+ * 获取搜索历史
+ */
+export const fetchSearchHistory = () => (
+  {
+    [CALL_API]: {
+      endpoint: `${r}/shops/search_history`,
+      credentials: 'include',
+      method: GET,
+      types: [
+        TYPE.SEARCH_HISTORY.REQUEST,
+        {
+          type: TYPE.SEARCH_HISTORY.SUCCESS,
+          payload
+        },
+        TYPE.SEARCH_HISTORY.FAILURE
+      ]
+    }
+  }
+)
+
+/**
  * 搜索结果相关
  */
-export const fetchSearchResult = (keyword) => ({
+export const fetchSearchResult = keyword => ({
   [CALL_API]: {
     endpoint: `${r}/shops/list?key_word=${keyword}&request_type=3`,
     method: GET,
@@ -81,58 +135,9 @@ export const fetchSearchResult = (keyword) => ({
 })
 
 /**
- * 搜索信息相关
- */
-export const fetchSearchInfo = () => async (dispatch, getState) => {
-  dispatch(requestSearchInfo())
-  const state = getState()
-  /**
-   * 10 minutes
-   */
-  if (Date.now() - state.searchInfo.updatedTime >= 60 * 1000 * 10) {
-    try {
-      const searchInfoHot = await axios.get(`${r}/shops/hot_records`)
-        .then(res => res.status === 200 && res.data)
-        .then(data => data.status === 200 && data.data)
-        .then(camelizeKeys)
-        .then(data => data.hotRecords)
-        .then(searchHistory => searchHistory.map(s => s.searchWord))
-        .catch((e) => {
-          throw e
-        })
-      const searchInfoHistory = await axios.get(`${r}/shops/search_history`)
-        .then(res => res.status === 200 && res.data)
-        .then(data => data.status === 200 && data.data)
-        .then(camelizeKeys)
-        .then(data => data.searchHistory)
-        .then(wait(300))
-        .catch((e) => {
-          throw e
-        })
-      dispatch(receiveSearchInfo({ searchInfoHot, searchInfoHistory }))
-    } catch (e) {
-      // dispatch(failedReceiveSearchInfo(e))
-      dispatch(throwGlobalAlarm(2500, undefined, '获取信息失败！'))
-    }
-  } else {
-    dispatch(receiveSearchInfo(state.searchInfo.searchInfo))
-  }
-}
-
-export const requestSearchInfo = () => ({
-  type: type.REQUEST_SEARCH_INFO
-})
-
-export const receiveSearchInfo = (searchInfo) => ({
-  type: type.RECEIVE_SEARCH_INFO,
-  searchInfo,
-  receivedAt: Date.now()
-})
-
-/**
  * 抛出一个全局警示
- * @param alarmColor
- * @param alarmValue
+ * @param {string} alarmColor
+ * @param {string} alarmValue
  */
 export const throwGlobalAlarm = (alarmColor, alarmValue) => ({
   type: TYPE.SHOW_GLOBAL_ALARM,
@@ -250,55 +255,89 @@ export const setCurrentShopType = (shopType) => ({
  * 店铺详情不从店铺列表中直接获取的原因：
  * 1.防止以后店铺列表缩小内容范围，导致数据不足
  * 2.懒
- */
-export const fetchShopDetail = (shopName) => async (dispatch, getState) => {
-  dispatch(requestShopDetail(shopName))
-  const { shopDetail } = getState()
-  if (shopName in shopDetail.shops) {
-    dispatch(receiveShopDetail(shopName, shopDetail.shops[shopName]))
-  } else {
-    try {
-      const shop = await axios.get(`${r}/shops`, {
-        params: {
-          'shop_name': shopName
-        }
-      })
-        .then(res => res.status === 200 && res.data)
-        .then(data => data.status === 200 && data.data)
-        .then(camelizeKeys)
-        .catch((e) => {
-          throw e
-        })
-      const { commentList } = await axios.post(`${r}/shops/comments`, {
-        'request_type': 2,
-        'shop_name': shopName
-      })
-        .then(res => res.status === 200 && res.data)
-        .then(data => data.status === 200 && data.data)
-        .then(camelizeKeys)
-        .catch((e) => {
-          throw e
-        })
-      shop.comments = commentList
-      dispatch(receiveShopDetail(shopName, shop))
-    } catch (e) {
-      dispatch(throwGlobalAlarm(2500, undefined, '获取店铺信息失败！'))
-    }
+//  */
+// export const fetchShopDetail = (shopName) => async (dispatch, getState) => {
+//   dispatch(requestShopDetail(shopName))
+//   const { shopDetail } = getState()
+//   if (shopName in shopDetail.shops) {
+//     dispatch(receiveShopDetail(shopName, shopDetail.shops[shopName]))
+//   } else {
+//     try {
+//       const shop = await axios.get(`${r}/shops`, {
+//         params: {
+//           'shop_name': shopName
+//         }
+//       })
+//         .then(res => res.status === 200 && res.data)
+//         .then(data => data.status === 200 && data.data)
+//         .then(camelizeKeys)
+//         .catch((e) => {
+//           throw e
+//         })
+//       const { commentList } = await axios.post(`${r}/shops/comments`, {
+//         'request_type': 2,
+//         'shop_name': shopName
+//       })
+//         .then(res => res.status === 200 && res.data)
+//         .then(data => data.status === 200 && data.data)
+//         .then(camelizeKeys)
+//         .catch((e) => {
+//           throw e
+//         })
+//       shop.comments = commentList
+//       dispatch(receiveShopDetail(shopName, shop))
+//     } catch (e) {
+//       dispatch(throwGlobalAlarm(2500, undefined, '获取店铺信息失败！'))
+//     }
+//   }
+// }
+
+// export const requestShopDetail = (shopName) => ({
+//   type: TYPE.REQUEST_SHOP_COMMENT,
+//   shopName
+// })
+
+// export const receiveShopDetail = (shopName, shop) => ({
+//   type: TYPE.RECEIVE_SHOP_COMMENT,
+//   shopName,
+//   shop
+// })
+
+// export const setCurrentShop = (shopName) => ({
+//   type: TYPE.SET_CURRENT_SHOP,
+//   shopName
+// })
+
+export const fetchShopDetail = shopName => ({
+  [CALL_API]: {
+    endpoint: `${r}/shops?shop_name=${shopName}`,
+    method: GET,
+    // 带上/接受 cookie
+    credentials: 'include',
+    types: [
+      TYPE.SHOP_DETAIL.REQUEST,
+      {
+        type: TYPE.SHOP_DETAIL.SUCCESS,
+        payload
+      },
+      TYPE.SHOP_DETAIL.FAILURE
+    ]
   }
-}
-
-export const requestShopDetail = (shopName) => ({
-  type: type.REQUEST_SHOP_COMMENT,
-  shopName
 })
 
-export const receiveShopDetail = (shopName, shop) => ({
-  type: type.RECEIVE_SHOP_COMMENT,
-  shopName,
-  shop
-})
-
-export const setCurrentShop = (shopName) => ({
-  type: type.SET_CURRENT_SHOP,
-  shopName
+export const fetchShopComments = shopName => ({
+  [CALL_API]: {
+    endpoint: `${r}/comments?shop_name=${shopName}`,
+    method: GET,
+    // 带上/接受 cookie
+    credentials: 'include',
+    types: [
+      TYPE.SHOP_COMMENTS.REQUEST,
+      {
+        type: TYPE.SHOP_COMMENTS.SUCCESS,
+        payload
+      },
+      TYPE.SHOP_COMMENTS.FAILURE
+    ]
+  }
 })

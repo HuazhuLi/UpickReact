@@ -8,7 +8,7 @@ import Loading from '../Loading'
 
 import style from './SearchInfo.styl'
 
-const KeywordList = (props) => (
+const KeywordList = props => (
   <ul className={style['keyword-list']}>
     {
       props.keywords.map((keyword, i) => (
@@ -28,21 +28,21 @@ KeywordList.propTypes = {
   onKeywordClick: PropTypes.func.isRequired
 }
 
-const SearchInfo = (props) => (
+const SearchInfo = props => (
   props.inLoadingStatus === false
     ? <div className={style['search-info-wrapper']} style={props.style}>
       <div className={style['keyword-list-wrapper']}>
         <h3 className={style['title']}>{'热门搜索'}</h3>
         <KeywordList
           keywords={props.searchInfoHot}
-          onKeywordClick={(keyword) => props.onKeywordClick(keyword)}
+          onKeywordClick={keyword => props.onKeywordClick(keyword)}
         />
       </div>
       <div className={style['keyword-list-wrapper']}>
         <h3 className={style['title']}>{'搜索历史'}</h3>
         <KeywordList
           keywords={props.searchInfoHistory}
-          onKeywordClick={(keyword) => props.onKeywordClick(keyword)}
+          onKeywordClick={keyword => props.onKeywordClick(keyword)}
         />
       </div>
     </div>

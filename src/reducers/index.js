@@ -21,14 +21,15 @@ const shopsByTypesSchema = [new Schema.Entity('shopsByType', {
 })]
 
 const TYPE = type
+
 export function index (state = {
-  indexData: {
+  value: {
     slogan: '...',
     shopTypes: ['...', '...', '...', '...', '...'],
     popularShops: new Array(6).fill({ shopName: '...' })
   },
-  isLoadingIndex: false,
-  errorInfo: {}
+  isFetching: false,
+  error: {}
 }, action) {
   return Object.assign({}, state, (function () {
     /**
@@ -37,21 +38,22 @@ export function index (state = {
     switch (action.type) {
       case TYPE.INDEX_DATA.REQUEST:
         return {
-          isLoadingIndex: true
+          isFetching: true
         }
       case TYPE.INDEX_DATA.SUCCESS:
         if (action.error) {
           return {
-            isLoadingIndex: false
+            isFetching: false,
+            error: action.error
           }
         }
         return {
-          indexData: action.payload,
-          isLoadingIndex: false
+          value: action.payload,
+          isFetching: false
         }
       case TYPE.INDEX_DATA.FAILURE:
         return {
-          isLoadingIndex: false
+          isFetching: false
         }
       default:
         return {}
@@ -154,30 +156,49 @@ export function shops (state = {
   })())
 }
 
-export function searchInfo (state = {
-  isFetchingSearchInfo: false,
-  searchInfo: {
-    searchInfoHistory: [],
-    searchInfoHot: []
-  },
-  updatedTime: 0
+export function searchHot (state = {
+  isFetching: false,
+  value: []
 }, action) {
   return Object.assign({}, state, (function () {
     switch (action.type) {
-      case type.REQUEST_SEARCH_INFO:
+      case TYPE.SEARCH_HOT.REQUEST:
         return {
-          isFetchingSearchInfo: true
+          isFetching: true
         }
-      case type.RECEIVE_SEARCH_INFO:
+      case TYPE.SEARCH_HOT.SUCCESS:
         return {
-          isFetchingSearchInfo: false,
-          searchInfo: action.searchInfo,
-          updatedTime: action.receivedAt
+          isFetching: false,
+          value: action.payload.hotRecords.map(search => search.searchWord)
         }
-      case type.FAILED_SEARCH_INFO:
+      case type.SEARCH_HOT.FAILURE:
         return {
-          isFetchingSearchInfo: false,
-          errorInfo: action.error
+          isFetching: false
+        }
+      default:
+        return {}
+    }
+  })())
+}
+
+export function searchHistory (state = {
+  isFetching: false,
+  value: []
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.SEARCH_HISTORY.REQUEST:
+        return {
+          isFetching: true
+        }
+      case TYPE.SEARCH_HISTORY.SUCCESS:
+        return {
+          isFetching: false,
+          value: action.payload.searchHistory
+        }
+      case type.SEARCH_HOT.FAILURE:
+        return {
+          isFetching: false
         }
       default:
         return {}
@@ -196,7 +217,6 @@ export function globalAlarm (state = {
       }
     }
     if (action.error) {
-      console.log(action)
       let alarmValue
       if (action.payload.name === 'InternalError') {
         alarmValue = '操作失败: 未知错误！'
@@ -210,46 +230,86 @@ export function globalAlarm (state = {
   })())
 }
 
-export function shopsByTypes (state = {
-  shopsByTypes: {},
-  // {
-  //   shopType: '',
-  //   shopsBySubtypes: [
-  //     {
-  //       subtype: '',
-  //       shopList: []
-  //     }
-  //   ]
-  // }
-  isLoadingShopsByType: false,
-  currentShopType: ''
+// export function shopsByTypes (state = {
+//   shopsByTypes: {},
+//   // {
+//   //   shopType: '',
+//   //   shopsBySubtypes: [
+//   //     {
+//   //       subtype: '',
+//   //       shopList: []
+//   //     }
+//   //   ]
+//   // }
+//   isLoadingShopsByType: false,
+//   currentShopType: ''
+// }, action) {
+//   return Object.assign({}, state, (function () {
+//     switch (action.type) {
+//       // case type.REQUEST_SHOPS_BY_TYPES:
+//       //   return {
+//       //     isLoadingShopsByType: true
+//       //   }
+//       // case type.RECEIVE_SHOPS_BY_TYPES:
+//       //   if (needLoadType) {
+//       //     return {
+//       //       isLoadingShopsByType: false
+//       //     }
+//       //   }
+//       case type.REQUEST_SHOPS_BY_TYPES:
+//         return {
+//           isLoadingShopsByType: true
+//         }
+//       case type.RECEIVE_SHOPS_BY_TYPES:
+//         return {
+//           isLoadingShopsByType: false,
+//           shopsByTypes: Object.assign({}, state.shopsByTypes, {
+//             [action.shopType]: action.shopsBySubtypes
+//           })
+//         }
+//       case type.SET_CURRENT_SHOP_TYPE:
+//         return {
+//           currentShopType: action.shopType
+//         }
+//       default:
+//         return {}
+//     }
+//   })())
+// }
+
+export function shopDetail (state = {
+  isFetching: false,
+  value: {
+    commentNumber: 0,
+    hitNumber: 0,
+    id: '',
+    imgs: [],
+    isAuth: false,
+    isExisted: true,
+    openTime: '...',
+    shopAddress: '...',
+    shopName: '...',
+    shopScore: 7.8,
+    shopTags: [],
+    shopType: '...',
+    status: true,
+    subtype: '...'
+  }
 }, action) {
   return Object.assign({}, state, (function () {
     switch (action.type) {
-      // case type.REQUEST_SHOPS_BY_TYPES:
-      //   return {
-      //     isLoadingShopsByType: true
-      //   }
-      // case type.RECEIVE_SHOPS_BY_TYPES:
-      //   if (needLoadType) {
-      //     return {
-      //       isLoadingShopsByType: false
-      //     }
-      //   }
-      case type.REQUEST_SHOPS_BY_TYPES:
+      case TYPE.SHOP_DETAIL.REQUEST:
         return {
-          isLoadingShopsByType: true
+          isFetching: true
         }
-      case type.RECEIVE_SHOPS_BY_TYPES:
+      case TYPE.SHOP_DETAIL.SUCCESS:
         return {
-          isLoadingShopsByType: false,
-          shopsByTypes: Object.assign({}, state.shopsByTypes, {
-            [action.shopType]: action.shopsBySubtypes
-          })
+          isFetching: false,
+          value: action.payload
         }
-      case type.SET_CURRENT_SHOP_TYPE:
+      case TYPE.SHOP_DETAIL.FAILURE:
         return {
-          currentShopType: action.shopType
+          isFetching: false
         }
       default:
         return {}
@@ -257,31 +317,24 @@ export function shopsByTypes (state = {
   })())
 }
 
-export function shopDetail (state = {
-  isLoadingShopDetail: false,
-  currentShop: '',
-  shops: {
-    // shopName as key
-    // with comments
-  }
+export function shopComments (state = {
+  isFetching: false,
+  value: []
 }, action) {
   return Object.assign({}, state, (function () {
     switch (action.type) {
-      case type.RECEIVE_SHOP_COMMENT:
+      case TYPE.SHOP_COMMENTS.REQUEST:
         return {
-          isLoadingShopDetail: false,
-          shops: {
-            ...state.shops,
-            [action.shop.shopName]: action.shop
-          }
+          isFetching: true
         }
-      case type.REQUEST_SHOP_COMMENT:
+      case TYPE.SHOP_COMMENTS.SUCCESS:
         return {
-          isLoadingShopDetail: true
+          isFetching: false,
+          value: action.payload.commentList
         }
-      case type.SET_CURRENT_SHOP:
+      case TYPE.SHOP_COMMENTS.FAILURE:
         return {
-          currentShop: action.shopName
+          isFetching: false
         }
       default:
         return {}

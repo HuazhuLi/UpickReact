@@ -31,8 +31,8 @@ app.use((req, res, next) => {
 })
 
 const proxyTable = {
-  '/api': 'http://dev.upick.hustonline.net/',
-  '/shop_images': 'http://dev.upick.hustonline.net/'
+  '/api': 'http://upick.hustonline.net/',
+  '/shop_images': 'http://upick.hustonline.net/'
 }
 
 Object.keys(proxyTable).forEach(function (context) {

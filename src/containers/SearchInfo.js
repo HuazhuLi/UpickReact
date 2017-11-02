@@ -7,13 +7,16 @@ import { push } from 'react-router-redux'
 
 import SearchInfoComponent from '../components/SearchInfo'
 
-import { fetchSearchInfo } from '../actions'
+import { fetchSearchHot, fetchSearchHistory } from '../actions'
 
 class SearchInfo extends Component {
-  static mapStateToProps = function ({ searchInfo }) {
+  static mapStateToProps = function ({ searchHot, searchHistory }) {
     return {
-      searchInfo: searchInfo.searchInfo,
-      isFetchingSearchInfo: searchInfo.isFetchingSearchInfo
+      searchInfo: {
+        searchInfoHot: searchHot.value,
+        searchInfoHistory: searchHistory.value
+      },
+      isFetchingSearchInfo: searchHot.isFetching || searchHistory.isFetching
     }
   }
   render () {
@@ -29,7 +32,8 @@ class SearchInfo extends Component {
   }
   componentWillMount () {
     const { dispatch } = this.props
-    dispatch(fetchSearchInfo())
+    dispatch(fetchSearchHot())
+    dispatch(fetchSearchHistory())
   }
 }
 

@@ -76,5 +76,7 @@ if (module.hot) {
 }
 
 window.throwGlobalAlarm = () => store.dispatch(actions.throwGlobalAlarm(5000, undefined, Date.now()))
+window.actions = actions
+window.store = store
 
 export default reRender

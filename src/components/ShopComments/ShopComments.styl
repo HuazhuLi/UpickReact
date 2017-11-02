@@ -39,11 +39,12 @@
   padding 0
   margin 0
   overflow auto
-  li {
+  > li {
     position relative
     padding 1rem 1.5rem
     display flex
     border-bottom 1px solid #f2f2f2
+    overflow hidden
     > img {
       width 3rem
       height @width
@@ -57,6 +58,7 @@
 }
 .comment-value {
   flex-grow 1
+  overflow hidden
   .name {
     display flex
     height 2rem
@@ -64,6 +66,7 @@
     .name-date {
       flex-grow 1
       height 2rem
+      overflow hidden
       span {
         display block
       }
@@ -73,9 +76,13 @@
       }
       .span-name {
         font-size 0.75rem
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
       }
     }
     .like, .dislike {
+      flex-shrink 0
       width 3rem
       font-size 0.7rem
       color #717171
@@ -117,4 +124,23 @@
       font-size 0.7rem
     }
   }
+}
+
+.comment-img-ul {
+  padding 0.3rem 0
+  > li {
+    display inline
+    > img {
+      width 3.6rem
+      height 3.6rem
+      margin-right 0.3rem
+      border-radius 0.3rem
+    }
+  }
+}
+
+.no-comment {
+  font-size: 0.7rem
+  text-align: center
+  color #535353
 }

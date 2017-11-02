@@ -25,7 +25,7 @@ const ShopComments = (props) => (
       className={style['comments-list']}
       onScroll={(event) => {
         const thisUL = event.target
-        if (thisUL.scrollTop >= thisUL.firstChild.clientHeight * 3) {
+        if (thisUL.scrollTop >= thisUL.firstChild.clientHeight * 4) {
           props.onScrollIsGreat()
         } else {
           props.onScrollIsNotGreat()
@@ -35,7 +35,7 @@ const ShopComments = (props) => (
       {
         props.comments.map((comment, i) => (
           <li key={i}>
-            <img src={comment.headimgurl}/>
+            <img src={comment.authorHeadimg}/>
             <div className={style['comment-value']}>
               <div className={style['name']}>
                 <div className={style['name-date']}>
@@ -52,12 +52,24 @@ const ShopComments = (props) => (
                 </div>
               </div>
               <div className={style['text']}>
-                <p>{comment.text}</p>
-                <ul/>
+                <p>{comment.commentText}</p>
+                <ul className={style['comment-img-ul']}>
+                  {
+                    (comment.imgs || []).map(img => (
+                      <li key={img.msrc}>
+                        <img src={img.msrc}/>
+                      </li>
+                    ))
+                  }
+                </ul>
               </div>
             </div>
           </li>
         ))
+      }
+      {
+        (!props.comments || props.comments.length <= 0) &&
+        <p className={style['no-comment']}>尴尬，暂时还没有人评论...</p>
       }
     </ul>
   </div>

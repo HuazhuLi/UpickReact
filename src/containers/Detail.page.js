@@ -5,18 +5,20 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { fetchShopDetail, setCurrentShop } from '../actions'
+import { fetchShopDetail, fetchShopComments } from '../actions'
 
 import ShopDetail from '../components/ShopDetail'
 import ShopComments from '../components/ShopComments'
 import Loading from '../components/Loading'
 
 class Detail extends Component {
-  static mapStateToProps = ({ shopDetail }) => ({
-    shop: shopDetail.shops[shopDetail.currentShop],
-    comments: shopDetail.comments,
-    isLoadingShopDetail: shopDetail.isLoadingShopDetail
-  })
+  static mapStateToProps = ({ shopDetail, shopComments }) => {
+    return {
+      shop: shopDetail.value,
+      comments: shopComments.value,
+      isFetching: shopDetail.isFetching || shopComments.isFetching
+    }
+  }
   constructor (props) {
     super(props)
     this.state = {
@@ -26,9 +28,9 @@ class Detail extends Component {
     }
   }
   render () {
-    if ((!this.props.isLoadingShopDetail && this.props.shop)) {
+    if ((!this.props.isFetching && this.props.shop)) {
       /**
-       * 只有不在加载且 currentShop 所指向的店铺存在
+       * 只有不在加载且店铺存在
        */
       return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -38,7 +40,7 @@ class Detail extends Component {
             style={{ flexShrink: 0 }}
           />
           <ShopComments
-            comments={this.props.shop.comments.sort(this.state.sortFunc)}
+            comments={this.props.comments.sort(this.state.sortFunc)}
             activeIndex={this.state.currentPosition}
             style={{ flexGrow: 1 }}
             onNewClick={() =>
@@ -76,13 +78,15 @@ class Detail extends Component {
   componentWillMount () {
     const { dispatch } = this.props
     dispatch(fetchShopDetail(this.props.match.params.shopName))
-    dispatch(setCurrentShop(this.props.match.params.shopName))
+    dispatch(fetchShopComments(this.props.match.params.shopName))
+    // dispatch(setCurrentShop(this.props.match.params.shopName))
   }
   componentWillReceiveProps (nextProps) {
     if (this.props.location.pathname !== nextProps.location.pathname) {
       const { dispatch } = this.props
       dispatch(fetchShopDetail(nextProps.match.params.shopName))
-      dispatch(setCurrentShop(nextProps.match.params.shopName))
+      dispatch(fetchShopComments(nextProps.match.params.shopName))
+      // dispatch(setCurrentShop(nextProps.match.params.shopName))
     }
   }
 }
