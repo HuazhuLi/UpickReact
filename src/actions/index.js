@@ -3,7 +3,6 @@
  */
 import * as type from './consts'
 import axios from 'axios'
-import objectToCamel from '../plugins/camel'
 
 import { camelizeKeys } from 'humps'
 import { CALL_API } from 'redux-api-middleware'
@@ -95,7 +94,7 @@ export const fetchSearchInfo = () => async (dispatch, getState) => {
       const searchInfoHot = await axios.get(`${r}/shops/hot_records`)
         .then(res => res.status === 200 && res.data)
         .then(data => data.status === 200 && data.data)
-        .then(objectToCamel)
+        .then(camelizeKeys)
         .then(data => data.hotRecords)
         .then(searchHistory => searchHistory.map(s => s.searchWord))
         .catch((e) => {
@@ -104,7 +103,7 @@ export const fetchSearchInfo = () => async (dispatch, getState) => {
       const searchInfoHistory = await axios.get(`${r}/shops/search_history`)
         .then(res => res.status === 200 && res.data)
         .then(data => data.status === 200 && data.data)
-        .then(objectToCamel)
+        .then(camelizeKeys)
         .then(data => data.searchHistory)
         .then(wait(300))
         .catch((e) => {
@@ -209,7 +208,7 @@ export const setCurrentShopType = (shopType) => ({
 //     )
 //       .then(res => res.status === 200 && res.data)
 //       .then(data => data.status === 200 && data.data)
-//       .then(objectToCamel)
+//       .then(camelizeKeys)
 //       /**
 //        * 如果返回对象不包括下面两个属性，就会抛出错误
 //        */
@@ -266,7 +265,7 @@ export const fetchShopDetail = (shopName) => async (dispatch, getState) => {
       })
         .then(res => res.status === 200 && res.data)
         .then(data => data.status === 200 && data.data)
-        .then(objectToCamel)
+        .then(camelizeKeys)
         .catch((e) => {
           throw e
         })
@@ -276,7 +275,7 @@ export const fetchShopDetail = (shopName) => async (dispatch, getState) => {
       })
         .then(res => res.status === 200 && res.data)
         .then(data => data.status === 200 && data.data)
-        .then(objectToCamel)
+        .then(camelizeKeys)
         .catch((e) => {
           throw e
         })
