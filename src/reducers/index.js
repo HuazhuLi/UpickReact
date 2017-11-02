@@ -157,12 +157,8 @@ export function shops (state = {
 export function searchInfo (state = {
   isFetchingSearchInfo: false,
   searchInfo: {
-    searchInfoHistory: [
-
-    ],
-    searchInfoHot: [
-
-    ]
+    searchInfoHistory: [],
+    searchInfoHot: []
   },
   updatedTime: 0
 }, action) {

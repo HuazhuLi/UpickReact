@@ -40,7 +40,7 @@ ShopListItem.propTypes = {
       src: PropTypes.string
     })),
     shopName: PropTypes.string,
-    shopTags: PropTypes.arrayOf(PropTypes.string),
+    shopTags: PropTypes.arrayOf(PropTypes.object),
     shopScore: PropTypes.number
   }).isRequired,
   onShopClick: PropTypes.func.isRequired

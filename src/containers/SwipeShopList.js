@@ -29,7 +29,6 @@ class SwipeShopList extends Component {
     const { dispatch } = this.props
     const type = this.props.currentShopType
     const subtypes = (this.props.shopsByType[type] || {}).shopsBySubtypes || []
-    console.log(subtypes)
     if (this.props.isLoadingShopsByType) {
       return <Loading/>
     } else {
