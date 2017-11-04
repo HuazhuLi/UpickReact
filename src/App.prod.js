@@ -11,7 +11,7 @@ import {
   routerMiddleware
 } from 'react-router-redux'
 import createHistory from 'history/createHashHistory'
-import thunk from 'redux-thunk'
+import { apiMiddleware } from 'redux-api-middleware'
 
 import * as reducers from './reducers'
 
@@ -23,7 +23,7 @@ const store = createStore(
     ...reducers,
     router: routerReducer
   }),
-  applyMiddleware(thunk, reduxRouter)
+  applyMiddleware(reduxRouter, apiMiddleware)
 )
 
 const RootRoute = require('./routes').default

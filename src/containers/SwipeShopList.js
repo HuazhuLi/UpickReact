@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import Swiper from 'react-id-swiper'
 
-import 'swiper/dist/css/swiper.min.css'
-
 import ShopList from '../components/ShopList'
 import ShopListItem from '../components/ShopListItem'
 import ListTopBar from '../components/ListTopBar'

@@ -14,7 +14,6 @@ import {
 } from 'react-router-redux'
 import createHistory from 'history/createHashHistory'
 
-import thunk from 'redux-thunk'
 import { apiMiddleware } from 'redux-api-middleware'
 
 import { AppContainer } from 'react-hot-loader'
@@ -37,7 +36,7 @@ const store = createStore(
     ...reducers,
     router: routerReducer
   }),
-  composeWithDevTools(applyMiddleware(thunk, reduxRouter, apiMiddleware))
+  composeWithDevTools(applyMiddleware(reduxRouter, apiMiddleware))
 )
 
 const renderFullPage = () => {

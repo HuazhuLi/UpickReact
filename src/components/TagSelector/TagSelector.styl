@@ -1,0 +1,46 @@
+.all-tags-ul {
+    margin 0
+    list-style none
+    padding 0 0.8rem
+    h = 1.1
+    display flex
+    flex-direction row
+    flex-wrap wrap
+    justify-content space-between
+    font-size 0
+    .tag {
+      font-size 0.6rem
+      color #717171
+      display inline-block
+      height h rem
+      line-height h rem
+      border-radius (h / 2)rem
+      background-color #e8e8e8
+      padding 0 0.5rem
+      margin 0.3rem
+    }
+    .tag.active {
+      background-color #FFD273
+    }
+    .tag.last {
+      background-color transparent
+      color transparent
+      font-size 0
+      flex-grow 1
+    }
+}
+.scope {
+  height 3.4rem
+  overflow hidden
+}
+
+.scope-wrapper {
+  height 5rem
+}
+
+.tags {
+  padding 0 1.5rem
+  height 5rem
+  border-bottom: .2rem solid #f2f2f2;
+  background-color: #fff;
+}
