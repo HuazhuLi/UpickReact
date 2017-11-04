@@ -1,0 +1,78 @@
+.mark {
+  padding-top 0.8rem
+  background-color #FFF
+  h2 {
+    text-align center
+    margin 0
+    font-size 1rem
+    vertical-align bottom
+    span {
+      display inline-block
+      color #FFAC00
+    }
+    span:after {
+      margin-left 0.3rem
+      content '分'
+      font-size 0.7rem
+      color #717171
+    }
+  }
+}
+.mark-selector {
+  padding 0.7rem 1.5rem
+  display flex
+  flex-direction row
+  position relative
+  span {
+    color #717171
+    text-align center
+    width 1rem
+    height @width
+    line-height 1rem
+    font-size 0.8rem
+    flex-shrink 0
+    vertical-align middle
+  }
+  .start {
+    margin-right 0.3rem
+  }
+  .end {
+    margin-left 0.3rem
+  }
+  w = 0.7
+  .line {
+    flex-grow 1
+    height 0.1rem
+    padding 0.45rem (w / 2)rem
+    background-color #FFAC00
+    background-clip content-box
+    position relative
+    .block {
+      left 0
+      width w rem
+      top ((1 - w) / 2)rem
+      height w rem
+      border-radius (w / 2)rem
+      position absolute
+      transform-origin 50% 50%
+      background-color #FFFFFF
+      background-image linear-gradient(180deg, #FFcb56, #FFAC00)
+    }
+  }
+  w = 0.28
+  i.dot {
+    position absolute
+    display inline-block
+    width w rem
+    height w rem
+    border-radius (w / 2)rem
+    background-color #FFAc00
+    top ((1 - w)/2)rem
+  }
+  i.dot:first-child {
+    left (w / 2)rem
+  }
+  i.dot:last-child {
+    right (w / 2)rem
+  }
+}
