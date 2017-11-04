@@ -8,16 +8,17 @@ import Loading from '../Loading'
 
 import style from './ShopList.styl'
 
-const ShopList = (props) => (
-  props.inLoadingStatus === true
-    ? <Loading/>
-    : <ul
+const ShopList = props =>
+  props.inLoadingStatus === true ? (
+    <Loading />
+  ) : (
+    <ul
       className={`${style['shop-list']} ${props.children.length > 0 ? style['show-bottom-tip'] : ''} ${props.className}`}
       style={props.style}
     >
       {props.children}
     </ul>
-)
+  )
 ShopList.propTypes = {
   inLoadingStatus: PropTypes.bool
 }

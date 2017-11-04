@@ -13,9 +13,7 @@ import style from './EntryHeader.styl'
  * @param props
  * @constructor
  */
-const Slogan = (props) => (
-  <h3 className={style['slogan']}>{props.slogan}</h3>
-)
+const Slogan = props => <h3 className={style['slogan']}>{props.slogan}</h3>
 Slogan.propTypes = {
   slogan: PropTypes.string.isRequired
 }
@@ -25,13 +23,16 @@ Slogan.propTypes = {
  * @param props
  * @constructor
  */
-const EntryHeader = (props) => {
+const EntryHeader = props => {
   return (
-    <header style={props.style}>
-      <img src={waveImg} className={style['wave-image']}/>
-      <h1 className={style['h1-with-Logo']}/>
-      <a className={style['search-button']} onClick={() => props.onSearchButtonClick()}/>
-      <Slogan slogan={props.slogan}/>
+    <header style={props.style} className={style['header-wrapper']}>
+      <img src={waveImg} className={style['wave-image']} />
+      <h1 className={style['h1-with-Logo']} />
+      <a
+        className={style['search-button']}
+        onClick={() => props.onSearchButtonClick()}
+      />
+      <Slogan slogan={props.slogan} />
     </header>
   )
 }

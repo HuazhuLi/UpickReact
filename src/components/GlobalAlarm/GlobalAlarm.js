@@ -11,6 +11,7 @@ class GlobalAlarm extends Component {
     return {
       color: globalAlarm.alarmColor,
       value: globalAlarm.alarmValue,
+      thrownTime: globalAlarm.time,
       show: globalAlarm.show
     }
   }
@@ -33,8 +34,10 @@ class GlobalAlarm extends Component {
     )
   }
   componentWillReceiveProps (nextProps) {
-    if (nextProps.color !== this.state.color ||
-        nextProps.value !== this.state.value
+    if (
+      nextProps.color /***/!== this.state.color /***/ ||
+      nextProps.value /***/!== this.state.value /***/ ||
+      nextProps.thrownTime !== this.state.thrownTime
     ) {
       clearTimeout(this.timer)
       this.setState({

@@ -16,8 +16,10 @@ class Entry extends Component {
   static mapStateToProps ({ index }) {
     return {
       value: index.value,
-      // 主页之前已经有加载，这里略去
-      // isFetching: index.isFetching
+      // 主页之前已经有加载，这里略去加载动画，
+      // 但是这个属性仍然有用，例如在加载过程
+      // 中设置禁止操作
+      isFetching: index.isFetching,
       error: index.error
     }
   }
@@ -48,13 +50,13 @@ class Entry extends Component {
         <Classify
           types={indexData.shopTypes}
           style={{ flexGrow: '1' }}
-          onTypesClick={(type) => dispatch(push(`/list/${type}`))}
+          onTypesClick={(type) => !this.props.isFetching && dispatch(push(`/list/${type}`))}
         />
         <Splitter content={'热门商家'} style={{ flexShrink: '0' }}/>
         <PopularShops
           shops={indexData.popularShops}
           style={{ flexShrink: '0' }}
-          onShopClick={(shop) => dispatch(push(`/detail/${shop.shopName}`))}
+          onShopClick={(shop) => !this.props.isFetching && dispatch(push(`/detail/${shop.shopName}`))}
         />
       </div>
     )

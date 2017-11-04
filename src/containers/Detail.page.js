@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { fetchShopDetail, fetchShopComments } from '../actions'
+import { fetchShopDetail, fetchShopComments, commentComment } from '../actions'
 
 import ShopDetail from '../components/ShopDetail'
 import ShopComments from '../components/ShopComments'
@@ -16,6 +16,7 @@ class Detail extends Component {
     return {
       shop: shopDetail.value,
       comments: shopComments.value,
+      NO_USED_TIME: shopComments.time,
       isFetching: shopDetail.isFetching || shopComments.isFetching
     }
   }
@@ -54,6 +55,9 @@ class Detail extends Component {
                 currentPosition: 1
               })
             }
+            /**
+             * 滚动的很大
+             */
             onScrollIsGreat={() => {
               if (this.state.collapsed === false) {
                 this.setState({
@@ -61,6 +65,9 @@ class Detail extends Component {
                 })
               }
             }}
+            /**
+             * 滚动的不是很大
+             */
             onScrollIsNotGreat={() => {
               if (this.state.collapsed === true) {
                 this.setState({
@@ -68,10 +75,15 @@ class Detail extends Component {
                 })
               }
             }}
+
+            onCommentClick={(comment, operation) => {
+              this.props.dispatch(commentComment(comment.authorOpenid, comment.issueTime, operation))
+            }}
           />
         </div>
       )
     } else {
+      // fullpage loading
       return <Loading/>
     }
   }

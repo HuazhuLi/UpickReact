@@ -208,7 +208,8 @@ export function searchHistory (state = {
 
 export function globalAlarm (state = {
   alarmValue: 'Error!',
-  alarmColor: '#FF305D'
+  alarmColor: '#FF305D',
+  time: Date.now()
 }, action) {
   return Object.assign({}, state, (function () {
     if (action.type === type.SHOW_GLOBAL_ALARM) {
@@ -219,63 +220,17 @@ export function globalAlarm (state = {
     if (action.error) {
       let alarmValue
       if (action.payload.name === 'InternalError') {
-        alarmValue = '操作失败: 未知错误！'
+        alarmValue = `${action.type.split(' @ ')[0]}失败: 未知错误！`
       } else {
-        alarmValue = '操作失败: 网络错误！'
+        alarmValue = `${action.type.split(' @ ')[0]}失败: 网络错误！`
       }
       return {
-        alarmValue
+        alarmValue,
+        time: Date.now()
       }
     }
   })())
 }
-
-// export function shopsByTypes (state = {
-//   shopsByTypes: {},
-//   // {
-//   //   shopType: '',
-//   //   shopsBySubtypes: [
-//   //     {
-//   //       subtype: '',
-//   //       shopList: []
-//   //     }
-//   //   ]
-//   // }
-//   isLoadingShopsByType: false,
-//   currentShopType: ''
-// }, action) {
-//   return Object.assign({}, state, (function () {
-//     switch (action.type) {
-//       // case type.REQUEST_SHOPS_BY_TYPES:
-//       //   return {
-//       //     isLoadingShopsByType: true
-//       //   }
-//       // case type.RECEIVE_SHOPS_BY_TYPES:
-//       //   if (needLoadType) {
-//       //     return {
-//       //       isLoadingShopsByType: false
-//       //     }
-//       //   }
-//       case type.REQUEST_SHOPS_BY_TYPES:
-//         return {
-//           isLoadingShopsByType: true
-//         }
-//       case type.RECEIVE_SHOPS_BY_TYPES:
-//         return {
-//           isLoadingShopsByType: false,
-//           shopsByTypes: Object.assign({}, state.shopsByTypes, {
-//             [action.shopType]: action.shopsBySubtypes
-//           })
-//         }
-//       case type.SET_CURRENT_SHOP_TYPE:
-//         return {
-//           currentShopType: action.shopType
-//         }
-//       default:
-//         return {}
-//     }
-//   })())
-// }
 
 export function shopDetail (state = {
   isFetching: false,
@@ -319,6 +274,12 @@ export function shopDetail (state = {
 
 export function shopComments (state = {
   isFetching: false,
+  /**
+   * 这个time是为了改变数据，引起重新渲染，导
+   * 致组件的componentWillReceiveProps得
+   * 已被执行。
+   */
+  time: Date.now(),
   value: []
 }, action) {
   return Object.assign({}, state, (function () {
@@ -336,8 +297,27 @@ export function shopComments (state = {
         return {
           isFetching: false
         }
+      // case TYPE.COMMENT_COMMENT.REQUEST:
+      //   return {
+      //     isCommenting: true
+      //   }
+      // case TYPE.COMMENT_COMMENT.SUCCESS:
+      //   return {
+      //     isCommenting: false
+      //   }
+      // case TYPE.COMMENT_COMMENT.FAILURE:
+      //   return {
+      //     isCommenting: false
+      //   }
       default:
-        return {}
+        if (action.error) {
+          console.log(action)
+          return {
+            time: Date.now()
+          }
+        } else {
+          return {}
+        }
     }
   })())
 }

@@ -5,7 +5,11 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
+import {
+  ConnectedRouter,
+  routerReducer,
+  routerMiddleware
+} from 'react-router-redux'
 import createHistory from 'history/createHashHistory'
 import thunk from 'redux-thunk'
 
@@ -27,9 +31,9 @@ const GlobalAlarm = require('./components/GlobalAlarm').default
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div style={{height: '100%'}}>
-        <RootRoute/>
-        <GlobalAlarm/>
+      <div style={{ height: '100%' }}>
+        <RootRoute />
+        <GlobalAlarm />
       </div>
     </ConnectedRouter>
   </Provider>,

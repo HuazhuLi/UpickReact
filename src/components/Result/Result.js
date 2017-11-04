@@ -9,13 +9,12 @@ import style from './Result.styl'
 import bad from '../../assets/bad.png'
 import success from '../../assets/success.png'
 
-const Result = (props) => (
+const Result = props => (
   <div className={style['result-container']}>
     <div className={style['image']}>
-      {
-        props.status === 0
-          ? <img src={bad} alt="失败！"/>
-          : <img src={success} alt="成功！"/>
+      {props.status === 0
+        ? <img src={bad} alt="失败！" />
+        : <img src={success} alt="成功！" />
       }
     </div>
     <div className={style['text']}>
@@ -23,8 +22,14 @@ const Result = (props) => (
       {props.text && <p>{props.text}</p>}
     </div>
     <div className={style['buttons']}>
-      {props.buttonTitle && <button onClick={() => props.onButtonClick()}>{props.buttonTitle}</button>}
-      {props.linkTitle && <a onClick={() => props.onLinkClick()}>{props.linkTitle}</a>}
+      {props.buttonTitle && (
+        <button onClick={() => props.onButtonClick()}>
+          {props.buttonTitle}
+        </button>
+      )}
+      {props.linkTitle && (
+        <a onClick={() => props.onLinkClick()}>{props.linkTitle}</a>
+      )}
     </div>
   </div>
 )

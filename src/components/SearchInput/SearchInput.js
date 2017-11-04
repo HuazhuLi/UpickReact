@@ -23,13 +23,15 @@ export default class SearchInput extends Component {
           className={style['search-input']}
           placeholder="请输入搜索内容"
           value={this.state.keyword}
-          onChange={(e) => this.setState({ keyword: e.target.value })}
+          onChange={e => this.setState({ keyword: e.target.value })}
         />
         <button
           disabled={this.state.keyword === ''}
           className={style['search-button']}
           onClick={() => this.props.onSubmit(this.state.keyword)}
-        >搜索</button>
+        >
+          搜索
+        </button>
       </div>
     )
   }

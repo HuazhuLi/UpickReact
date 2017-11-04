@@ -34,7 +34,7 @@ function payload (action, state, res) {
     .json()
     .then(camelizeKeys)
     // eslint-disable no-sequences
-    .then(({ data }) => { console.log(data); return data })
+    .then(({ data }) => data)
 }
 /**
   * 获取主页内容
@@ -107,9 +107,6 @@ export const fetchSearchResult = keyword => ({
     endpoint: `${r}/shops/list?key_word=${keyword}&request_type=3`,
     method: GET,
     credentials: 'include',
-    headers: {
-      'content-type': 'application/json'
-    },
     types: [
       TYPE.SEARCH.REQUEST,
       {
@@ -153,9 +150,6 @@ export const fetchShopsByType = (type) => ({
     method: GET,
     // 带上/接受 cookie
     credentials: 'include',
-    headers: {
-      'content-type': 'application/json'
-    },
     types: [
       TYPE.SHOPS_BY_TYPES.REQUEST,
       {
@@ -181,132 +175,6 @@ export const setCurrentShopType = (shopType) => ({
   type: TYPE.SHOPS_BY_TYPES.CHANGE_TYPE,
   shopType
 })
-
-// /**
-//  * @returns {thunk}
-//  * @param type {string}
-//  */
-// export const fetchShopsByType = (type) => async (dispatch, getState) => {
-//   dispatch(requestShopsByTypes(type))
-//   // http://debug.upick.hustonline.net/api/v2/shops/list
-//   const { shopsByTypes } = getState()
-//   if (type in shopsByTypes.shopsByTypes) {
-//     dispatch(receiveShopsByTypes(type, shopsByTypes.shopsByTypes[type]))
-//     return
-//   }
-//   try {
-//     /**
-//      * @type shopList {Array.<object>}
-//      * @type subtypes {Array.<string>}
-//      */
-//     const { shopList, subtypes } = await axios.post(
-//       `${r}/shops/list`,
-//       {
-//         'shop_type': type,
-//         'request_type': 1
-//       },
-//       {
-//         headers: {
-//           'content-type': 'application/json'
-//         }
-//       }
-//     )
-//       .then(res => res.status === 200 && res.data)
-//       .then(data => data.status === 200 && data.data)
-//       .then(camelizeKeys)
-//       /**
-//        * 如果返回对象不包括下面两个属性，就会抛出错误
-//        */
-//       .then(({ shopList, subtypes }) => ({ shopList, subtypes }))
-//       .then(wait(300))
-//       .catch((e) => {
-//         throw e
-//       })
-//     const shopsBySubtypes = subtypes.reduce((ret, subtype) => (
-//       {
-//         ...ret,
-//         [subtype]: shopList.filter((shop) => shop.subtype === subtype)
-//       }
-//     ), {})
-//     dispatch(receiveShopsByTypes(type, shopsBySubtypes))
-//   } catch (e) {
-//     console.log(e)
-//     dispatch(throwGlobalAlarm(2500, undefined, '获取店铺列表失败！'))
-//   }
-// }
-//
-// export const requestShopsByTypes = (shopType) => ({
-//   type: type.REQUEST_SHOPS_BY_TYPES,
-//   shopType
-// })
-//
-// export const receiveShopsByTypes = (shopType, shopsBySubtypes) => ({
-//   type: type.RECEIVE_SHOPS_BY_TYPES,
-//   shopsBySubtypes,
-//   shopType
-// })
-//
-// export const setCurrentShopType = (shopType) => ({
-//   type: type.SET_CURRENT_SHOP_TYPE,
-//   shopType
-// })
-
-/**
- * 店铺详情不从店铺列表中直接获取的原因：
- * 1.防止以后店铺列表缩小内容范围，导致数据不足
- * 2.懒
-//  */
-// export const fetchShopDetail = (shopName) => async (dispatch, getState) => {
-//   dispatch(requestShopDetail(shopName))
-//   const { shopDetail } = getState()
-//   if (shopName in shopDetail.shops) {
-//     dispatch(receiveShopDetail(shopName, shopDetail.shops[shopName]))
-//   } else {
-//     try {
-//       const shop = await axios.get(`${r}/shops`, {
-//         params: {
-//           'shop_name': shopName
-//         }
-//       })
-//         .then(res => res.status === 200 && res.data)
-//         .then(data => data.status === 200 && data.data)
-//         .then(camelizeKeys)
-//         .catch((e) => {
-//           throw e
-//         })
-//       const { commentList } = await axios.post(`${r}/shops/comments`, {
-//         'request_type': 2,
-//         'shop_name': shopName
-//       })
-//         .then(res => res.status === 200 && res.data)
-//         .then(data => data.status === 200 && data.data)
-//         .then(camelizeKeys)
-//         .catch((e) => {
-//           throw e
-//         })
-//       shop.comments = commentList
-//       dispatch(receiveShopDetail(shopName, shop))
-//     } catch (e) {
-//       dispatch(throwGlobalAlarm(2500, undefined, '获取店铺信息失败！'))
-//     }
-//   }
-// }
-
-// export const requestShopDetail = (shopName) => ({
-//   type: TYPE.REQUEST_SHOP_COMMENT,
-//   shopName
-// })
-
-// export const receiveShopDetail = (shopName, shop) => ({
-//   type: TYPE.RECEIVE_SHOP_COMMENT,
-//   shopName,
-//   shop
-// })
-
-// export const setCurrentShop = (shopName) => ({
-//   type: TYPE.SET_CURRENT_SHOP,
-//   shopName
-// })
 
 export const fetchShopDetail = shopName => ({
   [CALL_API]: {
@@ -338,6 +206,33 @@ export const fetchShopComments = shopName => ({
         payload
       },
       TYPE.SHOP_COMMENTS.FAILURE
+    ]
+  }
+})
+
+export const commentComment = (authorOpenid, issueTime, operation = 0) => ({
+  [CALL_API]: {
+    endpoint: `${r}/comments`,
+    method: POST,
+    // 带上/接受 cookie
+    credentials: 'include',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      'request_type': 2, // 请求类型，0代表删除评论，1代表添加评论，2代表点赞或者踩评论
+      'author_openid': authorOpenid, // 评论者微信号openid
+      'issue_time': issueTime, // 评论发布时间
+      'like_status': operation === 0 ? false : operation === 1, // 是否点赞
+      'dislike_status': operation === 0 ? false : operation === -1 // 是否踩
+    }),
+    types: [
+      TYPE.COMMENT_COMMENT.REQUEST,
+      {
+        type: TYPE.COMMENT_COMMENT.SUCCESS,
+        payload
+      },
+      TYPE.COMMENT_COMMENT.FAILURE
     ]
   }
 })

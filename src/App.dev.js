@@ -7,7 +7,11 @@ import { render, unmountComponentAtNode } from 'react-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { Provider } from 'react-redux'
-import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
+import {
+  ConnectedRouter,
+  routerReducer,
+  routerMiddleware
+} from 'react-router-redux'
 import createHistory from 'history/createHashHistory'
 
 import thunk from 'redux-thunk'
@@ -33,9 +37,7 @@ const store = createStore(
     ...reducers,
     router: routerReducer
   }),
-  composeWithDevTools(
-    applyMiddleware(thunk, reduxRouter, apiMiddleware)
-  )
+  composeWithDevTools(applyMiddleware(thunk, reduxRouter, apiMiddleware))
 )
 
 const renderFullPage = () => {
@@ -44,9 +46,9 @@ const renderFullPage = () => {
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <div style={{height: '100%'}}>
-          <RootRoute/>
-          <GlobalAlarm/>
+        <div style={{ height: '100%' }}>
+          <RootRoute />
+          <GlobalAlarm />
         </div>
       </ConnectedRouter>
     </Provider>
@@ -55,27 +57,23 @@ const renderFullPage = () => {
 
 const reRender = () => {
   unmountComponentAtNode(root)
-  render(
-    <AppContainer>
-      {
-        renderFullPage()
-      }
-    </AppContainer>,
-    root
-  )
+  render(<AppContainer>{renderFullPage()}</AppContainer>, root)
 }
 
 if (module.hot) {
   module.hot.accept('./reducers', () => {
-    store.replaceReducer(combineReducers({
-      ...require('./reducers'),
-      router: routerReducer
-    }))
+    store.replaceReducer(
+      combineReducers({
+        ...require('./reducers'),
+        router: routerReducer
+      })
+    )
     reRender()
   })
 }
 
-window.throwGlobalAlarm = () => store.dispatch(actions.throwGlobalAlarm(5000, undefined, Date.now()))
+window.throwGlobalAlarm = () =>
+  store.dispatch(actions.throwGlobalAlarm(5000, undefined, Date.now()))
 window.actions = actions
 window.store = store
 
