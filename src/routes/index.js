@@ -8,6 +8,7 @@ const Entry = require('../containers/Entry.page').default
 const Search = require('../containers/Search.page').default
 const List = require('../containers/List.page').default
 const Detail = require('../containers/Detail.page').default
+const Comment = require('../containers/Comment.page').default
 const SearchInfo = require('../containers/SearchInfo').default
 const SearchResult = require('../containers/SearchResult').default
 
@@ -66,6 +67,11 @@ const routesConfig = [
     path: '/detail/:shopName',
     exact: false,
     component: Detail
+  },
+  {
+    path: '/comment/:shopName',
+    exact: false,
+    component: Comment
   }
 ]
 

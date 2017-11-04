@@ -9,6 +9,7 @@ import { fetchShopDetail, fetchShopComments, commentComment } from '../actions'
 
 import ShopDetail from '../components/ShopDetail'
 import ShopComments from '../components/ShopComments'
+import FloatButton from '../components/FloatButton'
 import Loading from '../components/Loading'
 
 class Detail extends Component {
@@ -80,6 +81,7 @@ class Detail extends Component {
               this.props.dispatch(commentComment(comment.authorOpenid, comment.issueTime, operation))
             }}
           />
+          <FloatButton onClick={() => this.props.dispatch(push(`/comment/${this.props.shop.shopName}`))}/>
         </div>
       )
     } else {
