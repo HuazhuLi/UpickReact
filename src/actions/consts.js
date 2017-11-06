@@ -17,7 +17,8 @@ export const INDEX_DATA = {
 export const SEARCH = {
   REQUEST: '搜索 @ REQUEST',
   SUCCESS: '搜索 @ SUCCESS',
-  FAILURE: '搜索 @ FAILURE'
+  FAILURE: '搜索 @ FAILURE',
+  CHANGE_KEYWORD: '搜索 @ CGANGE_KEYWORD'
 }
 
 export const SEARCH_HOT = {
@@ -59,4 +60,10 @@ export const COMMENT_COMMENT = {
 
 export const COMMENT = {
 
+}
+
+export const SEARCH_HINT = {
+  REQUEST: '获取搜索提示 @ REQUEST',
+  SUCCESS: '获取搜索提示 @ SUCCESS',
+  FAILURE: '获取搜索提示 @ FAILURE'
 }

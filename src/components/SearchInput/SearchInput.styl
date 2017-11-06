@@ -33,3 +33,41 @@
     }
   }
 }
+
+.hints-list {
+  height 100px
+  width 100%
+  position absolute
+  > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    > li {
+      display: flex;
+      flex-direction: row;
+      padding: .7rem 1.5rem;
+      border-bottom: 1px solid #f5f5f5;
+      > .search-icon {
+        display: inline-block;
+        width: .7rem;
+        height: .7rem;
+        vertical-align: top;
+        flex-shrink: 0;
+        margin: 0 .5rem 0 0;
+      }
+      > .shop-name, > .shop-mark {
+        display: inline-block;
+        height: .7rem;
+        font-size: .7rem;
+        line-height: .7rem;
+        vertical-align: top;
+        flex-grow: 1;
+      }
+      > .shop-mark {
+        flex-shrink: 0;
+        flex-grow: 0;
+        color: #ffac00;
+      }
+    }
+  }
+}

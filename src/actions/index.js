@@ -236,3 +236,25 @@ export const commentComment = (authorOpenid, issueTime, operation = 0) => ({
     ]
   }
 })
+
+export const fetchSearchHint = prefix => ({
+  [CALL_API]: {
+    endpoint: `${r}/shops/list?request_type=4&prefix=${prefix}`,
+    method: GET,
+    credentials: 'include',
+    types: [
+      TYPE.SEARCH_HINT.REQUEST,
+      {
+        type: TYPE.SEARCH_HINT.SUCCESS
+      },
+      TYPE.SEARCH_HINT
+    ]
+  }
+})
+
+export const changeSearchText = keyword => ({
+  type: TYPE.SEARCH.CHANGE_KEYWORD,
+  payload: {
+    keyword
+  }
+})

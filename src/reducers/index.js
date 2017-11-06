@@ -74,6 +74,7 @@ export function shops (state = {
   },
   currentShopType: '',
   keyword: '',
+  keywordToShow: '',
   search: {
     '': {
       id: '',
@@ -297,18 +298,6 @@ export function shopComments (state = {
         return {
           isFetching: false
         }
-      // case TYPE.COMMENT_COMMENT.REQUEST:
-      //   return {
-      //     isCommenting: true
-      //   }
-      // case TYPE.COMMENT_COMMENT.SUCCESS:
-      //   return {
-      //     isCommenting: false
-      //   }
-      // case TYPE.COMMENT_COMMENT.FAILURE:
-      //   return {
-      //     isCommenting: false
-      //   }
       default:
         if (action.error) {
           console.log(action)
@@ -317,6 +306,19 @@ export function shopComments (state = {
           }
         } else {
           return {}
+        }
+    }
+  })())
+}
+
+export function uiState (state = {
+  keyword: ''
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.SEARCH.CHANGE_KEYWORD:
+        return {
+          keyword: action.payload.keyword
         }
     }
   })())

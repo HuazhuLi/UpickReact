@@ -7,7 +7,7 @@ import { push } from 'react-router-redux'
 
 import SearchInfoComponent from '../components/SearchInfo'
 
-import { fetchSearchHot, fetchSearchHistory } from '../actions'
+import { fetchSearchHot, fetchSearchHistory, changeSearchText } from '../actions'
 
 class SearchInfo extends Component {
   static mapStateToProps = function ({ searchHot, searchHistory }) {
@@ -25,12 +25,16 @@ class SearchInfo extends Component {
       <SearchInfoComponent
         {...this.props.searchInfo}
         inLoadingStatus={this.props.isFetchingSearchInfo}
-        onKeywordClick={(keyword) => dispatch(push(`/search/${keyword}`))}
+        onKeywordClick={keyword => {
+          dispatch(push(`/search/${keyword}`))
+          dispatch(changeSearchText(keyword))
+        }}
         style={{ flexGrow: '1', overflow: 'auto' }}
       />
     )
   }
   componentWillMount () {
+    console.log('remount')
     const { dispatch } = this.props
     dispatch(fetchSearchHot())
     dispatch(fetchSearchHistory())
