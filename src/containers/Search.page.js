@@ -4,9 +4,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { Switch, Route } from 'react-router-dom'
+
 import { changeSearchText } from '../actions'
 
 import SearchInput from '../components/SearchInput/index'
+
+const SearchInfo = require('../containers/SearchInfo').default
+const SearchResult = require('../containers/SearchResult').default
 
 class Search extends Component {
   /**
@@ -38,21 +43,20 @@ class Search extends Component {
         {
           this.props.children
         }
+        {/* <Switch>
+          {[<Route component={SearchResult} path={'/search/:keyword'} key={1}/>,
+            <Route component={SearchInfo} path={'/search'} exact key={2}/>]}
+        </Switch> */}
       </div>
     )
   }
-
-  // shouldComponentUpdate (nextProps, nextState) {
-  //   if (nextProps.internalKeyword === this.props.internalKeyword) {
-  //     return false
-  //   }
-  // }
 
   componentWillReceiveProps (nextProps) {
     // if (this.props.keyword !== nextProps.keyword) {
     //   this.setState({ keyword: nextProps.keyword })
     // }
-    console.log(nextProps)
+    // console.log(nextProps)
+    console.log(nextProps.children === this.props.children)
   }
 }
 

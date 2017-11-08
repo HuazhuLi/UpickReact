@@ -13,23 +13,26 @@ const SearchInfo = require('../containers/SearchInfo').default
 const SearchResult = require('../containers/SearchResult').default
 
 // 要求路由上的parent要能接受其children
-const MyRoute = (props) => (
+const MyRoute = props => (
   <Route
     path={props.path}
     exact={props.exact}
-    component={(localProps) =>
-      <props.component {...localProps}>
-        {
-          props.children &&
-          <Switch>
-            {
-              props.children.map(child =>
-                <MyRoute key={child.path} {...child} path={localProps.match.path + child.path}/>
-              )
-            }
-          </Switch>
-        }
-      </props.component>
+    component={props.children
+      // 有children的时候，要封一层传入children
+      ? localProps =>
+        <props.component {...localProps}>
+          {
+            <Switch>
+              {
+                props.children.map(child =>
+                  <MyRoute key={child.path} {...child} path={localProps.match.path + child.path}/>
+                )
+              }
+            </Switch>
+          }
+        </props.component>
+      // 无children, 直接传该组件
+      : props.component
     }
   />
 )
@@ -80,5 +83,14 @@ export default () => (
     {
       routesConfig.map(route => <MyRoute key={route.path} {...route}/>)
     }
+    {/* <Route path={'/'} exact component={Entry}/>
+    <Route path={'/search'} component={props =>
+      <Search>
+        <Route path={'/search/:keyword'} component={SearchResult}/>
+        <Route path={'/search'} exact component={SearchInfo}/>
+      </Search>
+    }/>
+    <Route path={'/list/:type'} exact component={List}/>
+    <Route path={'/list/:type'} exact component={Entry}/> */}
   </Switch>
 )
