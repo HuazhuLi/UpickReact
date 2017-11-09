@@ -37,7 +37,8 @@ export const SHOPS_BY_TYPES = {
   REQUEST: '获取店铺列表 @ REQUEST',
   SUCCESS: '获取店铺列表 @ SUCCESS',
   FAILURE: '获取店铺列表 @ FAILURE',
-  CHANGE_TYPE: '获取店铺列表 @ CHANGE_TYPE'
+  CHANGE_TYPE: '获取店铺列表 @ CHANGE_TYPE',
+  CHANGE_SUBTYPE: '获取店铺列表 @ CHANGE_SUBTYPE'
 }
 
 export const SHOP_DETAIL = {

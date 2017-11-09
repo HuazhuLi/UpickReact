@@ -3,8 +3,10 @@
  */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push, replace } from 'react-router-redux'
 import Swiper from 'react-id-swiper'
+
+import { setCurrentShopSubType } from '../actions'
 
 import ShopList from '../components/ShopList'
 import ShopListItem from '../components/ShopListItem'
@@ -22,14 +24,17 @@ class SwipeShopList extends Component {
   swiper = null
 
   state = {
-    listHeight: 0,
-    currentSubtypeIndex: 0
+    listHeight: 0
   }
 
   render () {
     const { dispatch } = this.props
     const type = this.props.currentShopType
     const subtypes = (this.props.shopsByType[type] || {}).shopsBySubtypes || []
+    const subtype = this.props.currentShopSubType
+    // if (subtype === '') {
+    //   dispatch(setCurrentShopSubType(subtypes[0]))
+    // }
     if (this.props.isLoadingShopsByType) {
       return <Loading/>
     } else {
@@ -38,7 +43,7 @@ class SwipeShopList extends Component {
           <ListTopBar
             subtypes={subtypes}
             style={{ flexShrink: '0' }}
-            activeIndex={this.state.currentSubtypeIndex}
+            activeIndex={(subtypes.findIndex(value => subtype === value) + 1 || 1) - 1}
             onSubtypeClick={index => {
               // this.setState({
               //   currentSubtypeIndex: index
@@ -62,9 +67,12 @@ class SwipeShopList extends Component {
             }}
           >
             <Swiper
-              ref={reactSwiper => { this.swiper = reactSwiper && reactSwiper.swiper }}
+              ref={reactSwiper => {
+                this.swiper = reactSwiper && reactSwiper.swiper
+                this.swiper && this.swiper.slideTo(subtypes.findIndex(value => subtype === value))
+              }}
               on={{
-                slideChange: () => this.setState({ currentSubtypeIndex: this.swiper.activeIndex })
+                slideChange: () => dispatch(setCurrentShopSubType(subtypes[this.swiper.activeIndex]))
               }}
               lazy={true}
             >
@@ -78,7 +86,14 @@ class SwipeShopList extends Component {
                       this.props.shopsBySubtype[subtype].shopList
                         .map(id => this.props.shops[id])
                         .map((shop, i) => (
-                          <ShopListItem shop={shop} key={i} onShopClick={() => dispatch(push(`/detail/${shop.shopName}`))}/>
+                          <ShopListItem
+                            shop={shop}
+                            key={i}
+                            onShopClick={() => {
+                              dispatch(replace(`/list/${type}/${subtype}`))
+                              dispatch(push(`/detail/${shop.shopName}`))
+                            }}
+                          />
                         ))
                     }
                   </ShopList>

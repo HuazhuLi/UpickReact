@@ -73,6 +73,8 @@ export function shops (state = {
 
   },
   currentShopType: '',
+  currentShopSubType: '',
+  currentShopListScrollTop: 0,
   keyword: '',
   keywordToShow: '',
   search: {
@@ -121,10 +123,17 @@ export function shops (state = {
         return {
           isLoadingShopsByType: true
         }
+
       case TYPE.SHOPS_BY_TYPES.CHANGE_TYPE:
         return {
           currentShopType: action.shopType
         }
+
+      case TYPE.SHOPS_BY_TYPES.CHANGE_SUBTYPE:
+        return {
+          currentShopSubType: action.shopSubType
+        }
+
       case TYPE.SHOPS_BY_TYPES.SUCCESS:
         const normalizedTypesData = normalize([
           {
@@ -151,10 +160,12 @@ export function shops (state = {
           },
           isLoadingShopsByType: false
         }
+
       case TYPE.SHOPS_BY_TYPES.FAILURE:
         return {
           isLoadingShopsByType: false
         }
+
       default:
         return {}
     }

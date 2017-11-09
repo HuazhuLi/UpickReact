@@ -25,7 +25,7 @@ const ShopListItem = props => (
       <div className={style['right-content']}>
         <h2 className={style['title-score']}>
           <span className={style['title']}>
-            {props.shop.shopName}
+            {props.shop.shopName.replace('（', '(').replace('）', ')')}
             {
               props.shop.isAuth &&
               <span className={style['auth']}></span>

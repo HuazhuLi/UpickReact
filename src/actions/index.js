@@ -176,6 +176,11 @@ export const setCurrentShopType = (shopType) => ({
   shopType
 })
 
+export const setCurrentShopSubType = (shopSubType) => ({
+  type: TYPE.SHOPS_BY_TYPES.CHANGE_SUBTYPE,
+  shopSubType
+})
+
 export const fetchShopDetail = shopName => ({
   [CALL_API]: {
     endpoint: `${r}/shops?shop_name=${shopName}`,

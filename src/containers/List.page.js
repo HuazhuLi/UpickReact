@@ -6,19 +6,23 @@ import { connect } from 'react-redux'
 
 import SwipeShopList from './SwipeShopList'
 
-import { setCurrentShopType, fetchShopsByType } from '../actions/index'
+import { setCurrentShopType, fetchShopsByType, setCurrentShopSubType } from '../actions/index'
 
 class List extends Component {
   componentWillMount () {
-    const { type } = this.props.match.params
+    const { type, subtype } = this.props.match.params
     this.props.dispatch(fetchShopsByType(type))
     this.props.dispatch(setCurrentShopType(type))
+    subtype && this.props.dispatch(setCurrentShopSubType(subtype))
   }
   componentWillReceiveProps (nextProps) {
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      const { type } = nextProps.match.params
+    const { type, subtype } = nextProps.match.params
+    if (nextProps.match.params.type !== this.props.match.params.type) {
       this.props.dispatch(fetchShopsByType(type))
       this.props.dispatch(setCurrentShopType(type))
+    }
+    if (nextProps.match.params.subtype !== this.props.match.params.subtype) {
+      subtype && this.props.dispatch(setCurrentShopSubType(subtype))
     }
   }
   render () {
