@@ -38,9 +38,6 @@ class SearchInfo extends Component {
     dispatch(fetchSearchHot())
     dispatch(fetchSearchHistory())
   }
-  componentWillUnmount () {
-    console.log('searchInfo unmount!')
-  }
 }
 
 export default connect(SearchInfo.mapStateToProps)(SearchInfo)

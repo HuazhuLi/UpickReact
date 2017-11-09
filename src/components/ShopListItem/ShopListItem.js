@@ -24,11 +24,20 @@ const ShopListItem = props => (
       </div>
       <div className={style['right-content']}>
         <h2 className={style['title-score']}>
-          <span className={style['title']}>{props.shop.shopName}</span>
+          <span className={style['title']}>
+            {props.shop.shopName}
+            {
+              props.shop.isAuth &&
+              <span className={style['auth']}></span>
+            }
+          </span>
           <span className={style['score']}>
             {(props.shop.shopScore === 10
               ? 10
-              : props.shop.shopScore.toFixed(1)) + '分'}
+              : props.shop.shopScore === 0
+                ? '暂无评'
+                : props.shop.shopScore.toFixed(1)) + '分'
+            }
           </span>
         </h2>
         <ul className={style['tags-list']}>

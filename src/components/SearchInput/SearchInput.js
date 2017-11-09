@@ -62,7 +62,7 @@ export default class SearchInput extends Component {
                 <li key={hint.id} onClick={() => this.props.onChange(hint.shopName) || this.props.onSubmit(hint.shopName)}>
                   <img className={style['search-icon']} src={searchIcon}/>
                   <span className={style['shop-name']}>{hint.shopName}</span>
-                  <span className={style['shop-mark']}>{Number(hint.shopScore).toFixed(1)}</span>
+                  <span className={style['shop-mark']}>{hint.shopScore > 0 ? Number(hint.shopScore).toFixed(1) : '暂无评分'}</span>
                 </li>
               )
             }

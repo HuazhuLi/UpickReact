@@ -41,7 +41,20 @@
         .score {
           flex-shrink 0
           color: #ff841b;
-          width: 2.4rem;
+          // width: 3.4rem;
+        }
+        .auth {
+          position relative
+          &:before {
+            content ''
+            position absolute
+            background-image url('../../assets/iknow.png')
+            background-size auto 100%
+            background-repeat no-repeat
+            background-position-x center
+            height 100%
+            width 5em
+          }
         }
       }
       .tags-list {
