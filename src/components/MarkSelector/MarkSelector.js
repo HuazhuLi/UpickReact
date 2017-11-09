@@ -9,11 +9,12 @@ import style from './MarkSelector.styl'
 export default class extends React.Component {
   static propTypes = {
     /** 是的，这个mark是不可控的 */
-    onMarkUpdate: PropTypes.func.isRequired
+    onMarkUpdate: PropTypes.func.isRequired,
+    defaultMark: PropTypes.number.isRequired
   }
 
   state = {
-    currentMark: 0,
+    currentMark: this.props.defaultMark,
     offset: 0
   }
 
@@ -80,8 +81,11 @@ export default class extends React.Component {
               if (ele instanceof HTMLElement) {
                 // setTimeout(() => {
                 this.rem = ele.clientHeight
-                this.lineWidth = ele.clientWidth - ele.querySelector('div').clientWidth
-                this.offset = this.lineWidth * 0.7
+                if (!this.lineWidth) {
+                  this.lineWidth = ele.clientWidth - ele.querySelector('div').clientWidth
+                  this.setState({ offset: this.lineWidth * 0.7 })
+                }
+                //  = this.lineWidth * 0.7
                 // }, 0)
               }
             }}

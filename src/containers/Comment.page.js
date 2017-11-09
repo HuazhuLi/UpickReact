@@ -17,7 +17,7 @@ class Comment extends React.Component {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <CommentTopBar shopName={shopName} onSubmit={() => console.log('aa')}/>
-        <MarkSelector onMarkUpdate={mark => console.log(mark)}/>
+        <MarkSelector defaultMark={7} onMarkUpdate={mark => console.log(mark)}/>
         <TagSelector tags={new Array(30).fill('不好吃').map((value, i) => value + i)}/>
       </div>
     )
