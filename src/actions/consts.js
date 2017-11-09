@@ -68,3 +68,9 @@ export const SEARCH_HINT = {
   SUCCESS: '获取搜索提示 @ SUCCESS',
   FAILURE: '获取搜索提示 @ FAILURE'
 }
+
+export const COMMENT_TAGS = {
+  REQUEST: '评论标签 @ REQUEST',
+  SUCCESS: '评论标签 @ SUCCESS',
+  FAILURE: '评论标签 @ FAILURE'
+}

@@ -264,3 +264,19 @@ export const changeSearchText = keyword => ({
     keyword
   }
 })
+
+export const fetchTags = shopName => ({
+  [CALL_API]: {
+    endpoint: `${r}/shops/tags?shop_name=${shopName}`,
+    method: GET,
+    credentials: 'include',
+    types: [
+      TYPE.COMMENT_TAGS.REQUEST,
+      {
+        type: TYPE.COMMENT_TAGS.SUCCESS,
+        payload
+      },
+      TYPE.COMMENT_TAGS.FAILURE
+    ]
+  }
+})

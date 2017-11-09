@@ -359,3 +359,28 @@ export function shopComments (state = {
 //     }
 //   })())
 // }
+
+export function commentTags (state = {
+  isFetching: false,
+  value: []
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.COMMENT_TAGS.REQUEST:
+        return {
+          isFetching: true
+        }
+      case TYPE.COMMENT_TAGS.SUCCESS:
+        return {
+          isFetching: false,
+          value: action.payload.shopTags
+        }
+      case TYPE.COMMENT_TAGS.FAILURE:
+        return {
+          isFetching: false
+        }
+      default:
+        return {}
+    }
+  })())
+}
