@@ -112,6 +112,10 @@ export function shops (state = {
           keyword: '',
           isSearching: false
         }
+      case TYPE.SEARCH.CHANGE_KEYWORD:
+        return {
+          keywordToShow: action.payload.keyword
+        }
       // 下面是店铺by type 相关
       case TYPE.SHOPS_BY_TYPES.REQUEST:
         return {
@@ -197,7 +201,32 @@ export function searchHistory (state = {
           isFetching: false,
           value: action.payload.searchHistory
         }
-      case type.SEARCH_HOT.FAILURE:
+      case type.SEARCH_HISTORY.FAILURE:
+        return {
+          isFetching: false
+        }
+      default:
+        return {}
+    }
+  })())
+}
+
+export function searchHint (state = {
+  isFetching: false,
+  value: []
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.SEARCH_HINT.REQUEST:
+        return {
+          isFetching: true
+        }
+      case TYPE.SEARCH_HINT.SUCCESS:
+        return {
+          isFetching: false,
+          value: action.payload.shopList
+        }
+      case type.SEARCH_HINT.FAILURE:
         return {
           isFetching: false
         }
@@ -300,7 +329,6 @@ export function shopComments (state = {
         }
       default:
         if (action.error) {
-          console.log(action)
           return {
             time: Date.now()
           }
@@ -311,15 +339,12 @@ export function shopComments (state = {
   })())
 }
 
-export function uiState (state = {
-  keyword: ''
-}, action) {
-  return Object.assign({}, state, (function () {
-    switch (action.type) {
-      case TYPE.SEARCH.CHANGE_KEYWORD:
-        return {
-          keyword: action.payload.keyword
-        }
-    }
-  })())
-}
+// export function uiState (state = {
+//   keyword: ''
+// }, action) {
+//   return Object.assign({}, state, (function () {
+//     switch (action.type) {
+
+//     }
+//   })())
+// }

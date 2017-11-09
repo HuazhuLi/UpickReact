@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { Switch, Route } from 'react-router-dom'
 
-import { changeSearchText } from '../actions'
+import { changeSearchText, fetchSearchHint } from '../actions'
 
 import SearchInput from '../components/SearchInput/index'
 
@@ -17,11 +17,14 @@ class Search extends Component {
   /**
    * 搜索容器的render函数
    */
-  static mapStateToProps ({ uiState, shops }) {
+  static mapStateToProps ({ shops, searchHint }) {
     return {
-      keyword: uiState.keyword
+      keyword: shops.keywordToShow,
+      hint: searchHint.value
     }
   }
+
+  timeoutHandler = 0
 
   render () {
     const { dispatch } = this.props
@@ -36,27 +39,21 @@ class Search extends Component {
             flexShrink: '0'
           }}
           keyword={this.props.keyword}
-          onChange={e => dispatch(changeSearchText(e.target.value))}
+          onChange={value => {
+            dispatch(changeSearchText(value))
+            clearTimeout(this.timeoutHandler)
+            if (value) {
+              this.timeoutHandler = setTimeout(() => dispatch(fetchSearchHint(value)), 500)
+            }
+          }}
           onSubmit={value => dispatch(push(`/search/${value}`))}
-          hints={[]}
+          hint={this.props.hint || []}
         />
         {
           this.props.children
         }
-        {/* <Switch>
-          {[<Route component={SearchResult} path={'/search/:keyword'} key={1}/>,
-            <Route component={SearchInfo} path={'/search'} exact key={2}/>]}
-        </Switch> */}
       </div>
     )
-  }
-
-  componentWillReceiveProps (nextProps) {
-    // if (this.props.keyword !== nextProps.keyword) {
-    //   this.setState({ keyword: nextProps.keyword })
-    // }
-    // console.log(nextProps)
-    console.log(nextProps.children === this.props.children)
   }
 }
 

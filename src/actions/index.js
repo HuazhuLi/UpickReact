@@ -245,9 +245,10 @@ export const fetchSearchHint = prefix => ({
     types: [
       TYPE.SEARCH_HINT.REQUEST,
       {
-        type: TYPE.SEARCH_HINT.SUCCESS
+        type: TYPE.SEARCH_HINT.SUCCESS,
+        payload
       },
-      TYPE.SEARCH_HINT
+      TYPE.SEARCH_HINT.FAILURE
     ]
   }
 })

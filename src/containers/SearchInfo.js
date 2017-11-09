@@ -34,10 +34,12 @@ class SearchInfo extends Component {
     )
   }
   componentWillMount () {
-    console.log('remount')
     const { dispatch } = this.props
     dispatch(fetchSearchHot())
     dispatch(fetchSearchHistory())
+  }
+  componentWillUnmount () {
+    console.log('searchInfo unmount!')
   }
 }
 
