@@ -7,8 +7,11 @@ import { push } from 'react-router-redux'
 import { Switch, Route } from 'react-router-dom'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { changeSearchText, fetchSearchHint } from '../actions'
 =======
+=======
+>>>>>>> 7bc6495e7cf631c51c8aace1ca034929deeeca66
 import { changeSearchText } from '../actions'
 >>>>>>> 7bc6495e7cf631c51c8aace1ca034929deeeca66
 
@@ -56,6 +59,10 @@ class Search extends Component {
         {
           this.props.children
         }
+        {/* <Switch>
+          {[<Route component={SearchResult} path={'/search/:keyword'} key={1}/>,
+            <Route component={SearchInfo} path={'/search'} exact key={2}/>]}
+        </Switch> */}
       </div>
     )
   }
