@@ -6,7 +6,11 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { Switch, Route } from 'react-router-dom'
 
+<<<<<<< HEAD
 import { changeSearchText, fetchSearchHint } from '../actions'
+=======
+import { changeSearchText } from '../actions'
+>>>>>>> 7bc6495e7cf631c51c8aace1ca034929deeeca66
 
 import SearchInput from '../components/SearchInput/index'
 
