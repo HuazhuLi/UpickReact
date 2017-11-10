@@ -26,13 +26,13 @@ const hotMiddleware = require('webpack-hot-middleware')(compiler, {
 })
 
 app.use((req, res, next) => {
-  req.headers.host = 'dev.upick.hustonline.net'
+  req.headers.host = 'weixin.bingyan-tech.hustonline.net'
   next()
 })
 
 const proxyTable = {
-  '/api': 'http://upick.hustonline.net/',
-  '/shop_images': 'http://upick.hustonline.net/'
+  '/api': 'https://weixin.bingyan-tech.hustonline.net/upick/',
+  '/shop_images': 'https://weixin.bingyan-tech.hustonline.net/upick/'
 }
 
 Object.keys(proxyTable).forEach(function (context) {

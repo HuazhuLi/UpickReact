@@ -6,7 +6,8 @@ import style from './TagSelector.styl'
 
 export default class TagSelector extends React.Component {
   static propTypes = {
-    tags: PropTypes.arrayOf(PropTypes.string).isRequired
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onTagsChange: PropTypes.func.isRequired
   }
 
   state = {
@@ -20,13 +21,17 @@ export default class TagSelector extends React.Component {
   tagClickHandler = tag => {
     const index = this.state.selectedTags.findIndex(localTag => localTag === tag)
     if (index < 0) {
+      // selectedTags数组中没有这个tag，直接插入
       this.setState({
         selectedTags: [...this.state.selectedTags, tag]
-      })
+      }, () => this.props.onTagsChange(this.state.selectedTags))
     } else {
+      // 有，去掉
       const tempSelectedTags = [...this.state.selectedTags]
       tempSelectedTags.splice(index, 1)
-      this.setState({ selectedTags: tempSelectedTags })
+      this.setState({
+        selectedTags: tempSelectedTags
+      }, () => this.props.onTagsChange(this.state.selectedTags))
     }
   }
 

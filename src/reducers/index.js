@@ -1,7 +1,7 @@
 /**
  * Created by faraway on 17-8-9.
  */
-import * as type from '../actions/consts'
+import * as TYPE from '../actions/consts'
 import { normalize, schema as Schema } from 'normalizr'
 
 const shopSchema = new Schema.Entity('shops')
@@ -19,8 +19,6 @@ const shopsBySubtypeSchema = new Schema.Entity('shopsBySubtype', {
 const shopsByTypesSchema = [new Schema.Entity('shopsByType', {
   shopsBySubtypes: [ shopsBySubtypeSchema ]
 })]
-
-const TYPE = type
 
 export function index (state = {
   value: {
@@ -187,7 +185,7 @@ export function searchHot (state = {
           isFetching: false,
           value: action.payload.hotRecords.map(search => search.searchWord)
         }
-      case type.SEARCH_HOT.FAILURE:
+      case TYPE.SEARCH_HOT.FAILURE:
         return {
           isFetching: false
         }
@@ -212,7 +210,7 @@ export function searchHistory (state = {
           isFetching: false,
           value: action.payload.searchHistory
         }
-      case type.SEARCH_HISTORY.FAILURE:
+      case TYPE.SEARCH_HISTORY.FAILURE:
         return {
           isFetching: false
         }
@@ -237,7 +235,7 @@ export function searchHint (state = {
           isFetching: false,
           value: action.payload.shopList
         }
-      case type.SEARCH_HINT.FAILURE:
+      case TYPE.SEARCH_HINT.FAILURE:
         return {
           isFetching: false
         }
@@ -250,12 +248,14 @@ export function searchHint (state = {
 export function globalAlarm (state = {
   alarmValue: 'Error!',
   alarmColor: '#FF305D',
+  alarmTime: 3000,
   time: Date.now()
 }, action) {
   return Object.assign({}, state, (function () {
-    if (action.type === type.SHOW_GLOBAL_ALARM) {
+    if (action.type === TYPE.GLOBAL_ALARM.SHOW) {
       return {
-        ...action.payload
+        ...action.payload,
+        time: Date.now()
       }
     }
     if (action.error) {
@@ -263,10 +263,16 @@ export function globalAlarm (state = {
       if (action.payload.name === 'InternalError') {
         alarmValue = `${action.type.split(' @ ')[0]}失败: 未知错误！`
       } else {
-        alarmValue = `${action.type.split(' @ ')[0]}失败: 网络错误！`
+        if (action.payload.response && action.payload.response.error) {
+          alarmValue = action.payload.response.error
+        } else {
+          alarmValue = `${action.type.split(' @ ')[0]}失败: 网络错误！`
+        }
       }
       return {
         alarmValue,
+        alarmColor: '#FF305D',
+        alarmTime: 3000,
         time: Date.now()
       }
     }
@@ -381,6 +387,66 @@ export function commentTags (state = {
         }
       default:
         return {}
+    }
+  })())
+}
+
+export function uploadedImages (state = {
+  fetchingCount: 0,
+  value: {},
+  error: null
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.UPLOAD_IMAGE.REQUEST:
+        return {
+          fetchingCount: state.fetchingCount + 1,
+          error: null
+        }
+      case TYPE.UPLOAD_IMAGE.SUCCESS:
+        return {
+          fetchingCount: state.fetchingCount - 1,
+          value: {
+            ...state.value,
+            [action.payload.id]: {
+              src: action.payload.url,
+              msrc: action.payload.simgUrl,
+              width: action.payload.width,
+              height: action.payload.height
+            }
+          },
+          error: null
+        }
+      case TYPE.UPLOAD_IMAGE.FAILURE:
+        return {
+          fetchingCount: state.fetchingCount - 1,
+          error: action.error
+        }
+    }
+  })())
+}
+
+export function comment (state = {
+  isCommenting: false,
+  error: null
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.COMMENT.REQUEST:
+        return {
+          isCommenting: true,
+          error: null
+        }
+      case TYPE.COMMENT.SUCCESS:
+        return {
+          isCommenting: false,
+          error: null
+        }
+      case TYPE.COMMENT.FAILURE:
+        return {
+          isCommenting: false,
+          error: action.error
+        }
     }
   })())
 }

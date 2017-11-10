@@ -60,7 +60,9 @@ export const COMMENT_COMMENT = {
 }
 
 export const COMMENT = {
-
+  REQUEST: '发表评价 @ REQUEST',
+  SUCCESS: '发表评价 @ SUCCESS',
+  FAILURE: '发表评价 @ FAILURE'
 }
 
 export const SEARCH_HINT = {
@@ -70,7 +72,17 @@ export const SEARCH_HINT = {
 }
 
 export const COMMENT_TAGS = {
-  REQUEST: '评论标签 @ REQUEST',
-  SUCCESS: '评论标签 @ SUCCESS',
-  FAILURE: '评论标签 @ FAILURE'
+  REQUEST: '获取评论标签 @ REQUEST',
+  SUCCESS: '获取评论标签 @ SUCCESS',
+  FAILURE: '获取评论标签 @ FAILURE'
+}
+
+export const UPLOAD_IMAGE = {
+  REQUEST: '上传图片 @ REQUEST',
+  SUCCESS: '上传图片 @ SUCCESS',
+  FAILURE: '上传图片 @ FAILURE'
+}
+
+export const GLOBAL_ALARM = {
+  SHOW: '显示全局警告'
 }

@@ -24,7 +24,6 @@ function wait (timeToWait) {
  * @param {object} state
  * @param {object} res
  */
-
 function payload (action, state, res) {
   if (res.status !== 200) {
     // dispatch(throwGlobalAlarm(5000, undefined, 'API Error!'))
@@ -136,11 +135,12 @@ export const fetchSearchResult = keyword => ({
  * @param {string} alarmColor
  * @param {string} alarmValue
  */
-export const throwGlobalAlarm = (alarmColor, alarmValue) => ({
-  type: TYPE.SHOW_GLOBAL_ALARM,
+export const throwGlobalAlarm = (alarmValue, alarmColor = '#FF305D', alarmTime = 3000) => ({
+  type: TYPE.GLOBAL_ALARM.SHOW,
   payload: {
     alarmValue,
-    alarmColor
+    alarmColor,
+    alarmTime
   }
 })
 
@@ -277,6 +277,83 @@ export const fetchTags = shopName => ({
         payload
       },
       TYPE.COMMENT_TAGS.FAILURE
+    ]
+  }
+})
+// {
+//   "request_type": Number, // 请求类型，0代表删除评论，1代表添加评论，2代表点赞或者踩评论
+//   "shop_name": String, // 店铺名称
+//   "shop_score": Number, // 用户打分
+//   "comment_text": String, // 评论文字
+//   "shop_tags" : Array [String], // 店铺标签名称
+//   "imgs": [
+//       {
+//           "src": String, // 评论图片名称(相对路径)
+//           "msrc": String, // 评论图片缩略图名称(相对路径)
+//           "width": Number// 原图宽度
+//           "height": Number, // 原图高度
+//       }
+//   ]
+// }
+export const comment = (shopName, shopScore, commentText, shopTags, images) => ({
+  [CALL_API]: {
+    endpoint: `${r}/comments`,
+    method: POST,
+    credentials: 'include',
+    body: JSON.stringify({
+      request_type: 1,
+      shop_name: shopName,
+      shop_score: shopScore,
+      comment_text: commentText,
+      shop_tags: shopTags,
+      imgs: images
+    }),
+    headers: {
+      'content-type': 'application/json'
+    },
+    types: [
+      TYPE.COMMENT.REQUEST,
+      {
+        type: TYPE.COMMENT.SUCCESS,
+        payload
+      },
+      TYPE.COMMENT.FAILURE
+    ]
+  }
+})
+
+export const uploadImage = image => ({
+  [CALL_API]: {
+    endpoint: `${r}/comments/images`,
+    method: POST,
+    credentials: 'include',
+    body: JSON.stringify({
+      type: 'upload',
+      image: image.imageBase64.split(',')[1]
+    }),
+    headers: {
+      'content-type': 'application/json'
+    },
+    types: [
+      TYPE.UPLOAD_IMAGE.REQUEST,
+      {
+        type: TYPE.UPLOAD_IMAGE.SUCCESS,
+        payload (action, state, res) {
+          if (res.status !== 200) {
+            // dispatch(throwGlobalAlarm(5000, undefined, 'API Error!'))
+            throw new Error('API Error!')
+          }
+          return res
+            .json()
+            .then(camelizeKeys)
+            // eslint-disable no-sequences
+            .then(({ data }) => ({
+              ...data,
+              id: image.id
+            }))
+        }
+      },
+      TYPE.UPLOAD_IMAGE.FAILURE
     ]
   }
 })

@@ -11,17 +11,17 @@ class GlobalAlarm extends Component {
     return {
       color: globalAlarm.alarmColor,
       value: globalAlarm.alarmValue,
-      thrownTime: globalAlarm.time,
-      show: globalAlarm.show
+      displayTime: globalAlarm.alarmTime,
+      thrownTime: globalAlarm.time
     }
   }
-  constructor (props) {
-    super(props)
-    this.timer = 0
-    this.state = {
-      show: false
-    }
+
+  timer = 0
+
+  state = {
+    show: false
   }
+
   render () {
     const props = this.props
     return (
@@ -35,15 +35,15 @@ class GlobalAlarm extends Component {
   }
   componentWillReceiveProps (nextProps) {
     if (
-      nextProps.color /***/!== this.state.color /***/ ||
-      nextProps.value /***/!== this.state.value /***/ ||
-      nextProps.thrownTime !== this.state.thrownTime
+      nextProps.color /***/!== this.props.color /***/ ||
+      nextProps.value /***/!== this.props.value /***/ ||
+      nextProps.thrownTime !== this.props.thrownTime
     ) {
       clearTimeout(this.timer)
       this.setState({
         show: true
       })
-      this.timer = setTimeout(() => this.setState({ show: false }), 5000)
+      this.timer = setTimeout(() => this.setState({ show: false }), nextProps.displayTime)
     }
   }
 }
