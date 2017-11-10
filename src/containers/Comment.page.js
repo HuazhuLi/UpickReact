@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push, replace, goBack } from 'react-router-redux'
 
 import {
   fetchShopDetail,
@@ -17,6 +17,7 @@ import CommentTopBar from '../components/CommentTopBar'
 import MarkSelector from '../components/MarkSelector'
 import TagSelector from '../components/TagSelector'
 import CommentEditor from '../components/CommentEditor'
+import Result from '../components/Result'
 
 class Comment extends React.Component {
   static mapStateToProps ({ commentTags, uploadedImages, comment }) {
@@ -38,7 +39,8 @@ class Comment extends React.Component {
     shopScore: 7,
     images: [],
     text: '',
-    selectedTags: []
+    selectedTags: [],
+    success: false
   }
 
   uploadResolve = () => {}
@@ -51,6 +53,19 @@ class Comment extends React.Component {
     const { dispatch } = this.props
     if (this.props.isFetching) {
       return <Loading />
+    }
+    if (this.state.success) {
+      return (
+        <Result
+          status={1}
+          title={'感谢提交新店'}
+          text={'我们会尽快审核！'}
+          buttonTitle={'返回搜索'}
+          linkTitle={'返回首页'}
+          onButtonClick={() => dispatch(goBack())}
+          onLinkClick={() => dispatch(replace(`/`))}
+        />
+      )
     }
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -76,6 +91,7 @@ class Comment extends React.Component {
               this.commentResolve = resolve
               this.commentReject = reject
             })
+            this.setState({ success: true })
           }}
         />
         <MarkSelector
