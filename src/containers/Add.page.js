@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { replace } from 'react-router-redux'
 
 import { fetchAllSubtypes, uploadImage, addShop, throwGlobalAlarm } from '../actions'
 
 import AddShop from '../components/AddShop'
 import Loading from '../components/Loading'
+import Result from '../components/Result'
 
 class Add extends React.Component {
   static mapStateToProps ({ subtypes, uploadedImages, addShop }) {
@@ -22,6 +23,10 @@ class Add extends React.Component {
     }
   }
 
+  state = {
+    success: false
+  }
+
   uploadResolve = () => {}
   addResolve = () => {}
   uploadReject = () => {}
@@ -31,6 +36,17 @@ class Add extends React.Component {
     const { dispatch } = this.props
     if (this.props.isFetchingSubtypes) {
       return <Loading />
+    }
+    if (this.state.success) {
+      return (
+        <Result
+          status={1}
+          title={'感谢提交新店'}
+          text={'我们会尽快审核！'}
+          buttonTitle={'返回搜索'}
+          onButtonClick={() => dispatch(replace('/search'))}
+        />
+      )
     }
     return (
       <AddShop
@@ -56,6 +72,9 @@ class Add extends React.Component {
           await new Promise((resolve, reject) => {
             this.addResolve = resolve
             this.addReject = reject
+          })
+          this.setState({
+            success: true
           })
         }}
       />
