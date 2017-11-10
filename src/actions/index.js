@@ -357,3 +357,44 @@ export const uploadImage = image => ({
     ]
   }
 })
+
+export const fetchAllSubtypes = shopName => ({
+  [CALL_API]: {
+    endpoint: `${r}/shops/types`,
+    method: GET,
+    credentials: 'include',
+    types: [
+      TYPE.ALL_TYPES.REQUEST,
+      {
+        type: TYPE.ALL_TYPES.SUCCESS,
+        payload
+      },
+      TYPE.ALL_TYPES.FAILURE
+    ]
+  }
+})
+
+export const addShop = (shopName, shopAddress, imgs) => ({
+  [CALL_API]: {
+    endpoint: `${r}/shops`,
+    method: POST,
+    credentials: 'include',
+    body: JSON.stringify({
+      request_type: 1,
+      shop_name: shopName,
+      shop_address: shopAddress,
+      imgs
+    }),
+    headers: {
+      'content-type': 'application/json'
+    },
+    types: [
+      TYPE.ADD_SHOP.REQUEST,
+      {
+        type: TYPE.ADD_SHOP.SUCCESS,
+        payload
+      },
+      TYPE.ADD_SHOP.FAILURE
+    ]
+  }
+})

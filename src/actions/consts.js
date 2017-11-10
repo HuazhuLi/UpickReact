@@ -86,3 +86,15 @@ export const UPLOAD_IMAGE = {
 export const GLOBAL_ALARM = {
   SHOW: '显示全局警告'
 }
+
+export const ALL_TYPES = {
+  REQUEST: '获取全部分类 @ REQUEST',
+  SUCCESS: '获取全部分类 @ SUCCESS',
+  FAILURE: '获取全部分类 @ FAILURE'
+}
+
+export const ADD_SHOP = {
+  REQUEST: '添加店铺 @ REQUEST',
+  SUCCESS: '添加店铺 @ SUCCESS',
+  FAILURE: '添加店铺 @ FAILURE'
+}

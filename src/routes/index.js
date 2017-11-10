@@ -11,6 +11,7 @@ const Detail = require('../containers/Detail.page').default
 const Comment = require('../containers/Comment.page').default
 const SearchInfo = require('../containers/SearchInfo').default
 const SearchResult = require('../containers/SearchResult').default
+const Add = require('../containers/Add.page').default
 
 // 要求路由上的parent要能接受其children
 const MyRoute = props => (
@@ -80,6 +81,11 @@ const routesConfig = [
     path: '/comment/:shopName',
     exact: false,
     component: Comment
+  },
+  {
+    path: '/add',
+    exact: true,
+    component: Add
   }
 ]
 

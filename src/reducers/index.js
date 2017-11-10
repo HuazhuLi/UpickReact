@@ -450,3 +450,57 @@ export function comment (state = {
     }
   })())
 }
+
+// 所有的subtypes
+export function subtypes (state = {
+  value: [],
+  isFetching: false,
+  error: null
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.ALL_TYPES.REQUEST:
+        return {
+          isFetching: true,
+          error: null
+        }
+      case TYPE.ALL_TYPES.SUCCESS:
+        return {
+          isFetching: false,
+          error: null,
+          // 得到的其实是 {type_name: "饮品", subtypes: ["咖啡馆", "奶茶饮品"]}
+          value: action.payload.reduce((allSubtypes, type) => [...allSubtypes, ...type.subtypes], [])
+        }
+      case TYPE.ALL_TYPES.FAILURE:
+        return {
+          isFetching: false,
+          error: action.error
+        }
+    }
+  })())
+}
+
+export function addShop (state = {
+  isAdding: false,
+  error: null
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.ADD_SHOP.REQUEST:
+        return {
+          isAdding: true,
+          error: null
+        }
+      case TYPE.ADD_SHOP.SUCCESS:
+        return {
+          isAdding: false,
+          error: null
+        }
+      case TYPE.ADD_SHOP.FAILURE:
+        return {
+          isAdding: false,
+          error: action.error
+        }
+    }
+  })())
+}

@@ -1,0 +1,200 @@
+.add {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  > .header-title {
+    position: relative;
+    flex-shrink: 0;
+    > .bg-wave {
+      width 100%
+    }
+    > .round-icon {
+      position: absolute;
+      bottom: 0;
+      width: 5rem;
+      height: 5rem;
+      left: 0;
+      right: 0;
+      margin: auto;
+      transform: scale(.9);
+    }
+  }
+}
+
+.form {
+  padding 2.0rem 1.5rem
+  display flex
+  flex-direction column
+  .inputs {
+    position relative
+    z-index 9
+    flex-grow 1
+    padding 0 1rem
+    > div {
+      margin-bottom 1.5rem
+      height 1.5rem
+      border-bottom 1px solid #bdbdbd
+      display flex
+      flex-direction row
+      padding-bottom 0.1rem
+      span {
+        width 2rem
+        flex-shrink 0
+        background-size auto 75%
+        background-repeat no-repeat
+        background-position 50% 50%
+      }
+      input {
+        border 0
+        padding 0
+        flex-grow 1
+        font-size 0.75rem
+        color #5e5e5e
+      }
+      input[disabled] {
+        background-color #ffffff
+      }
+    }
+    .input-name {
+      span {
+        background-image url('../../assets/icon_name.png')
+      }
+    }
+    .input-location {
+      span {
+        background-image url('../../assets/icon_position.png')
+      }
+    }
+    .input-type {
+      .pulldown-wrapper {
+        position relative
+        display flex
+        flex-direction row
+        flex-grow 1
+        div {
+          flex-grow 1
+          display flex
+          flex-direction row
+        }
+        p {
+          line-height 1.5rem
+          height 1.5rem
+          margin 0
+          border 0
+          padding 0
+          flex-grow 1
+          font-size 0.75rem
+          color #5e5e5e
+        }
+        // > div:focus + ul {
+        //   box-shadow 0 0.1rem 0.5rem 1px rgba(120,120,120,0.1)
+        //   height 10rem
+        //   transform scale(0.96)
+        //   opacity 1
+        // }
+        /*
+        height 0
+        transform translate3d(0,-0.2rem,0)
+        transition transform 0.4s
+        overflow hidden
+        */
+      }
+      span:first-child {
+        background-image url('../../assets/icon_tag.png')
+      }
+      span:last-child {
+        background-image url('../../assets/icon_pulldown.png')
+      }
+    }
+  }
+}
+
+
+.upload-file {
+  input {
+    display none
+  }
+  .touch-to-choose {
+    width 70%
+    margin auto
+    height 8rem
+    border 2px dashed #A8A8A8
+    border-radius 0.4rem
+    background-color #f1f1f1
+    transform scale((7/8))
+    div {
+      width 30%
+      left 35%
+      right 35%
+      position relative
+      top 30%
+      img {
+        margin 0 auto
+        display block
+        height 2.2rem
+      }
+      span {
+        display block
+        font-size 0.65rem
+        text-align center
+        margin-top 0.5rem
+        color #818181
+      }
+    }
+    .preview {
+      position absolute
+      width 100%
+      height 100%
+    }
+  }
+}
+
+.submit-button {
+  width 80%
+  height 2rem
+  background-color #FFAC00
+  border-radius 1rem
+  border 0
+  box-shadow rgba(215, 142, 37, 0.40) 0 0 0.5rem 0.05rem
+  font-size 0.75rem
+  color #FFFFFF
+  margin 1.6rem auto 0
+}
+
+.type-list {
+  transform scale(0.96)translate3d(0,-0.2rem,0)
+  transform-origin 0 0
+  opacity 0
+  list-style none
+  position absolute
+  width 100%
+  margin 0
+  padding 0 0.5rem
+  box-sizing border-box
+  font-size 0.7rem
+  height 0
+  overflow auto
+  border-radius 0.4rem
+  background-color #ffffff
+  transition transform 0.4s, opacity 0.4s
+  li {
+    display block
+    height 2rem
+    line-height 2rem
+    transform translate3d(0,-10%,0)
+    text-align center
+    border-bottom 1px #dbdbdb solid
+    &:last-child {
+      border-bottom 1px transparent solid
+    }
+    &:hover {
+      background-color #e8e8e8
+    }
+  }
+  &.show {
+    box-shadow 0 0.1rem 0.5rem 1px rgba(120,120,120,0.1)
+    height 10rem
+    transform scale(0.96)
+    opacity 1
+  }
+}
