@@ -1,0 +1,62 @@
+.tool-bar {
+  font-size 0
+  border-top 1px #f2f2f2 solid
+  flex-shrink 0
+  display flex
+  flex-direction row
+  height 2.8rem
+  box-sizing border-box
+  background-color #fff
+  > * {
+    flex-grow 1
+  }
+  > .icon-wrapper {
+    display flex
+    flex-direction column
+    justify-content center
+  }
+  .icon-home, .icon-kind, .icon-mine {
+    width 1.4rem
+    height 1.4rem
+    background-size cover
+    margin 0 auto
+  }
+  .icon-home {
+    background-image: url('../../assets/icon_home_nor.png')
+    &.active {
+      background-image: url('../../assets/icon_home_sel.png')
+    }
+  }
+  .icon-kind {
+    background-image: url('../../assets/icon_kind_nor.png')
+    &.active {
+      background-image: url('../../assets/icon_kind_sel.png')
+    }
+  }
+  .icon-mine {
+    background-image: url('../../assets/icon_mine_nor.png')
+    &.active {
+      background-image: url('../../assets/icon_mine_sel.png')
+    }
+  }
+  .title {
+    transform scale(0.8)
+    display inline-block
+    width 100%
+    text-align center
+    font-size 0.6rem
+    color #696969
+    &.active {
+      color #fda832
+    }
+  }
+}
+
+.wrapper {
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  position: relative;  
+}
