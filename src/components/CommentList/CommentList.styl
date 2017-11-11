@@ -1,0 +1,116 @@
+ul {
+  list-style none
+  padding 0
+  margin 0
+}
+.comments-list {
+  flex-grow 1
+  list-style none
+  padding 0
+  margin 0
+  overflow auto
+  > li {
+    position relative
+    padding 1rem 1.5rem
+    display flex
+    border-bottom 1px solid #f2f2f2
+    overflow hidden
+    > img {
+      width 3rem
+      height @width
+      margin-right 1rem
+      flex-shrink 0
+    }
+    &:last-child {
+      margin-bottom 4rem
+    }
+  }
+}
+.comment-value {
+  flex-grow 1
+  overflow hidden
+  .name {
+    display flex
+    height 2rem
+    flex-direction row
+    .name-date {
+      flex-grow 1
+      height 2rem
+      overflow hidden
+      span {
+        display block
+      }
+      .span-date {
+        font-size 0.7rem
+        color #717171
+      }
+      .span-name {
+        font-size 0.75rem
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+      }
+    }
+    .like, .dislike {
+      flex-shrink 0
+      width 3rem
+      font-size 0.7rem
+      color #717171
+      .value {
+        margin 0 0.2rem
+      }
+    }
+    .icon {
+      display inline-block
+      height 1.2rem
+      width 1.3rem
+      background-size auto 100%
+      background-repeat no-repeat
+      background-position 0 0
+      &.like {
+        background-image url('../../assets/like.png')
+      }
+      &.dislike {
+        background-image url('../../assets/dislike.png')
+      }
+      &.liked {
+        background-image url('../../assets/liked.png')        
+      }
+      &.disliked {
+        background-image url('../../assets/disliked.png')      
+      }
+    }
+    .value {
+      vertical-align top
+      height 1.2rem
+      line-height 1.2rem
+    }
+  }
+  .text {
+    p {
+      margin 0
+      margin-top 0.5rem
+      color #717171
+      font-size 0.7rem
+    }
+  }
+}
+
+.comment-img-ul {
+  padding 0.3rem 0
+  > li {
+    display inline
+    > img {
+      width 3.6rem
+      height 3.6rem
+      margin-right 0.3rem
+      border-radius 0.3rem
+    }
+  }
+}
+
+.no-comment {
+  font-size: 0.7rem
+  text-align: center
+  color #535353
+}

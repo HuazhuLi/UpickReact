@@ -24,8 +24,6 @@ class Detail extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      sortFunc: (comment1, comment2) => comment1.issueTime - comment2.issueTime,
-      currentPosition: 0,
       collapsed: false
     }
   }
@@ -42,9 +40,10 @@ class Detail extends Component {
             style={{ flexShrink: 0 }}
           />
           <ShopComments
-            comments={this.props.comments.sort(this.state.sortFunc)}
-            activeIndex={this.state.currentPosition}
+            comments={this.props.comments}
+            // activeIndex={this.state.currentPosition}
             style={{ flexGrow: 1 }}
+            /*
             onNewClick={() =>
               this.setState({
                 sortFunc: (comment1, comment2) => comment1.issueTime - comment2.issueTime,
@@ -56,6 +55,7 @@ class Detail extends Component {
                 currentPosition: 1
               })
             }
+            */
             /**
              * 滚动的很大
              */
