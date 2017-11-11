@@ -12,6 +12,14 @@ const Comment = require('../containers/Comment.page').default
 const SearchInfo = require('../containers/SearchInfo').default
 const SearchResult = require('../containers/SearchResult').default
 const Add = require('../containers/Add.page').default
+const ToolBar = require('../components/ToolBar').default
+
+const concatPath = (a, b) => {
+  // if (a[-1] === '/' && b[0] === '/') {
+
+  // }
+  return (a + b).replace(/\/\//g, '/')
+}
 
 // 要求路由上的parent要能接受其children
 const MyRoute = props => (
@@ -26,7 +34,7 @@ const MyRoute = props => (
             <Switch>
               {
                 props.children.map(child =>
-                  <MyRoute key={child.path} {...child} path={localProps.match.path + child.path}/>
+                  <MyRoute key={child.path} {...child} path={concatPath(localProps.match.path, child.path)}/>
                 )
               }
             </Switch>
@@ -42,50 +50,57 @@ const MyRoute = props => (
 const routesConfig = [
   {
     path: '/',
-    exact: true,
-    component: Entry
-  },
-  {
-    path: '/search',
     exact: false,
-    component: Search,
+    component: ToolBar,
     children: [
       {
-        path: '/:keyword',
-        exact: false,
-        component: SearchResult
+        path: '/',
+        exact: true,
+        component: Entry
       },
       {
-        path: '',
+        path: '/search',
+        exact: false,
+        component: Search,
+        children: [
+          {
+            path: '/:keyword',
+            exact: false,
+            component: SearchResult
+          },
+          {
+            path: '',
+            exact: true,
+            component: SearchInfo
+          }
+        ]
+      },
+      {
+        path: '/list/:type/:subtype',
+        exact: false,
+        component: List
+      },
+      {
+        path: '/list/:type',
+        exact: false,
+        component: List
+      },
+      {
+        path: '/detail/:shopName',
+        exact: false,
+        component: Detail
+      },
+      {
+        path: '/comment/:shopName',
+        exact: false,
+        component: Comment
+      },
+      {
+        path: '/add',
         exact: true,
-        component: SearchInfo
+        component: Add
       }
     ]
-  },
-  {
-    path: '/list/:type/:subtype',
-    exact: false,
-    component: List
-  },
-  {
-    path: '/list/:type',
-    exact: false,
-    component: List
-  },
-  {
-    path: '/detail/:shopName',
-    exact: false,
-    component: Detail
-  },
-  {
-    path: '/comment/:shopName',
-    exact: false,
-    component: Comment
-  },
-  {
-    path: '/add',
-    exact: true,
-    component: Add
   }
 ]
 
