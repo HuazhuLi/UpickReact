@@ -14,6 +14,7 @@ class ToolBar extends React.Component {
   }
 
   render () {
+    console.log(this.props)
     return (
       <div className={style['wrapper']}>
         <div className={style['wrapper']}>
