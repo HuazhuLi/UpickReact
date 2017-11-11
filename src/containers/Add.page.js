@@ -82,6 +82,8 @@ class Add extends React.Component {
   }
 
   componentWillMount () {
+    document.title = '添加新店'
+
     const { dispatch } = this.props
     dispatch(fetchAllSubtypes())
   }

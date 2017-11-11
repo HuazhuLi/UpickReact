@@ -90,6 +90,8 @@ class Detail extends Component {
     }
   }
   componentWillMount () {
+    document.title = '商家详情'
+
     const { dispatch } = this.props
     dispatch(fetchShopDetail(this.props.match.params.shopName))
     dispatch(fetchShopComments(this.props.match.params.shopName))

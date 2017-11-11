@@ -115,6 +115,7 @@ class Comment extends React.Component {
     const { shopName } = this.props.match.params
     const { dispatch } = this.props
     dispatch(fetchTags(shopName))
+    document.title = `评价“${shopName}”`
   }
 
   componentWillReceiveProps (nextProps) {

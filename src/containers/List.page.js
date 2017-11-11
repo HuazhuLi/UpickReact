@@ -11,12 +11,18 @@ import { setCurrentShopType, fetchShopsByType, setCurrentShopSubType } from '../
 class List extends Component {
   componentWillMount () {
     const { type, subtype } = this.props.match.params
+
+    document.title = type
+
     this.props.dispatch(fetchShopsByType(type))
     this.props.dispatch(setCurrentShopType(type))
     subtype && this.props.dispatch(setCurrentShopSubType(subtype))
   }
   componentWillReceiveProps (nextProps) {
     const { type, subtype } = nextProps.match.params
+
+    document.title = type
+
     if (nextProps.match.params.type !== this.props.match.params.type) {
       this.props.dispatch(fetchShopsByType(type))
       this.props.dispatch(setCurrentShopType(type))

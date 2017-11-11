@@ -63,6 +63,7 @@ class Entry extends Component {
   }
   componentWillMount () {
     const { dispatch } = this.props
+    document.title = '华科优铺 | 校内店铺评价'
     dispatch(fetchIndex())
   }
 }

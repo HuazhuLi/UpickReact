@@ -59,6 +59,10 @@ class Search extends Component {
       </div>
     )
   }
+
+  componentWillMount () {
+    document.title = '搜索'
+  }
 }
 
 export default connect(Search.mapStateToProps)(Search)

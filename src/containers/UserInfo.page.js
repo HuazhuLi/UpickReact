@@ -8,7 +8,7 @@ import Swiper from 'react-id-swiper'
 
 import mainStyle from '../style/main.styl'
 
-import { fetchUserInfo, throwGlobalAlarm } from '../actions/index'
+import { fetchUserInfo, throwGlobalAlarm, fetchAllTickets } from '../actions/index'
 
 class UserInfo extends Component {
   static mapStateToProps ({ userInfo, userTickets }) {
@@ -80,7 +80,10 @@ class UserInfo extends Component {
   componentWillMount () {
     const { dispatch } = this.props
 
+    document.title = '用户中心'
+
     dispatch(fetchUserInfo())
+    dispatch(fetchAllTickets())
   }
 }
 
