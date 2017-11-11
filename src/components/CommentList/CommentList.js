@@ -149,7 +149,7 @@ export default class CommentList extends React.Component {
           </li>
         ))}
         {(!props.comments || props.comments.length <= 0) && (
-          <p className={style['no-comment']}>尴尬，暂时还没有人评论...</p>
+          <p className={style['no-comment']}>尴尬，暂时还没有评论...</p>
         )}
       </ul>
     )
