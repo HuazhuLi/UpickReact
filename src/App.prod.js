@@ -31,7 +31,7 @@ const GlobalAlarm = require('./components/GlobalAlarm').default
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div style={{ height: '100%' }}>
+      <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         <RootRoute />
         <GlobalAlarm />
       </div>
