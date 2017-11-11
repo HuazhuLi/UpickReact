@@ -504,3 +504,71 @@ export function addShop (state = {
     }
   })())
 }
+
+export function userInfo (state = {
+  isFetching: false,
+
+  headimgurl: '', // 用户头像
+  nickname: '', // 昵称
+  comments: [],
+
+  error: null
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.ALL_USER_INFO.REQUEST:
+        return {
+          isFetching: true,
+          error: null
+        }
+      case TYPE.ALL_USER_INFO.SUCCESS:
+        return {
+          isFetching: false,
+
+          headimgurl: action.payload.userInfo.headimgurl,
+          nickname: action.payload.userInfo.nickname,
+          comments: action.payload.comments,
+
+          error: null
+        }
+      case TYPE.ALL_USER_INFO.FAILURE:
+        return {
+          isFetching: false,
+          value: {},
+          error: action.error
+        }
+    }
+  })())
+}
+
+export function userTickets (state = {
+  isFetching: false,
+
+  value: [],
+
+  error: null
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.ALL_USER_TICKETS.REQUEST:
+        return {
+          isFetching: true,
+          error: null
+        }
+      case TYPE.ALL_USER_TICKETS.SUCCESS:
+        return {
+          isFetching: false,
+
+          value: action.payload,
+
+          error: null
+        }
+      case TYPE.ALL_USER_TICKETS.FAILURE:
+        return {
+          isFetching: false,
+          value: {},
+          error: action.error
+        }
+    }
+  })())
+}

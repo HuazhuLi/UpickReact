@@ -397,3 +397,35 @@ export const addShop = (shopName, shopAddress, imgs) => ({
     ]
   }
 })
+
+export const fetchUserInfo = () => ({
+  [CALL_API]: {
+    endpoint: `${r}/users`,
+    method: GET,
+    credentials: 'include',
+    types: [
+      TYPE.ALL_USER_INFO.REQUEST,
+      {
+        type: TYPE.ALL_USER_INFO.SUCCESS,
+        payload
+      },
+      TYPE.ALL_USER_INFO.FAILURE
+    ]
+  }
+})
+
+export const fetchAllTickets = () => ({
+  [CALL_API]: {
+    endpoint: `${r}/tickets`,
+    method: GET,
+    credentials: 'include',
+    types: [
+      TYPE.ALL_USER_TICKETS.REQUEST,
+      {
+        type: TYPE.ALL_USER_TICKETS.SUCCESS,
+        payload
+      },
+      TYPE.ALL_USER_TICKETS.FAILURE
+    ]
+  }
+})

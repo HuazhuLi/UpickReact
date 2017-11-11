@@ -98,3 +98,15 @@ export const ADD_SHOP = {
   SUCCESS: '添加店铺 @ SUCCESS',
   FAILURE: '添加店铺 @ FAILURE'
 }
+
+export const ALL_USER_TICKETS = {
+  REQUEST: '获取用户点券 @ REQUEST',
+  SUCCESS: '获取用户点券 @ SUCCESS',
+  FAILURE: '获取用户点券 @ FAILURE'
+}
+
+export const ALL_USER_INFO = {
+  REQUEST: '获取用户信息 @ REQUEST',
+  SUCCESS: '获取用户信息 @ SUCCESS',
+  FAILURE: '获取用户信息 @ FAILURE'
+}
