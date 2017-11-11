@@ -2,7 +2,6 @@
  * Created by faraway on 17-8-9.
  */
 import * as type from './consts'
-import axios from 'axios'
 
 import { camelizeKeys } from 'humps'
 import { CALL_API } from 'redux-api-middleware'
