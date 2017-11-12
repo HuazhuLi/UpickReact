@@ -6,7 +6,7 @@ import * as type from './consts'
 import { camelizeKeys } from 'humps'
 import { CALL_API } from 'redux-api-middleware'
 
-const r = '/api/v2'
+const r = 'api/v2'
 const GET = 'GET'
 const POST = 'POST'
 const TYPE = type
