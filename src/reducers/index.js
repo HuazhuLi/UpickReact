@@ -566,7 +566,7 @@ export function userTickets (state = {
       case TYPE.ALL_USER_TICKETS.FAILURE:
         return {
           isFetching: false,
-          value: {},
+          value: [],
           error: action.error
         }
     }

@@ -8,6 +8,8 @@
 import './style/main.styl'
 import { startLoading, stopLoading } from './plugins/loading'
 
+import './plugins/wx'
+
 /** 下面这段代码专门为iPad编写 */
 // if (window.navigator.userAgent.indexOf('iPad') >= 0) {
 //   const iPad = () => {

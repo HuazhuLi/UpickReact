@@ -20,7 +20,7 @@ const ShopDetail = props => (
         <span className={style['name']}>营业时间</span>
         <span className={style['colon']}>:</span>
         <ul className={style['value']}>
-          {props.shop.openTime
+          {(props.shop.openTime || '未知')
             .split(' ')
             .map((time, i) => <li key={i}>{time}</li>)}
         </ul>

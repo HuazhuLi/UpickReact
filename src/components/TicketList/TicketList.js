@@ -6,7 +6,7 @@ import style from './TicketList.styl'
 const TicketList = props =>
   <ul className={style['ticket-list']}>
     {
-      props.tickets.map(ticket =>
+      (props.tickets || []).map(ticket =>
         <li
           className={style['single-ticket']}
           key={ticket.id}

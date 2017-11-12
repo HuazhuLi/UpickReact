@@ -31,8 +31,8 @@ app.use((req, res, next) => {
 })
 
 const proxyTable = {
-  '/api': 'https://weixin.bingyan-tech.hustonline.net/upick/',
-  '/shop_images': 'https://weixin.bingyan-tech.hustonline.net/upick/'
+  '/api': 'https://weixin.bingyan-tech.hustonline.net/devupick/',
+  '/shop_images': 'https://weixin.bingyan-tech.hustonline.net/devupick/'
 }
 
 Object.keys(proxyTable).forEach(function (context) {

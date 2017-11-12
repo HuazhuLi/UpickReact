@@ -40,8 +40,8 @@ class UserInfo extends Component {
         <UserInfoHeader
           nickname={this.props.nickname}
           headimgurl={this.props.headimgurl}
-          commentCount={this.props.comments.length}
-          ticketCount={this.props.tickets.length}
+          commentCount={this.props.comments.length || 0}
+          ticketCount={this.props.tickets.length || 0}
         />
         <TabHeader
           tabTitles={['我的评论', '我的卡券']}

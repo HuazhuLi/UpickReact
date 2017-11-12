@@ -5,6 +5,8 @@ const path = require('path')
 module.exports = {
   entry: {
     app: [
+      'whatwg-fetch',
+      'babel-polyfill',
       path.resolve(__dirname, '../src/index.js')
     ]
   },
