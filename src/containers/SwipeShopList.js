@@ -23,8 +23,11 @@ class SwipeShopList extends Component {
   swipeWrapper = null
   swiper = null
 
+  areas = '东中西'
+
   state = {
-    listHeight: 0
+    listHeight: 0,
+    areaIndex: 0
   }
 
   render () {
@@ -50,6 +53,8 @@ class SwipeShopList extends Component {
               // })
               this.swiper.slideTo(index)
             }}
+            locationIndex={this.state.areaIndex}
+            onLocationChange={areaIndex => this.setState({ areaIndex })}
             onSearchButtonClick={() => this.props.dispatch(push('/search'))}
           />
           <div
@@ -85,6 +90,13 @@ class SwipeShopList extends Component {
                     {
                       this.props.shopsBySubtype[subtype].shopList
                         .map(id => this.props.shops[id])
+                        .map(shop => {
+                          if (!shop.shopArea) {
+                            shop.shopArea = '东'
+                          }
+                          return shop
+                        })
+                        .filter(shop => shop.shopArea === this.areas[this.state.areaIndex] || !shop.shopArea)
                         .map((shop, i) => (
                           <ShopListItem
                             shop={shop}
