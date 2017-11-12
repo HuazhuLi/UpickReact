@@ -36,7 +36,6 @@ export default class CommentList extends React.Component {
 
   commentListScrollHandler = event => {
     const thisUL = event.target
-    console.log(thisUL, thisUL.firstChild)
     if (thisUL instanceof HTMLElement) {
       /** 简单的以第一个评论高度的四倍为阈值 */
       if (thisUL.scrollTop >= thisUL.firstChild.clientHeight * 4) {
