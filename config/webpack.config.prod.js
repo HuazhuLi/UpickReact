@@ -8,6 +8,7 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const merge = require('webpack-merge')
 const path = require('path')
@@ -54,6 +55,18 @@ module.exports = merge(baseWebpackConfig, {
     new ExtractTextPlugin({
       filename: 'static/css/[name].css'
     }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: path.resolve(__dirname, '../dist/static'),
+        ignore: ['.*']
+      },
+      {
+        from: path.resolve(__dirname, '../jump.html'),
+        to: path.resolve(__dirname, '../dist'),
+        ignore: ['.*']
+      }
+    ]),
     new ManifestPlugin()
   ]
 })

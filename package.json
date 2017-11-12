@@ -29,6 +29,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "chalk": "^2.3.0",
+    "copy-webpack-plugin": "^4.2.0",
     "css-loader": "^0.28.4",
     "eslint": "^4.3.0",
     "eslint-config-standard": "^10.2.1",
