@@ -9,22 +9,22 @@ import './style/main.styl'
 import { startLoading, stopLoading } from './plugins/loading'
 
 /** 下面这段代码专门为iPad编写 */
-if (window.navigator.userAgent.indexOf('iPad') >= 0) {
-  const iPad = () => {
-    const root = document.querySelector('#root')
+// if (window.navigator.userAgent.indexOf('iPad') >= 0) {
+//   const iPad = () => {
+//     const root = document.querySelector('#root')
 
-    root.style.width = window.innerHeight / 16 * 10 + 'px'
-    root.style.marginLeft = root.style.marginRight = 'auto'
+//     root.style.width = window.innerHeight / 16 * 10 + 'px'
+//     root.style.marginLeft = root.style.marginRight = 'auto'
 
-    document.body.style.backgroundColor = '#f2f2f2'
-    document.documentElement.style.fontSize =
-      window.innerHeight / 16 * 10 / 20 + 'px'
-  }
-  iPad()
-  window.addEventListener('resize', () => setTimeout(iPad, 0))
-}
+//     document.body.style.backgroundColor = '#f2f2f2'
+//     document.documentElement.style.fontSize =
+//       window.innerHeight / 16 * 10 / 20 + 'px'
+//   }
+//   iPad()
+//   window.addEventListener('resize', () => setTimeout(iPad, 0))
+// }
 
-;(async function () {
+(async function () {
   startLoading()
   try {
     await import('./App.js')

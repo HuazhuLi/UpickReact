@@ -8,6 +8,7 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
 const merge = require('webpack-merge')
 const path = require('path')
 const baseWebpackConfig = require('./webpack.config.base')
@@ -52,6 +53,7 @@ module.exports = merge(baseWebpackConfig, {
     // extract css into its own file
     new ExtractTextPlugin({
       filename: 'static/css/[name].css'
-    })
+    }),
+    new ManifestPlugin()
   ]
 })
