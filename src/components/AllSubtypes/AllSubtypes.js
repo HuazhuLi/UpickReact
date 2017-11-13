@@ -20,7 +20,15 @@ const AllSubtypes = props =>
               </td>
               <td>
                 {
-                  type.subtypes.map(subtype => <span className={style['subtype']} key={subtype}>{subtype}</span>)
+                  type.subtypes.map(subtype =>
+                    <span
+                      className={style['subtype']}
+                      key={subtype}
+                      onClick={() => props.onSubtypeClick(type.typeName, subtype)}
+                    >
+                      {subtype}
+                    </span>
+                  )
                 }
               </td>
             </tr>
@@ -29,5 +37,9 @@ const AllSubtypes = props =>
       </tbody>
     </table>
   </div>
+
+AllSubtypes.propTypes = {
+  onSubtypeClick: PropTypes.func.isRequired
+}
 
 export default AllSubtypes

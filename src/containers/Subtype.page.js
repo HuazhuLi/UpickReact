@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { replace } from 'react-router-redux'
+import { push } from 'react-router-redux'
 
 import { fetchAllSubtypes } from '../actions'
 
@@ -23,7 +23,10 @@ class Subtype extends React.Component {
       return <Loading />
     }
     return (
-      <AllSubtypes subtypes={this.props.subtypes}/>
+      <AllSubtypes
+        subtypes={this.props.subtypes}
+        onSubtypeClick={(type, subtype) => dispatch(push(`/list/${type}/${subtype}`))}
+      />
     )
   }
 
