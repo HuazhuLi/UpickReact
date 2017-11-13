@@ -19,7 +19,8 @@ class ToolBar extends React.Component {
   }
 
   isKindActive () {
-    return this.props.location.pathname.indexOf('/list/') >= 0
+    return this.props.location.pathname.indexOf('/list/') >= 0 ||
+    this.props.location.pathname.indexOf('/subtype') >= 0
   }
 
   isMineActive () {
@@ -49,7 +50,7 @@ class ToolBar extends React.Component {
             className={style['icon-wrapper']}
             onClick={() => {
               if (!this.isKindActive()) {
-                dispatch(push('/'))
+                dispatch(push('/subtype'))
               }
             }}
           >

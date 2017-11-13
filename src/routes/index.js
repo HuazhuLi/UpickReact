@@ -13,6 +13,7 @@ const SearchInfo = require('../containers/SearchInfo').default
 const SearchResult = require('../containers/SearchResult').default
 const Add = require('../containers/Add.page').default
 const UserInfo = require('../containers/UserInfo.page').default
+const Subtype = require('../containers/Subtype.page').default
 const ToolBar = require('../components/ToolBar').default
 
 const concatPath = (a, b) => {
@@ -58,6 +59,11 @@ const routesConfig = [
         path: '/',
         exact: true,
         component: Entry
+      },
+      {
+        path: '/subtype',
+        exact: true,
+        component: Subtype
       },
       {
         path: '/mine',

@@ -454,6 +454,7 @@ export function comment (state = {
 // 所有的subtypes
 export function subtypes (state = {
   value: [],
+  originValue: [],
   isFetching: false,
   error: null
 }, action) {
@@ -468,7 +469,8 @@ export function subtypes (state = {
         return {
           isFetching: false,
           error: null,
-          // 得到的其实是 {type_name: "饮品", subtypes: ["咖啡馆", "奶茶饮品"]}
+          // 得到的其实是 [{type_name: "饮品", subtypes: ["咖啡馆", "奶茶饮品"]}]
+          originValue: action.payload,
           value: action.payload.reduce((allSubtypes, type) => [...allSubtypes, ...type.subtypes], [])
         }
       case TYPE.ALL_TYPES.FAILURE:
