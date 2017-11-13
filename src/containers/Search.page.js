@@ -10,6 +10,8 @@ import { changeSearchText, fetchSearchHint } from '../actions'
 
 import SearchInput from '../components/SearchInput/index'
 
+import * as wx from '../plugins/wx'
+
 const SearchInfo = require('../containers/SearchInfo').default
 const SearchResult = require('../containers/SearchResult').default
 
@@ -62,6 +64,10 @@ class Search extends Component {
 
   componentWillMount () {
     document.title = '搜索'
+    wx.wxShare({
+      title: `华科优铺 | 来这里搜索校内优秀商家`, // 分享标题
+      desc: '还不快快点进来搜索！'
+    })
   }
 }
 

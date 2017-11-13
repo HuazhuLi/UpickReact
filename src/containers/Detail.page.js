@@ -12,6 +12,8 @@ import ShopComments from '../components/ShopComments'
 import FloatButton from '../components/FloatButton'
 import Loading from '../components/Loading'
 
+import * as wx from '../plugins/wx'
+
 class Detail extends Component {
   static mapStateToProps = ({ shopDetail, shopComments }) => {
     return {
@@ -98,6 +100,17 @@ class Detail extends Component {
     // dispatch(setCurrentShop(this.props.match.params.shopName))
   }
   componentWillReceiveProps (nextProps) {
+    const { shopName } = nextProps.match.params
+    const shop = nextProps.shop
+    try {
+      wx.wxShare({
+        title: `“${shopName}”等你来评!`, // 分享标题
+        desc: `营业时间为${shop.openTime}，位于${shop.shopAddress}，评分${parseInt(shop.shopScore)}分。`, // 分享链接
+        imgUrl: shop.imgs[0].msrc.indexOf('hustonline.net') >= 0
+          ? shop.imgs[0].msrc
+          : window.location.href.split('#')[0] + shop.imgs[0].msrc
+      })
+    } catch (e) {}
     if (this.props.location.pathname !== nextProps.location.pathname) {
       const { dispatch } = this.props
       dispatch(fetchShopDetail(nextProps.match.params.shopName))

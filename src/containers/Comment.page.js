@@ -19,6 +19,8 @@ import TagSelector from '../components/TagSelector'
 import CommentEditor from '../components/CommentEditor'
 import Result from '../components/Result'
 
+import * as wx from '../plugins/wx'
+
 class Comment extends React.Component {
   static mapStateToProps ({ commentTags, uploadedImages, comment }) {
     return {
@@ -116,9 +118,18 @@ class Comment extends React.Component {
     const { dispatch } = this.props
     dispatch(fetchTags(shopName))
     document.title = `评价“${shopName}”`
+    wx.wxShare({
+      title: `华科优铺邀请你为“${shopName}”`, // 分享标题
+      desc: `发现校内优质店铺，\n吐槽校内黑心商家，\n让品质校园生活从华科优铺开始！` // 分享链接
+    })
   }
 
   componentWillReceiveProps (nextProps) {
+    const { shopName } = nextProps.match.params
+    wx.wxShare({
+      title: `华科优铺邀请你为“${shopName}”`, // 分享标题
+      desc: `发现校内优质店铺，\n吐槽校内黑心商家，\n让品质校园生活从华科优铺开始！` // 分享链接
+    })
     const { dispatch } = this.props
     // 当前未在加载，即将开始加载
     if (!this.props.isUploading && nextProps.isUploading) {

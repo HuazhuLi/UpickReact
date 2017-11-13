@@ -12,6 +12,8 @@ import PopularShops from '../components/PopularShops'
 
 import { fetchIndex } from '../actions'
 
+import * as wx from '../plugins/wx'
+
 class Entry extends Component {
   static mapStateToProps ({ index }) {
     return {
@@ -65,6 +67,12 @@ class Entry extends Component {
     const { dispatch } = this.props
     document.title = '华科优铺 | 校内店铺评价'
     dispatch(fetchIndex())
+    setTimeout(() =>
+      wx.wxShare({
+        title: `华科优铺 | 让校内坑店无处遁形”`, // 分享标题
+        desc: `发现校内优质店铺，\n吐槽校内黑心商家，\n让品质校园生活从华科优铺开始！` // 分享链接
+      })
+      , 1000)
   }
 }
 export default connect(Entry.mapStateToProps)(Entry)

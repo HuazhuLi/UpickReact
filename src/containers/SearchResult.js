@@ -11,6 +11,8 @@ import Result from '../components/Result'
 
 import { fetchSearchResult } from '../actions'
 
+import * as wx from '../plugins/wx'
+
 /**
  * 没有相关店铺的一个子容器
  */
@@ -50,6 +52,10 @@ class SearchResult extends Component {
   }
   componentWillMount () {
     const { dispatch } = this.props
+    wx.wxShare({
+      title: `校内所有“${this.props.match.params.keyword}”相关的商家都在这里啦！| 华科优铺`, // 分享标题
+      desc: '还不快快点进来看看！'
+    })
     dispatch(fetchSearchResult(this.props.match.params.keyword))
   }
   // componentWillUpdate () {
@@ -62,6 +68,10 @@ class SearchResult extends Component {
      * 当当前路由和即将得到的路由不同时，更新
      */
     if (this.props.location.pathname !== nextProps.location.pathname) {
+      wx.wxShare({
+        title: `校内所有“${nextProps.match.params.keyword}”相关的商家都在这里啦！| 华科优铺`, // 分享标题
+        desc: '还不快快点进来看看！'
+      })
       this.props.dispatch(fetchSearchResult(nextProps.match.params.keyword))
     }
   }

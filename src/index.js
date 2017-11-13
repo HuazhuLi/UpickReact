@@ -8,8 +8,6 @@
 import './style/main.styl'
 import { startLoading, stopLoading } from './plugins/loading'
 
-import './plugins/wx'
-
 /** 下面这段代码专门为iPad编写 */
 // if (window.navigator.userAgent.indexOf('iPad') >= 0) {
 //   const iPad = () => {
@@ -25,8 +23,11 @@ import './plugins/wx'
 //   iPad()
 //   window.addEventListener('resize', () => setTimeout(iPad, 0))
 // }
+import * as wx from './plugins/wx'
 
-(async function () {
+wx.init()
+
+;(async function () {
   startLoading()
   try {
     await import('./App.js')

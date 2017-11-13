@@ -8,6 +8,8 @@ import AddShop from '../components/AddShop'
 import Loading from '../components/Loading'
 import Result from '../components/Result'
 
+import * as wx from '../plugins/wx'
+
 class Add extends React.Component {
   static mapStateToProps ({ subtypes, uploadedImages, addShop }) {
     return {
@@ -90,6 +92,12 @@ class Add extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     const { dispatch } = this.props
+
+    wx.wxShare({
+      title: '华科优铺 | 快来添加新店吧', // 分享标题
+      desc: `帮助我们收录更全的校内店铺信息` // 分享链接
+    })
+
     // 当前未在加载，即将开始加载
     if (!this.props.isUploading && nextProps.isUploading) {
       dispatch(throwGlobalAlarm('开始上传图片...', 'rgb(80,212,103)', 10000000/** 意味无限长 */))
