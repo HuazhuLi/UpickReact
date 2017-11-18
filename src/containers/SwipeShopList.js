@@ -23,7 +23,7 @@ class SwipeShopList extends Component {
   swipeWrapper = null
   swiper = null
 
-  areas = '东中西'
+  areas = ['东', '中', '西']
 
   state = {
     listHeight: 0,
@@ -98,12 +98,10 @@ class SwipeShopList extends Component {
                       this.props.shopsBySubtype[subtype].shopList
                         .map(id => this.props.shops[id])
                         .map(shop => {
-                          if (!shop.shopArea) {
-                            shop.shopArea = '东'
-                          }
+                          shop.shopArea = shop.shopArea || '东'
                           return shop
                         })
-                        .filter(shop => shop.shopArea === this.areas[this.state.areaIndex] || !shop.shopArea)
+                        .filter(shop => shop.shopArea.indexOf(this.areas[this.state.areaIndex]) >= 0)
                         .map((shop, i) => (
                           <ShopListItem
                             shop={shop}
