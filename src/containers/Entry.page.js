@@ -45,6 +45,7 @@ class Entry extends Component {
              * 还是应该用action，毕竟v4提倡声明式的路由
              */
             dispatch(push('/search'))
+            window._czc.push(['_trackEvent', '主页', '搜索', '点击'])
             // dispatch(fetchSearchInfo())
           }}
         />
@@ -52,13 +53,19 @@ class Entry extends Component {
         <Classify
           types={indexData.shopTypes}
           style={{ flexGrow: '1' }}
-          onTypesClick={(type) => !this.props.isFetching && dispatch(push(`/list/${type}`))}
+          onTypesClick={(type) => {
+            !this.props.isFetching && dispatch(push(`/list/${type}`))
+            window._czc.push(['_trackEvent', '主页', '店铺大类', type, '点击'])
+          }}
         />
         <Splitter content={'热门商家'} style={{ flexShrink: '0' }}/>
         <PopularShops
           shops={indexData.popularShops}
           style={{ flexShrink: '0' }}
-          onShopClick={(shop) => !this.props.isFetching && dispatch(push(`/detail/${shop.shopName}`))}
+          onShopClick={(shop) => {
+            !this.props.isFetching && dispatch(push(`/detail/${shop.shopName}`))
+            window._czc.push(['_trackEvent', '主页', '热门商家', shop.shopName, '点击'])
+          }}
         />
       </div>
     )
@@ -70,7 +77,14 @@ class Entry extends Component {
     setTimeout(() =>
       wx.wxShare({
         title: `华科优铺 | 让校内坑店无处遁形”`, // 分享标题
-        desc: `发现校内优质店铺，\n吐槽校内黑心商家，\n让品质校园生活从华科优铺开始！` // 分享链接
+        desc: `发现校内优质店铺，\n吐槽校内黑心商家，\n让品质校园生活从华科优铺开始！`, // 分享链接
+        success: () => {
+          window._czc.push(['_trackEvent', '主页', '用户分享', '分享成功'])
+        },
+        cancel: () => {
+          // 用户取消分享后执行的回调函数
+          window._czc.push(['_trackEvent', '主页', '用户分享', '分享取消'])
+        }
       })
       , 1000)
   }

@@ -16,7 +16,14 @@ class List extends Component {
 
     wx.wxShare({
       title: `校内所有“${type || subtype}”相关的商家都在这里啦！| 华科优铺`, // 分享标题
-      desc: '还不快快点进来看看！'
+      desc: '还不快快点进来看看！',
+      success: () => {
+        window._czc.push(['_trackEvent', '列表页', '用户分享', '分享成功'])
+      },
+      cancel: () => {
+        // 用户取消分享后执行的回调函数
+        window._czc.push(['_trackEvent', '列表页', '用户分享', '分享取消'])
+      }
     })
     document.title = type
 
@@ -29,7 +36,14 @@ class List extends Component {
 
     wx.wxShare({
       title: `校内所有“${type || subtype}”相关的商家都在这里啦！| 华科优铺`, // 分享标题
-      desc: '还不快快点进来看看！'
+      desc: '还不快快点进来看看！',
+      success: () => {
+        window._czc.push(['_trackEvent', '列表页', '用户分享', '分享成功'])
+      },
+      cancel: () => {
+        // 用户取消分享后执行的回调函数
+        window._czc.push(['_trackEvent', '列表页', '用户分享', '分享取消'])
+      }
     })
     document.title = type
 

@@ -75,6 +75,8 @@ class Comment extends React.Component {
           shopName={shopName}
           onSubmit={async () => {
             // console.log(await Promise.all())
+            window._czc.push(['_trackEvent', '评论页', '提交', shopName, this.state.images.length > 0 ? '带有图片' : '不带图片'])
+
             this.state.images.map(image => dispatch(uploadImage(image)))
             if (this.state.images.length > 0) {
               await new Promise((resolve, reject) => {

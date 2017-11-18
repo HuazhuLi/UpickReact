@@ -55,6 +55,9 @@ class Add extends React.Component {
         subtypes={this.props.subtypes}
         onRequestSubmit={async e => {
           const { shopName, shopAddress, subtype, imgs } = e
+
+          window._czc.push(['_trackEvent', '添加新店页', '用户提交', imgs.length > 0 ? '带有图片' : '不带图片'])
+
           if (!shopName || !shopAddress || !subtype) {
             dispatch(throwGlobalAlarm('请完整填写!'))
             return
@@ -95,7 +98,14 @@ class Add extends React.Component {
 
     wx.wxShare({
       title: '华科优铺 | 快来添加新店吧', // 分享标题
-      desc: `帮助我们收录更全的校内店铺信息` // 分享链接
+      desc: `帮助我们收录更全的校内店铺信息`, // 分享链接
+      success: () => {
+        window._czc.push(['_trackEvent', '添加新店页', '用户分享', '分享成功'])
+      },
+      cancel: () => {
+        // 用户取消分享后执行的回调函数
+        window._czc.push(['_trackEvent', '添加新店页', '用户分享', '分享取消'])
+      }
     })
 
     // 当前未在加载，即将开始加载

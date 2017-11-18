@@ -83,7 +83,10 @@ class Detail extends Component {
               this.props.dispatch(commentComment(comment.authorOpenid, comment.issueTime, operation))
             }}
           />
-          <FloatButton onClick={() => this.props.dispatch(push(`/comment/${this.props.shop.shopName}`))}/>
+          <FloatButton onClick={() => {
+            this.props.dispatch(push(`/comment/${this.props.shop.shopName}`))
+            window._czc.push(['_trackEvent', '详情页', this.props.shop.shopName, '评论', '点击'])
+          }}/>
         </div>
       )
     } else {

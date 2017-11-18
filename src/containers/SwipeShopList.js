@@ -52,10 +52,17 @@ class SwipeShopList extends Component {
               //   currentSubtypeIndex: index
               // })
               this.swiper.slideTo(index)
+              window._czc.push(['_trackEvent', '列表页', '子类Tab', subtypes[index], '点击'])
             }}
             locationIndex={this.state.areaIndex}
-            onLocationChange={areaIndex => this.setState({ areaIndex })}
-            onSearchButtonClick={() => this.props.dispatch(push('/search'))}
+            onLocationChange={areaIndex => {
+              this.setState({ areaIndex })
+              window._czc.push(['_trackEvent', '列表页', '地域Tab', this.areas[areaIndex], '点击'])
+            }}
+            onSearchButtonClick={() => {
+              this.props.dispatch(push('/search'))
+              window._czc.push(['_trackEvent', '列表页', '搜索', '点击'])
+            }}
           />
           <div
             style={{ flexGrow: '1', overflowY: 'auto' }}
@@ -104,6 +111,7 @@ class SwipeShopList extends Component {
                             onShopClick={() => {
                               dispatch(replace(`/list/${type}/${subtype}`))
                               dispatch(push(`/detail/${shop.shopName}`))
+                              window._czc.push(['_trackEvent', '列表页', '店铺列表', shop.shopName, '点击'])
                             }}
                           />
                         ))

@@ -28,6 +28,7 @@ class SearchInfo extends Component {
         onKeywordClick={keyword => {
           dispatch(push(`/search/${keyword}`))
           dispatch(changeSearchText(keyword))
+          window._czc.push(['_trackEvent', '搜索页', '热门or历史', keyword, '点击'])
         }}
         style={{ flexGrow: '1', overflow: 'auto' }}
       />

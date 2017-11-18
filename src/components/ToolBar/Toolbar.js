@@ -41,6 +41,7 @@ class ToolBar extends React.Component {
               if (!this.isHomeActive()) {
                 dispatch(push('/'))
               }
+              window._czc.push(['_trackEvent', '底部栏', '首页', '点击'])
             }}
           >
             <div className={style['icon-home'] + ' ' + (this.isHomeActive() ? style['active'] : '')}></div>
@@ -52,6 +53,7 @@ class ToolBar extends React.Component {
               if (!this.isKindActive()) {
                 dispatch(push('/subtype'))
               }
+              window._czc.push(['_trackEvent', '底部栏', '分类', '点击'])
             }}
           >
             <div className={style['icon-kind'] + ' ' + (this.isKindActive() ? style['active'] : '')}></div>
@@ -63,6 +65,7 @@ class ToolBar extends React.Component {
               if (!this.isMineActive()) {
                 dispatch(push('/mine'))
               }
+              window._czc.push(['_trackEvent', '底部栏', '我的', '点击'])
             }}
           >
             <div className={style['icon-mine'] + ' ' + (this.isMineActive() ? style['active'] : '')}></div>

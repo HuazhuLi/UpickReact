@@ -25,7 +25,10 @@ class Subtype extends React.Component {
     return (
       <AllSubtypes
         subtypes={this.props.subtypes}
-        onSubtypeClick={(type, subtype) => dispatch(push(`/list/${type}/${subtype}`))}
+        onSubtypeClick={(type, subtype) => {
+          dispatch(push(`/list/${type}/${subtype}`))
+          window._czc.push(['_trackEvent', '全部分类页', '点击', type, subtype])
+        }}
       />
     )
   }
@@ -35,7 +38,14 @@ class Subtype extends React.Component {
     dispatch(fetchAllSubtypes())
     wx.wxShare({
       title: '华科优铺 | 所有的分类都在这里啦！', // 分享标题
-      desc: '发现校内优质店铺，\n吐槽校内黑心商家，\n让品质校园生活从华科优铺开始！'
+      desc: '发现校内优质店铺，\n吐槽校内黑心商家，\n让品质校园生活从华科优铺开始！',
+      success: () => {
+        window._czc.push(['_trackEvent', '全部分类页', '用户分享', '分享成功'])
+      },
+      cancel: () => {
+        // 用户取消分享后执行的回调函数
+        window._czc.push(['_trackEvent', '全部分类页', '用户分享', '分享取消'])
+      }
     })
   }
 }

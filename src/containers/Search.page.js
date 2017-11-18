@@ -48,7 +48,10 @@ class Search extends Component {
               this.timeoutHandler = setTimeout(() => dispatch(fetchSearchHint(value)), 500)
             }
           }}
-          onSubmit={value => dispatch(push(`/search/${value}`))}
+          onSubmit={value => {
+            dispatch(push(`/search/${value}`))
+            window._czc.push(['_trackEvent', '搜索页', '搜索', value])
+          }}
           hint={this.props.hint || []}
         />
         {
@@ -66,7 +69,14 @@ class Search extends Component {
     document.title = '搜索'
     wx.wxShare({
       title: `华科优铺 | 来这里搜索校内优秀商家`, // 分享标题
-      desc: '还不快快点进来搜索！'
+      desc: '还不快快点进来搜索！',
+      success: () => {
+        window._czc.push(['_trackEvent', '搜索页', '搜索前', '用户分享', '分享成功'])
+      },
+      cancel: () => {
+        // 用户取消分享后执行的回调函数
+        window._czc.push(['_trackEvent', '搜索页', '搜索前', '用户分享', '分享取消'])
+      }
     })
   }
 }

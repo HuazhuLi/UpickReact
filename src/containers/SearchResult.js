@@ -18,7 +18,10 @@ import * as wx from '../plugins/wx'
  */
 const NoSuchShops = connect(() => ({}))((props) => (
   <Result
-    onButtonClick={() => props.dispatch(push('/add'))}
+    onButtonClick={() => {
+      props.dispatch(push('/add'))
+      window._czc.push(['_trackEvent', '搜索页', '未找到', '添加新店', '点击'])
+    }}
     buttonTitle={'添加新店'}
     text={'到添加新店里面提醒我们吧！'}
     title={'没有找到该店铺哦～'}
@@ -43,7 +46,14 @@ class SearchResult extends Component {
         ? <ShopList inLoadingStatus={this.props.isSearching} style={{ flexGrow: '1' }}>
           {
             this.props.searchResult.map((shop, i) => (
-              <ShopListItem key={i} shop={shop} onShopClick={() => dispatch(push(`/detail/${shop.shopName}`)) }/>
+              <ShopListItem
+                key={i}
+                shop={shop}
+                onShopClick={() => {
+                  dispatch(push(`/detail/${shop.shopName}`))
+                  window._czc.push(['_trackEvent', '搜索页', '搜索结果', shop.shopName, '点击'])
+                }}
+              />
             ))
           }
         </ShopList>
@@ -54,7 +64,14 @@ class SearchResult extends Component {
     const { dispatch } = this.props
     wx.wxShare({
       title: `校内所有“${this.props.match.params.keyword}”相关的商家都在这里啦！| 华科优铺`, // 分享标题
-      desc: '还不快快点进来看看！'
+      desc: '还不快快点进来看看！',
+      success: () => {
+        window._czc.push(['_trackEvent', '搜索页', '搜索后', '用户分享', '分享成功'])
+      },
+      cancel: () => {
+        // 用户取消分享后执行的回调函数
+        window._czc.push(['_trackEvent', '搜索页', '搜索后', '用户分享', '分享取消'])
+      }
     })
     dispatch(fetchSearchResult(this.props.match.params.keyword))
   }
@@ -70,7 +87,14 @@ class SearchResult extends Component {
     if (this.props.location.pathname !== nextProps.location.pathname) {
       wx.wxShare({
         title: `校内所有“${nextProps.match.params.keyword}”相关的商家都在这里啦！| 华科优铺`, // 分享标题
-        desc: '还不快快点进来看看！'
+        desc: '还不快快点进来看看！',
+        success: () => {
+          window._czc.push(['_trackEvent', '搜索页', '搜索后', '用户分享', '分享成功'])
+        },
+        cancel: () => {
+          // 用户取消分享后执行的回调函数
+          window._czc.push(['_trackEvent', '搜索页', '搜索后', '用户分享', '分享取消'])
+        }
       })
       this.props.dispatch(fetchSearchResult(nextProps.match.params.keyword))
     }
