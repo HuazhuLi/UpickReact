@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import style from './CommentList.styl'
+import wx from 'weixin-js-sdk'
 
 export default class CommentList extends React.Component {
   static propTypes = {
@@ -139,7 +140,15 @@ export default class CommentList extends React.Component {
                 <ul className={style['comment-img-ul']}>
                   {(comment.imgs || []).map(img => (
                     <li key={img.msrc}>
-                      <img src={img.msrc} />
+                      <img
+                        src={img.msrc}
+                        onClick={() => {
+                          wx.previewImage({
+                            current: img.src || img.msrc, // 当前显示图片的http链接
+                            urls: comment.imgs.map(img => img.src || img.msrc) // 需要预览的图片http链接列表
+                          })
+                        }}
+                      />
                     </li>
                   ))}
                 </ul>

@@ -5,6 +5,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import style from './ShopDetail.styl'
+import wx from 'weixin-js-sdk'
 
 const ShopDetail = props => (
   <div style={props.style}>
@@ -39,7 +40,17 @@ const ShopDetail = props => (
       {props.shop.imgs
         .slice(0, 3)
         .map((img, i) => (
-          <img key={i} src={img.msrc || img.src} alt={props.shop.shopName} />
+          <img
+            key={i}
+            src={img.msrc || img.src}
+            alt={props.shop.shopName}
+            onClick={() => {
+              wx.previewImage({
+                current: img.src || img.msrc, // 当前显示图片的http链接
+                urls: props.shop.imgs.slice(0, 3).map(img => img.src || img.msrc) // 需要预览的图片http链接列表
+              })
+            }}
+          />
         ))}
     </div>
     <div

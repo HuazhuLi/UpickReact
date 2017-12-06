@@ -16,12 +16,13 @@ const isLocalhost = () =>
 export const init = async () => {
   // return await http.get(`${root}/users/status`).then(data => data.status)
   if (isLocalhost()) {
-    return
+    // return
   }
   await fetch(`api/v2/users/status`)
     .then(res => {
       return new Promise((resolve, reject) => {
-        res.json().then(({ data: status }) => {
+        res.json().then(({ data: { status } }) => {
+          // console.log(status)
           if (status === true) {
             resolve(status)
           } else {
