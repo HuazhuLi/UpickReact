@@ -47,7 +47,7 @@ class ToolBar extends React.Component {
             <div className={style['icon-home'] + ' ' + (this.isHomeActive() ? style['active'] : '')}></div>
             <span className={style['title'] + ' ' + (this.isHomeActive() ? style['active'] : '')}>首页</span>
           </div>
-          <div
+          {/* <div
             className={style['icon-wrapper']}
             onClick={() => {
               if (!this.isKindActive()) {
@@ -58,7 +58,7 @@ class ToolBar extends React.Component {
           >
             <div className={style['icon-kind'] + ' ' + (this.isKindActive() ? style['active'] : '')}></div>
             <span className={style['title'] + ' ' + (this.isKindActive() ? style['active'] : '')}>分类</span>
-          </div>
+          </div> */}
           <div
             className={style['icon-wrapper']}
             onClick={() => {

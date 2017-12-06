@@ -27,10 +27,11 @@ class SwipeShopList extends Component {
 
   state = {
     listHeight: 0,
-    areaIndex: 0
+    areaIndex: this.areas.join('').indexOf(this.props.initialAreaIndex) || 0
   }
 
   render () {
+    console.log(this.props.initialAreaIndex)
     const { dispatch } = this.props
     const type = this.props.currentShopType
     const subtypes = (this.props.shopsByType[type] || {}).shopsBySubtypes || []
@@ -107,7 +108,7 @@ class SwipeShopList extends Component {
                             shop={shop}
                             key={i}
                             onShopClick={() => {
-                              dispatch(replace(`/list/${type}/${subtype}`))
+                              dispatch(replace(`/list/${type}/${subtype}/${shop.shopArea}`))
                               dispatch(push(`/detail/${shop.shopName}`))
                               window._czc.push(['_trackEvent', '列表页', '店铺列表', shop.shopName, '点击'])
                             }}

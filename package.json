@@ -33,6 +33,7 @@
     "chalk": "^2.3.0",
     "copy-webpack-plugin": "^4.2.0",
     "css-loader": "^0.28.4",
+    "deploy-to-git": "^0.1.5",
     "eslint": "^4.3.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-loader": "^1.9.0",
@@ -64,10 +65,26 @@
     "webpack-merge": "^4.1.0"
   },
   "scripts": {
+    "deploy:remove": "rm -rf ./.build",
+    "deploy:init": "git clone -b release git@github.com:farawaaay/Upick.git ./.build",
+    "deploy": "rm -rf ./.build/dist/* && npm run build && cp -rf ./dist/* ./.build/dist && cd ./.build && git add . && git commit -m 'auto deploy commit' && git push origin release",
     "dev": "NODE_ENV=development node ./build/dev.js",
     "build": "NODE_ENV=production node ./build/build.js",
     "stats": "webpack --config=./config/webpack.config.prod.js --profile --json > ./stats.json",
     "analyze": "webpack-bundle-analyzer ./stats.json"
+  },
+  "config": {
+    "deployToGit": {
+        "repository": "git@github.com:farawaaay/Upick.git",
+        "branch": "release",
+        "folder": ".build",
+        "script": "npm run build && cp -rf ./dist ./.build",
+        "commit": "Automatic commit text",
+        "user": {
+            "email": "hzylovelyl@gmail.com",
+            "name": "Faraway"
+        }
+    }
   },
   "author": "Faraway <hzylovelyl@gmail.com>",
   "license": "ISC",

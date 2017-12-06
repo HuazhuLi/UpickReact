@@ -5,3 +5,4 @@ dist/
 .vscode/
 # webpack stats file
 stats.json
+.build/

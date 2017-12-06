@@ -13,9 +13,27 @@ const isLocalhost = () =>
   window.location.href.indexOf('localhost') >= 0 ||
   window.location.href.indexOf('127.0.0.1') >= 0
 
-export const init = () =>
-  !isLocalhost() &&
-  fetch('api/v2/jsapi', {
+export const init = async () => {
+  // return await http.get(`${root}/users/status`).then(data => data.status)
+  if (isLocalhost()) {
+    return
+  }
+  await fetch(`api/v2/users/status`)
+    .then(res => {
+      return new Promise((resolve, reject) => {
+        res.json().then(({ data: status }) => {
+          if (status === true) {
+            resolve(status)
+          } else {
+            window.title = '需要登录！'
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx70014cb42f7c9422&redirect_uri=https%3A//weixin.bingyan-tech.hustonline.net/upick/api/v2/weixin/access&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+            reject(new Error('User is not logged in!'))
+          }
+        })
+      })
+    })
+
+  await fetch('api/v2/jsapi', {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json'
@@ -56,6 +74,7 @@ export const init = () =>
         })
       })
     })
+}
 
 export const getConfig = () => config
 

@@ -88,6 +88,11 @@ const routesConfig = [
         ]
       },
       {
+        path: '/list/:type/:subtype/:area',
+        exact: false,
+        component: List
+      },
+      {
         path: '/list/:type/:subtype',
         exact: false,
         component: List

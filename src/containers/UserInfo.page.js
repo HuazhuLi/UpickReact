@@ -11,7 +11,7 @@ import Swiper from 'react-id-swiper'
 
 import mainStyle from '../style/main.styl'
 
-import { fetchUserInfo, throwGlobalAlarm, fetchAllTickets } from '../actions/index'
+import { fetchUserInfo, throwGlobalAlarm, fetchAllTickets, comment } from '../actions/index'
 
 class UserInfo extends Component {
   static mapStateToProps ({ userInfo, userTickets }) {
@@ -35,6 +35,7 @@ class UserInfo extends Component {
 
   render () {
     const { dispatch } = this.props
+    const comments = this.heightSet ? this.props.comments : []
     return (
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         <UserInfoHeader
@@ -79,7 +80,12 @@ class UserInfo extends Component {
                   <div style={{ height: this.state.scopeHeight, overflow: 'auto' }} className={mainStyle['comment-list-no-img']}>
                     <CommentList
                       // 当高度没有设置好的时候，就显示所有评论，会导致外面被撑开
-                      comments={this.heightSet ? this.props.comments : []}
+                      comments={comments.map(comment => (
+                        {
+                          ...comment,
+                          authorNickname: comment.shopName
+                        }
+                      ))}
                       onScrollIsGreat={() => {}}
                       onScrollIsNotGreat={() => {}}
                       onCommentClick={() => {
