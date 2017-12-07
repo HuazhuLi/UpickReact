@@ -60,9 +60,9 @@ class Comment extends React.Component {
       return (
         <Result
           status={1}
-          title={'感谢提交新店'}
-          text={'我们会尽快审核！'}
-          buttonTitle={'返回搜索'}
+          title={'感谢评论'}
+          text={'您的评论将在我们审核通过之后立刻显示！'}
+          buttonTitle={'返回店铺'}
           linkTitle={'返回首页'}
           onButtonClick={() => dispatch(goBack())}
           onLinkClick={() => dispatch(replace(`/`))}
