@@ -47,7 +47,15 @@ const ShopDetail = props => (
             onClick={() => {
               wx.previewImage({
                 current: img.src || img.msrc, // 当前显示图片的http链接
-                urls: props.shop.imgs.slice(0, 3).map(img => img.src || img.msrc) // 需要预览的图片http链接列表
+                urls: props.shop.imgs.slice(0, 3)
+                  .map(img => img.src || img.msrc) // 需要预览的图片http链接列表
+                  .map(src => {
+                    if (src.indexOf('hustonline.net') < 0) {
+                      return `https://weixin.bingyan-tech.hustonline.net/upick/${src}`
+                    } else {
+                      return src
+                    }
+                  })
               })
             }}
           />

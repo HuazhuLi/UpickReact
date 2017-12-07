@@ -38,7 +38,7 @@ const ListTopBar = props => (
       </div>
     </div>
     <TabHeader
-      tabTitles={'东中西'.split('')}
+      tabTitles={'全部 东 中 西'.split(' ')}
       activeIndex={props.locationIndex || 0}
       onTabChange={index => (props.onLocationChange || (() => {}))(index)}
     />

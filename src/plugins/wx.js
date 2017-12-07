@@ -16,19 +16,23 @@ const isLocalhost = () =>
 export const init = async () => {
   // return await http.get(`${root}/users/status`).then(data => data.status)
   if (isLocalhost()) {
-    // return
+    return Promise.resolve()
   }
-  await fetch(`api/v2/users/status`)
+  await fetch(`api/v2/users/status`, {
+    credentials: 'include'
+  })
     .then(res => {
       return new Promise((resolve, reject) => {
         res.json().then(({ data: { status } }) => {
-          // console.log(status)
+          console.log(status)
           if (status === true) {
             resolve(status)
           } else {
             window.title = '需要登录！'
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx70014cb42f7c9422&redirect_uri=https%3A//weixin.bingyan-tech.hustonline.net/upick/api/v2/weixin/access&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
-            reject(new Error('User is not logged in!'))
+            // reject will case crash in some browsers
+            // reject(new Error('User is not logged in!'))
+            console.error('User is not logged in!')
           }
         })
       })

@@ -24,17 +24,22 @@ import { startLoading, stopLoading } from './plugins/loading'
 //   window.addEventListener('resize', () => setTimeout(iPad, 0))
 // }
 import * as wx from './plugins/wx'
-
-wx.init()
-
+window.addEventListener('load', () => {
+  // to avoid input keyboard
+  document.body.style.height = window.innerHeight + 'px'
+})
 ;(async function () {
   startLoading()
   try {
+    await wx.init()
     await import('./App.js')
     stopLoading()
   } catch (e) {
     alert(
-      `发生了十分严重的问题: \n"${e.message}"\n 对此我们感到十分抱歉!\n请将这个界面截图发送给开发者: 微信号: Farawaaay。谢谢您的支持！`
+      `发生了十分严重的问题: 
+      "${e.message}"
+      对此我们感到十分抱歉!
+      请将这个界面截图发送给开发者: 微信号: Farawaaay。谢谢您的支持！`
     )
   }
 })()

@@ -27,11 +27,12 @@ class SwipeShopList extends Component {
 
   state = {
     listHeight: 0,
-    areaIndex: this.areas.join('').indexOf(this.props.initialAreaIndex) || 0
+    areaIndex: ['全', ...this.areas].join('').indexOf(this.props.initialAreaIndex) || 0
   }
 
   render () {
-    console.log(this.props.initialAreaIndex)
+    // console.log(this.state.areaIndex)
+    // console.log(this.props.initialAreaIndex)
     const { dispatch } = this.props
     const type = this.props.currentShopType
     const subtypes = (this.props.shopsByType[type] || {}).shopsBySubtypes || []
@@ -58,7 +59,7 @@ class SwipeShopList extends Component {
             locationIndex={this.state.areaIndex}
             onLocationChange={areaIndex => {
               this.setState({ areaIndex })
-              window._czc.push(['_trackEvent', '列表页', '地域Tab', this.areas[areaIndex], '点击'])
+              window._czc.push(['_trackEvent', '列表页', '地域Tab', this.areas[areaIndex - 1], '点击'])
             }}
             onSearchButtonClick={() => {
               this.props.dispatch(push('/search'))
@@ -82,7 +83,7 @@ class SwipeShopList extends Component {
             <Swiper
               ref={reactSwiper => {
                 this.swiper = reactSwiper && reactSwiper.swiper
-                this.swiper && this.swiper.slideTo(subtypes.findIndex(value => subtype === value))
+                this.swiper && this.swiper.slideTo(subtypes.findIndex(value => subtype === value), 0)
               }}
               on={{
                 slideChange: () => dispatch(setCurrentShopSubType(subtypes[this.swiper.activeIndex]))
@@ -102,13 +103,17 @@ class SwipeShopList extends Component {
                           shop.shopArea = shop.shopArea || '东'
                           return shop
                         })
-                        .filter(shop => shop.shopArea.indexOf(this.areas[this.state.areaIndex]) >= 0)
+                        .filter(shop =>
+                          this.state.areaIndex === 0 || // 全部
+                          shop.shopArea.indexOf(this.areas[this.state.areaIndex - 1]) >= 0 // 东中西
+                        )
                         .map((shop, i) => (
                           <ShopListItem
                             shop={shop}
-                            key={i}
+                            key={shop.shopName + i}
                             onShopClick={() => {
-                              dispatch(replace(`/list/${type}/${subtype}/${shop.shopArea}`))
+                              // replace this history to save area information
+                              dispatch(replace(`/list/${type}/${subtype}/${this.areas[this.state.areaIndex - 1] || '全'}`))
                               dispatch(push(`/detail/${shop.shopName}`))
                               window._czc.push(['_trackEvent', '列表页', '店铺列表', shop.shopName, '点击'])
                             }}

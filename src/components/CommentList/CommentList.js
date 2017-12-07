@@ -145,7 +145,19 @@ export default class CommentList extends React.Component {
                         onClick={() => {
                           wx.previewImage({
                             current: img.src || img.msrc, // 当前显示图片的http链接
-                            urls: comment.imgs.map(img => img.src || img.msrc) // 需要预览的图片http链接列表
+                            urls: comment.imgs
+                              .map(img => img.src || img.msrc) // 需要预览的图片http链接列表
+                              .map(src => {
+                                if (src.indexOf('hustonline.net') < 0) {
+                                  return `https://weixin.bingyan-tech.hustonline.net/upick/${src}`
+                                } else {
+                                  return src
+                                }
+                              })
+                              .map(src => {
+                                console.log(src)
+                                return src
+                              })
                           })
                         }}
                       />

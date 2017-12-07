@@ -57,7 +57,7 @@ class List extends Component {
   }
   render () {
     return (
-      <SwipeShopList initialAreaIndex={this.props.match.params.area || '东'}/>
+      <SwipeShopList initialAreaIndex={this.props.match.params.area || '全'}/>
     )
   }
 }
