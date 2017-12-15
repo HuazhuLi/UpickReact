@@ -22,10 +22,10 @@ import Result from '../components/Result'
 import * as wx from '../plugins/wx'
 
 class Comment extends React.Component {
-  static mapStateToProps ({ commentTags, uploadedImages, comment }) {
+  static mapStateToProps ({ commentTags, uploadedImages, comment, shopDetail }) {
     return {
       tags: commentTags.value.map(tag => tag.tagName) || [],
-      isFetching: commentTags.isFetching,
+      isFetching: commentTags.isFetching || shopDetail.isFetching,
 
       isUploading: uploadedImages.fetchingCount > 0,
       fetchingCount: uploadedImages.fetchingCount,
@@ -33,7 +33,9 @@ class Comment extends React.Component {
       uploadError: uploadedImages.error,
 
       isCommenting: comment.isCommenting,
-      commentError: comment.error
+      commentError: comment.error,
+
+      shop: shopDetail.value
     }
   }
 
@@ -53,7 +55,7 @@ class Comment extends React.Component {
   render () {
     const { shopName } = this.props.match.params
     const { dispatch } = this.props
-    if (this.props.isFetching) {
+    if (this.props.isFetching || this.props.shop.shopName === '...') {
       return <Loading />
     }
     if (this.state.success) {
@@ -69,6 +71,15 @@ class Comment extends React.Component {
         />
       )
     }
+
+    if (window.location.search.indexOf('fromqrcode') >= 0) {
+      window._czc.push(['_trackEvent',
+        '二维码埋点',
+        '评论页面-' + (this.props.shop.isAuth ? '认证商家' : '未认证'),
+        shopName
+      ])
+    }
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <CommentTopBar
@@ -120,6 +131,7 @@ class Comment extends React.Component {
     const { dispatch } = this.props
     dispatch(fetchTags(shopName))
     document.title = `评价“${shopName}”`
+
     wx.wxShare({
       title: `华科优铺邀请你为“${shopName}”`, // 分享标题
       desc: `发现校内优质店铺，\n吐槽校内黑心商家，\n让品质校园生活从华科优铺开始！` // 分享链接

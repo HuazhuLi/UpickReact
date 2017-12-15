@@ -30,10 +30,17 @@ class Detail extends Component {
     }
   }
   render () {
-    if ((!this.props.isFetching && this.props.shop)) {
+    if ((!this.props.isFetching && this.props.shop.shopName !== '...')) {
       /**
        * 只有不在加载且店铺存在
        */
+      if (window.location.search.indexOf('fromqrcode') >= 0) {
+        window._czc.push(['_trackEvent',
+          '二维码埋点',
+          '详情页面-' + (this.props.shop.isAuth ? '认证商家' : '未认证'),
+          this.props.shop.shopName
+        ])
+      }
       return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <ShopDetail

@@ -87,6 +87,10 @@ class Entry extends Component {
         }
       })
       , 1000)
+    if (window.location.search.indexOf('fromqrcode') >= 0) {
+      // if the user is not logged in, they will jump to entry page
+      window._czc.push(['_trackEvent', '二维码埋点', '主页'])
+    }
   }
 }
 export default connect(Entry.mapStateToProps)(Entry)
