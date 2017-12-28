@@ -63,7 +63,7 @@ class Comment extends React.Component {
         <Result
           status={1}
           title={'感谢评论'}
-          text={'您的评论将在我们审核通过之后立刻显示！'}
+          text={'您的评论已经可以被万千优铺用户看到！'}
           buttonTitle={'返回店铺'}
           linkTitle={'返回首页'}
           onButtonClick={() => dispatch(goBack())}
