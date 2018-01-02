@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push, replace } from 'react-router-redux'
 
 import UserInfoHeader from '../components/UserInfoHeader'
 import CommentList from '../components/CommentList'
@@ -46,7 +46,7 @@ class UserInfo extends Component {
         />
         <TabHeader
           tabTitles={['我的评论', '我的卡券']}
-          activeIndex={this.state.activeTabIndex}
+          activeIndex={this.state.activeTabIndex || 0}
           onTabChange={index =>
             this.setState(
               { activeTabIndex: index },
@@ -99,12 +99,13 @@ class UserInfo extends Component {
                       tickets={this.props.tickets}
                       onTicketClick={ticket => {
                         if (ticket.endTime > Date.now()) {
-                          dispatch(push(`/detail/${ticket.shopName}`))
+                          dispatch(replace(`/mine/1`))
+                          dispatch(push(`/ticket/${ticket.code}`))
                         } else {
                           dispatch(throwGlobalAlarm('该卡券已过期!'))
                         }
                       }}
-                      onRightActionClick={ticket => dispatch(throwGlobalAlarm('现在不在活动期间!'))}
+                      // onRightActionClick={ticket => dispatch(push(`/ticket/${ticket.code}`))}
                     />
                   </div>
                 </Swiper>
@@ -120,8 +121,32 @@ class UserInfo extends Component {
 
     document.title = '用户中心'
 
+    // if (!this.props.match.params.index) {
+    //   dispatch(replace('/mine/0'))
+    // }
+
     dispatch(fetchUserInfo())
     dispatch(fetchAllTickets())
+  }
+
+  componentDidMount () {
+    const index = Number(this.props.match.params.index)
+    this.changeTab(index)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.match.params.index !== this.props.match.params.index) {
+      this.changeTab(Number(nextProps.match.params.index))
+    }
+  }
+
+  changeTab (index) {
+    this.setState(
+      { activeTabIndex: index }
+    )
+    setTimeout(() => {
+      this.swiper.slideTo(index, 0)
+    }, 500)
   }
 }
 

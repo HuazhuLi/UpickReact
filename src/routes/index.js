@@ -72,6 +72,11 @@ const routesConfig = [
         component: UserInfo
       },
       {
+        path: '/mine/:index',
+        exact: true,
+        component: UserInfo
+      },
+      {
         path: '/search',
         exact: false,
         component: Search,
