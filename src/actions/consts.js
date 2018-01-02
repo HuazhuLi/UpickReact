@@ -110,3 +110,26 @@ export const ALL_USER_INFO = {
   SUCCESS: '获取用户信息 @ SUCCESS',
   FAILURE: '获取用户信息 @ FAILURE'
 }
+
+export const RECEIVE_TICKETS = {
+  BY_SHOP: {
+    REQUEST: '获取店铺优惠券 @ REQUEST',
+    SUCCESS: '获取店铺优惠券 @ SUCCESS',
+    FAILURE: '获取店铺优惠券 @ FAILURE'
+  },
+
+  RECEIVE: {
+    REQUEST: '领取优惠券 @ REQUEST',
+    SUCCESS: '领取优惠券 @ SUCCESS',
+    FAILURE: '领取优惠券 @ FAILURE'
+  },
+
+  MAKE_INVALID: {
+    REQUEST: '销毁优惠券 @ REQUEST',
+    SUCCESS: '销毁优惠券 @ SUCCESS',
+    FAILURE: '销毁优惠券 @ FAILURE'
+  },
+
+  SHOW_BOX: 'SHOW_BOX',
+  HIDE_BOX: 'HIDE_BOX'
+}

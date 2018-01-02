@@ -574,3 +574,53 @@ export function userTickets (state = {
     }
   })())
 }
+
+export function ticketBox (state = {
+  open: false
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.RECEIVE_TICKETS.SHOW_BOX:
+        return {
+          open: true
+        }
+      case TYPE.RECEIVE_TICKETS.HIDE_BOX:
+        return {
+          open: false
+        }
+      default:
+        return {}
+    }
+  })())
+}
+
+export function ticketsByShop (state = {
+  isFetching: false,
+  value: [],
+  error: null
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.RECEIVE_TICKETS.BY_SHOP.REQUEST:
+        return {
+          isFetching: true,
+          error: null
+        }
+      case TYPE.RECEIVE_TICKETS.BY_SHOP.SUCCESS:
+        console.log(action.payload)
+        return {
+          isFetching: false,
+
+          value: action.payload.tickets,
+
+          error: null
+        }
+      case TYPE.RECEIVE_TICKETS.BY_SHOP.FAILURE:
+        return {
+          isFetching: false,
+          value: [],
+          error: action.error
+        }
+    }
+  })())
+}

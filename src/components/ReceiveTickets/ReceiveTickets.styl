@@ -1,0 +1,194 @@
+.rec-ticket-root {
+  position: absolute;
+
+  width: 90%;
+  height: 80%;
+
+  margin: auto
+
+  left: 0
+  right: 0
+  bottom: 0
+  top: 0
+
+  border-radius: 10px
+  background-color: #E9E9E9
+
+  overflow: hidden
+
+  display: flex
+  flex-direction: column
+
+  transform-origin: 100% 0
+  transform: scale(1)  
+
+  transition: transform 0.2s 0s
+}
+
+.hidden .rec-ticket-root {
+  transform: scale(0.5)
+}
+.rec-ticket-bg {
+  background-color: rgba(1,1,1,0.2)
+
+  width: 100%
+  height: 100%
+  position: fixed
+
+  opacity: 1
+  z-index: 999 
+
+  transition: opacity 0.2s 0s
+}
+
+.rec-ticket-bg.hidden {
+  z-index: -1
+  opacity: 0
+  transition: opacity 0.2s 0s, z-index 0s 0.2s  
+}
+
+.header {
+  height: 2.4rem
+  background-color: #FEA91C
+  color: #fff
+
+  line-height: 2.4rem
+
+  text-align: center
+
+  font-size: 0.9rem
+
+  flex-shrink: 0
+}
+
+
+.list {
+  padding-top: 0.5rem
+  flex: 1
+  overflow: auto
+
+  -webkit-overflow-scrolling: touch
+}
+.list-item {
+  padding: 0.5rem  
+  width: 85%
+  box-sizing: border-box
+  margin: 0.2rem auto
+  // height: 4rem
+
+  background-color: #FFFFFF
+  background-size: auto 100%
+  background-repeat: no-repeat
+  background-image: url("data:image/svg+xml;utf8,<svg width='150' height='50' xmlns='http://www.w3.org/2000/svg'><text dominant-baseline='hanging' y='-12' x='-12' font-size='50' fill='#FBFBFB' font-family='arial, sans-serif' font-weight='bold'>Upick</text></svg>")
+
+  border: 1px solid #D5D5D5
+  border-radius: 6px
+
+  display: flex
+  flex-direction: row
+}
+
+
+
+.detail-wrapper {
+  flex: 1
+  display: flex
+  flex-direction: column
+  justify-content: center
+  min-height: 3.2rem
+  > .promotion-info, > .duration-info {
+    display block
+    line-height 0.8rem
+    font-size 0.7rem
+    position relative
+    margin 0.3rem 0
+
+    padding-left: 1.6rem
+    &:before {
+      content ''
+      display inline-block
+      width 0.8rem
+      height 0.8rem
+      background-image url('../../assets/sign.png')
+      background-size cover
+      vertical-align bottom
+
+      position: absolute
+      transform: translateX(-125%)
+    }
+  }
+
+  > .duration-info {
+    &:before {
+      background-image url('../../assets/time.png')
+    }          
+  }
+}
+
+.button-wrapper {
+  flex-shrink: 0
+
+  display: flex
+  button {
+    width: 3.6rem
+    height: 1.4rem
+
+    margin: auto
+
+    border-radius: 0.7rem
+    border: none 
+
+    color: #fff
+    font-size: 0.75rem
+
+    background-color: #FEA91C
+
+    box-shadow: rgba(254, 169, 28, 0.35) 2px 2px 9px 0px
+    &.disabled {
+      background-color: #ababab
+
+      box-shadow: rgba(143, 143, 143, 0.35) 2px 2px 9px 0px    
+    }
+  }
+}
+
+.footer {
+  margin: 0 auto
+  width: 85%
+  .tip {
+    display: block
+    color: rgba(17,17,17,0.6)
+    font-size: 0.75rem
+    height: 1rem
+    line-height: 1rem
+    margin: 0.3rem 0
+    &:before {
+      vertical-align: top
+      content: ''
+      display: inline-block
+      width: 1rem
+      height: 1rem
+      border-radius: 50%
+      transform: scale(0.4)
+      background-color: #feA91c
+    }
+  }
+
+  button {
+    display: block
+    margin: 1rem auto
+
+    width: 6rem
+    height: 1.6rem
+    border-radius: 0.8rem
+
+    border: none
+
+    background-color: #FEA91C
+
+    color: #fff
+    font-size: 0.75rem
+
+    box-shadow: rgba(254, 169, 28, 0.35) 2px 2px 9px 0px
+  }
+}

@@ -13,6 +13,11 @@ const ShopDetail = props => (
       <h1>
         <span>{props.shop.shopName}</span>
         <span className={style['mark']}>{props.shop.shopScore.toFixed(1)}</span>
+
+        {
+          props.hasActivity &&
+          <button className={style['promotion-rec-card']} onClick={props.onRecTicketsClick}>领优惠券</button>
+        }
       </h1>
     </div>
     <div className={style['time-location']}>
@@ -93,7 +98,9 @@ ShopDetail.propTypes = {
       })
     )
   }),
-  collapsed: PropTypes.bool.isRequired
+  collapsed: PropTypes.bool.isRequired,
+  onRecTicketsClick: PropTypes.func,
+  hasActivity: PropTypes.bool
 }
 
 export default ShopDetail

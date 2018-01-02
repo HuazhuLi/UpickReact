@@ -429,3 +429,49 @@ export const fetchAllTickets = () => ({
     ]
   }
 })
+
+export const showTicketsBox = () => ({
+  type: TYPE.RECEIVE_TICKETS.SHOW_BOX
+})
+
+export const hideTicketsBox = () => ({
+  type: TYPE.RECEIVE_TICKETS.HIDE_BOX
+})
+
+export const fetchTicketsByShop = (shopName) => ({
+  [CALL_API]: {
+    endpoint: `${r}/new_tickets?shop_name=${shopName}`,
+    method: GET,
+    credentials: 'include',
+    types: [
+      TYPE.RECEIVE_TICKETS.BY_SHOP.REQUEST,
+      {
+        type: TYPE.RECEIVE_TICKETS.BY_SHOP.SUCCESS,
+        payload
+      },
+      TYPE.RECEIVE_TICKETS.BY_SHOP.FAILURE
+    ]
+  }
+})
+
+export const receiveTicket = (id) => ({
+  [CALL_API]: {
+    endpoint: `${r}/new_tickets`,
+    method: POST,
+    credentials: 'include',
+    body: JSON.stringify({
+      ticket_id: id
+    }),
+    headers: {
+      'content-type': 'application/json'
+    },
+    types: [
+      TYPE.RECEIVE_TICKETS.RECEIVE.REQUEST,
+      {
+        type: TYPE.RECEIVE_TICKETS.RECEIVE.SUCCESS,
+        payload
+      },
+      TYPE.RECEIVE_TICKETS.RECEIVE.FAILURE
+    ]
+  }
+})

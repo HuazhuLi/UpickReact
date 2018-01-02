@@ -6,7 +6,7 @@
     font-size 1rem
 
     display flex
-
+    position: relative
     span:not(.mark) {
       white-space nowrap
       overflow hidden
@@ -134,4 +134,27 @@
       background-color #e8e8e8
     }
   }
+}
+
+
+
+//// promotion added
+
+.promotion-rec-card {
+  background-color: #fe561c;
+  border: none;
+  height: 1.6rem;
+  border-radius: (@height / 2)rem;
+  width: 5rem;
+  display: inline-block;
+  position: absolute;
+  right: -0.5rem;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+
+  box-shadow: rgba(254,86,28,0.35) 2px 2px 9px 0px
+  color: #fff
+
+  font-size: 0.75rem
 }

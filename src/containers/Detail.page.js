@@ -5,22 +5,25 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { fetchShopDetail, fetchShopComments, commentComment } from '../actions'
+import { fetchShopDetail, fetchShopComments, commentComment, showTicketsBox } from '../actions'
 
 import ShopDetail from '../components/ShopDetail'
 import ShopComments from '../components/ShopComments'
 import FloatButton from '../components/FloatButton'
 import Loading from '../components/Loading'
+import ReceiveTickets from '../components/ReceiveTickets'
 
 import * as wx from '../plugins/wx'
 
 class Detail extends Component {
-  static mapStateToProps = ({ shopDetail, shopComments }) => {
+  static mapStateToProps = ({ shopDetail, shopComments, ticketBox }) => {
     return {
       shop: shopDetail.value,
       comments: shopComments.value,
       NO_USED_TIME: shopComments.time,
-      isFetching: shopDetail.isFetching || shopComments.isFetching
+      isFetching: shopDetail.isFetching || shopComments.isFetching,
+
+      ticketsBoxOpen: ticketBox.open
     }
   }
   constructor (props) {
@@ -47,6 +50,8 @@ class Detail extends Component {
             shop={this.props.shop}
             collapsed={this.state.collapsed}
             style={{ flexShrink: 0 }}
+            onRecTicketsClick={() => this.props.dispatch(showTicketsBox())}
+            hasActivity={this.props.shop.hasActivity}
           />
           <ShopComments
             comments={this.props.comments}
@@ -94,6 +99,10 @@ class Detail extends Component {
             this.props.dispatch(push(`/comment/${this.props.shop.shopName}`))
             window._czc.push(['_trackEvent', '详情页', this.props.shop.shopName, '评论', '点击'])
           }}/>
+          {
+            this.props.shop.hasActivity &&
+            <ReceiveTickets show={this.props.ticketsBoxOpen}/>
+          }
         </div>
       )
     } else {
