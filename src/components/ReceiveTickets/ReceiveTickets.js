@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { replace } from 'react-router-redux'
 
-import { hideTicketsBox, fetchTicketsByShop } from '../../actions'
+import { hideTicketsBox, fetchTicketsByShop, receiveTicket } from '../../actions'
 
 import Loading from '../../components/Loading'
 
@@ -40,7 +40,9 @@ class ReceiveTickets extends Component {
           }
           <footer className={styles['footer']}>
             <p className={styles['tip']}>明晚11点重新开抢</p>
-            <button>完成</button>
+            <button
+              onClick={() => this.props.dispatch(hideTicketsBox())}
+            >完成</button>
           </footer>
         </div>
       </div>
@@ -63,9 +65,15 @@ class ReceiveTickets extends Component {
             !ticketInfo.isReceived
               ? <button
                 className={styles['normal']}
-                onClick={() => {}}
+                onClick={() => {
+                  this.props.dispatch(receiveTicket(ticketInfo.id))
+                }}
               >
-                领取
+                {
+                  ticketInfo.isReceiving
+                    ? '正在领取'
+                    : '领取'
+                }
               </button>
               : <button className={styles['disabled']}>已领取</button>
           }

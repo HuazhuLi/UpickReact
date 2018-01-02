@@ -466,12 +466,30 @@ export const receiveTicket = (id) => ({
       'content-type': 'application/json'
     },
     types: [
-      TYPE.RECEIVE_TICKETS.RECEIVE.REQUEST,
+      {
+        type: TYPE.RECEIVE_TICKETS.RECEIVE.REQUEST,
+        payload () {
+          return { id }
+        }
+      },
       {
         type: TYPE.RECEIVE_TICKETS.RECEIVE.SUCCESS,
-        payload
+        payload (action, state, res) {
+          if (res.status !== 200) {
+            throw new Error('API Error!')
+          }
+          return res
+            .json()
+            .then(camelizeKeys)
+            .then(({ data }) => ({ ...data, id }))
+        }
       },
-      TYPE.RECEIVE_TICKETS.RECEIVE.FAILURE
+      {
+        type: TYPE.RECEIVE_TICKETS.RECEIVE.FAILURE,
+        payload (action, state, res) {
+          return { id, response: res }
+        }
+      }
     ]
   }
 })

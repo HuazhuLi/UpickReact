@@ -258,6 +258,16 @@ export function globalAlarm (state = {
         time: Date.now()
       }
     }
+    if (action.type === TYPE.RECEIVE_TICKETS.RECEIVE.FAILURE) {
+      if (action.error && action.payload.response.status === 403) {
+        return {
+          alarmValue: '您今日已领取2张优惠券了哦!',
+          alarmColor: '#FEA91C',
+          alarmTime: 3000,
+          time: Date.now()
+        }
+      }
+    }
     if (action.error) {
       let alarmValue
       if (action.payload.name === 'InternalError') {
@@ -607,11 +617,13 @@ export function ticketsByShop (state = {
           error: null
         }
       case TYPE.RECEIVE_TICKETS.BY_SHOP.SUCCESS:
-        console.log(action.payload)
         return {
           isFetching: false,
 
-          value: action.payload.tickets,
+          value: action.payload.tickets.map((ticket) => ({
+            ...ticket,
+            isReceiving: false
+          })),
 
           error: null
         }
@@ -621,6 +633,46 @@ export function ticketsByShop (state = {
           value: [],
           error: action.error
         }
+      case TYPE.RECEIVE_TICKETS.RECEIVE.REQUEST: {
+        // make a copy
+        const value = state.value.map((ticket) => Object.assign({}, ticket))
+        for (const v of value) {
+          console.log(v, action)
+          if (v.id === action.payload.id) {
+            v.isReceiving = true
+            break
+          }
+        }
+        return {
+          value
+        }
+      }
+      case TYPE.RECEIVE_TICKETS.RECEIVE.SUCCESS: {
+        // make a copy
+        const value = state.value.map((ticket) => Object.assign({}, ticket))
+        for (const v of value) {
+          if (v.id === action.payload.id) {
+            v.isReceived = true
+            break
+          }
+        }
+        return {
+          value
+        }
+      }
+      case TYPE.RECEIVE_TICKETS.RECEIVE.FAILURE: {
+        // make a copy
+        const value = state.value.map((ticket) => Object.assign({}, ticket))
+        for (const v of value) {
+          if (v.id === action.payload.id) {
+            v.isReceiving = false
+            break
+          }
+        }
+        return {
+          value
+        }
+      }
     }
   })())
 }
