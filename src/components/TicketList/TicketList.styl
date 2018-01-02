@@ -18,6 +18,35 @@
     display flex
     flex-direction row
 
+    position: relative
+
+    &.out-of-date {
+      > .shop-info-wrapper {
+        > .text-info{
+          opacity 0.5
+        }
+      }
+      &:after {
+        content ''
+        display block
+        position: absolute
+        width: 100%
+        height: 100%
+
+        top: 0
+        left: 0
+
+        background-color: rgba(0,0,0,0.3)
+
+        background-image: url('../../assets/out_of_date.png')
+        background-position: center center
+
+        background-size: auto 70%
+        background-repeat: no-repeat
+
+        border-radius: 4px
+      }
+    }
     > .shop-info-wrapper {
       height 70%
       margin auto

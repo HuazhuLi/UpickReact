@@ -97,7 +97,13 @@ class UserInfo extends Component {
                   <div style={{ height: this.state.scopeHeight, overflow: 'auto' }}>
                     <TicketList
                       tickets={this.props.tickets}
-                      onTicketClick={ticket => dispatch(push(`/detail/${ticket.shopName}`))}
+                      onTicketClick={ticket => {
+                        if (ticket.endTime > Date.now()) {
+                          dispatch(push(`/detail/${ticket.shopName}`))
+                        } else {
+                          dispatch(throwGlobalAlarm('该卡券已过期!'))
+                        }
+                      }}
                       onRightActionClick={ticket => dispatch(throwGlobalAlarm('现在不在活动期间!'))}
                     />
                   </div>
