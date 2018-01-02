@@ -21,6 +21,10 @@ const ShopListItem = props => (
           }
           alt={props.shop.shopName}
         />
+        {
+          props.shop.hasActivity &&
+          <div className={style['has-activity']}>有活动!</div>
+        }
       </div>
       <div className={style['right-content']}>
         <h2 className={style['title-score']}>

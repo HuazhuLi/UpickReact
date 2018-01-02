@@ -9,10 +9,31 @@
       height 3.6rem
       width 3.6rem
       flex-shrink 0
+      position: relative
       img {
         height 100%
         width 100%
         border-radius 0.2rem
+      }
+      .has-activity {
+        position: absolute
+        width: 3.2rem
+        height: 1.1rem
+        line-height: @height
+
+        color: #fff
+
+        border-radius: (@height / 4)rem
+
+        box-shadow: rgba(254, 169, 28, 0.35) 1px 1px 6px 0px
+
+        font-size: 0.7rem
+        background-color: #FEA91B
+
+        text-align: center
+
+        bottom: 0.3rem
+        right: -0.3rem
       }
     }
     .right-content {

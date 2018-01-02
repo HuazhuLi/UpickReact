@@ -25,7 +25,7 @@ export const init = async () => {
       return new Promise((resolve, reject) => {
         res.json().then(({ data: { status } }) => {
           console.log(status)
-          if (status === true) {
+          if (status === true || window.location.href.indexOf('devupick') >= 0) {
             resolve(status)
           } else {
             window.title = '需要登录！'
