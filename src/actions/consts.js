@@ -118,6 +118,12 @@ export const RECEIVE_TICKETS = {
     FAILURE: '获取店铺优惠券 @ FAILURE'
   },
 
+  BY_CODE: {
+    REQUEST: '获取优惠券详情 @ BY_CODE REQUEST',
+    SUCCESS: '获取优惠券详情 @ BY_CODE SUCCESS',
+    FAILURE: '获取优惠券详情 @ BY_CODE FAILURE'
+  },
+
   RECEIVE: {
     REQUEST: '领取优惠券 @ REQUEST',
     SUCCESS: '领取优惠券 @ SUCCESS',

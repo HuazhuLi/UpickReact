@@ -32,7 +32,15 @@ function payload (action, state, res) {
     .json()
     .then(camelizeKeys)
     // eslint-disable no-sequences
-    .then(({ data }) => data)
+    .then(({ data }) => {
+      return new Promise((resolve, reject) => {
+        if (data) {
+          resolve(data)
+        } else {
+          reject(new Error('网络错误!'))
+        }
+      })
+    })
 }
 /**
   * 获取主页内容
@@ -490,6 +498,22 @@ export const receiveTicket = (id) => ({
           return { id, response: res }
         }
       }
+    ]
+  }
+})
+
+export const fetchTicketByCode = (code) => ({
+  [CALL_API]: {
+    endpoint: `${r}/tickets/ticket_info?code=${code}`,
+    method: GET,
+    credentials: 'include',
+    types: [
+      TYPE.RECEIVE_TICKETS.BY_CODE.REQUEST,
+      {
+        type: TYPE.RECEIVE_TICKETS.BY_CODE.SUCCESS,
+        payload
+      },
+      TYPE.RECEIVE_TICKETS.BY_CODE.FAILURE
     ]
   }
 })

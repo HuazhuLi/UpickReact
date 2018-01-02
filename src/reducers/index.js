@@ -676,3 +676,33 @@ export function ticketsByShop (state = {
     }
   })())
 }
+
+export function ticketDetail (state = {
+  isFetching: false,
+  value: {
+    discount: '...',
+    shopName: '...',
+    startTime: Date.now(),
+    endTime: Date.now()
+  },
+  error: null
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.RECEIVE_TICKETS.BY_CODE.REQUEST:
+        return {
+          isFetching: true
+        }
+      case TYPE.RECEIVE_TICKETS.BY_CODE.SUCCESS:
+        return {
+          isFetching: false,
+          value: action.payload
+        }
+      case TYPE.RECEIVE_TICKETS.BY_CODE.FAILURE:
+        return {
+          isFetching: false,
+          error: action.error
+        }
+    }
+  })())
+}
