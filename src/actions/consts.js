@@ -130,7 +130,7 @@ export const RECEIVE_TICKETS = {
     FAILURE: '领取优惠券 @ FAILURE'
   },
 
-  MAKE_INVALID: {
+  DESTROY: {
     REQUEST: '销毁优惠券 @ REQUEST',
     SUCCESS: '销毁优惠券 @ SUCCESS',
     FAILURE: '销毁优惠券 @ FAILURE'

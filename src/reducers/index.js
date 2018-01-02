@@ -706,3 +706,25 @@ export function ticketDetail (state = {
     }
   })())
 }
+
+export function destroyTicket (state = {
+  isFetching: false
+}, action) {
+  return Object.assign({}, state, (function () {
+    switch (action.type) {
+      case TYPE.RECEIVE_TICKETS.DESTROY.REQUEST:
+        return {
+          isFetching: true
+        }
+      case TYPE.RECEIVE_TICKETS.DESTROY.SUCCESS:
+        return {
+          isFetching: false
+        }
+      case TYPE.RECEIVE_TICKETS.DESTROY.FAILURE:
+        return {
+          isFetching: false,
+          error: action.error
+        }
+    }
+  })())
+}

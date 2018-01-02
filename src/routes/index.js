@@ -13,6 +13,7 @@ const SearchInfo = require('../containers/SearchInfo').default
 const SearchResult = require('../containers/SearchResult').default
 const Add = require('../containers/Add.page').default
 const TicketDetail = require('../containers/TicketDetail.page').default
+const Destroy = require('../containers/Destroy.page').default
 const UserInfo = require('../containers/UserInfo.page').default
 const Subtype = require('../containers/Subtype.page').default
 const ToolBar = require('../components/ToolBar').default
@@ -75,6 +76,11 @@ const routesConfig = [
         path: '/mine/:index',
         exact: true,
         component: UserInfo
+      },
+      {
+        path: '/destroy',
+        exact: true,
+        component: Destroy
       },
       {
         path: '/search',

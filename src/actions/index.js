@@ -517,3 +517,23 @@ export const fetchTicketByCode = (code) => ({
     ]
   }
 })
+
+export const requestDestroy = (code) => ({
+  [CALL_API]: {
+    endpoint: `${r}/tickets`,
+    method: POST,
+    credentials: 'include',
+    body: JSON.stringify({
+      request_type: 0,
+      code
+    }),
+    types: [
+      TYPE.RECEIVE_TICKETS.DESTROY.REQUEST,
+      {
+        type: TYPE.RECEIVE_TICKETS.DESTROY.SUCCESS,
+        payload
+      },
+      TYPE.RECEIVE_TICKETS.DESTROY.FAILURE
+    ]
+  }
+})
