@@ -6,6 +6,8 @@ import { requestDestroy, throwGlobalAlarm } from '../actions'
 
 import DestroyTicket from '../components/DestroyTicket'
 
+import * as wx from '../plugins/wx'
+
 class Destroy extends Component {
   static mapStateToProps ({ destroyTicket }) {
     return {
@@ -37,6 +39,15 @@ class Destroy extends Component {
         pending={this.props.isFetching}
       />
     )
+  }
+
+  componentDidMount () {
+    try {
+      wx.wxShare({
+        title: '销毁优惠券', // 分享标题
+        desc: '此页面为商家用来销毁优惠券使用' // 分享链接
+      })
+    } catch (e) {}
   }
 }
 
