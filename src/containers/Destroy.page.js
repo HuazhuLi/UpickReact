@@ -11,7 +11,8 @@ import * as wx from '../plugins/wx'
 class Destroy extends Component {
   static mapStateToProps ({ destroyTicket }) {
     return {
-      isFetching: destroyTicket.isFetching
+      isFetching: destroyTicket.isFetching,
+      error: destroyTicket.error
     }
   }
 
@@ -23,7 +24,6 @@ class Destroy extends Component {
     return (
       <DestroyTicket
         onConfirm={() => {
-          console.log(this.state.code)
           if (!this.state.code || isNaN(this.state.code)) {
             this.props.dispatch(throwGlobalAlarm('优惠券编码无效', '#FFA91E'))
             return
@@ -48,6 +48,18 @@ class Destroy extends Component {
         desc: '此页面为商家用来销毁优惠券使用' // 分享链接
       })
     } catch (e) {}
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.isFetching !== this.props.isFetching &&
+      this.props.isFetching === false &&
+      !this.props.error
+    ) {
+      this.props.dispatch(throwGlobalAlarm('销毁成功！', '#50D467'))
+      this.setState({
+        code: ''
+      })
+    }
   }
 }
 

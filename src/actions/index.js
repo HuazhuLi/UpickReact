@@ -523,6 +523,9 @@ export const requestDestroy = (code) => ({
     endpoint: `${r}/tickets`,
     method: POST,
     credentials: 'include',
+    headers: {
+      'content-type': 'application/json'
+    },
     body: JSON.stringify({
       request_type: 0,
       code

@@ -14,6 +14,9 @@ const DestroyTicket = props => (
           className={style['code']}
           onChange={props.onChange}
           value={props.value}
+          placeholder={'输入优惠券编号'}
+          // onFocus={(e) => { e.target.placeholder = '' }}
+          // onBlur={(e) => { e.target.placeholder = '输入优惠券编号' }}
         />
         <button
           className={style['confirm']}

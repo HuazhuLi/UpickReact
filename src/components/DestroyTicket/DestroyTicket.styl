@@ -28,6 +28,19 @@
     height: 2rem
     margin: 1.5rem auto
     font-size: 1.2rem
+    text-align: center
+
+    &::-ms-input-placeholder {text-align: center}
+		&::-webkit-input-placeholder {text-align: center}
+
+    &:focus::-webkit-input-placeholder { color:transparent; }
+    &:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+    &:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+    &:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
+
+    &:focus::-webkit-input-placeholder {
+      opacity: 0;
+    }
   }
   .confirm {
     border: none

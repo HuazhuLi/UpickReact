@@ -39,6 +39,9 @@
   z-index: 999 
 
   transition: opacity 0.2s 0s
+
+  // prevent bug on old version of safari
+  transform: translate3d(0,0,0)
 }
 
 .rec-ticket-bg.hidden {
@@ -132,6 +135,7 @@
   button {
     width: 3.6rem
     height: 1.4rem
+    // line-height: @height
 
     margin: auto
 
@@ -139,14 +143,13 @@
     border: none 
 
     color: #fff
-    font-size: 0.75rem
+    font-size: 0.7rem
 
     background-color: #FEA91C
-
     box-shadow: rgba(254, 169, 28, 0.35) 2px 2px 9px 0px
+    
     &.disabled {
       background-color: #ababab
-
       box-shadow: rgba(143, 143, 143, 0.35) 2px 2px 9px 0px    
     }
   }

@@ -708,7 +708,8 @@ export function ticketDetail (state = {
 }
 
 export function destroyTicket (state = {
-  isFetching: false
+  isFetching: false,
+  error: null
 }, action) {
   return Object.assign({}, state, (function () {
     switch (action.type) {
@@ -718,7 +719,8 @@ export function destroyTicket (state = {
         }
       case TYPE.RECEIVE_TICKETS.DESTROY.SUCCESS:
         return {
-          isFetching: false
+          isFetching: false,
+          error: null
         }
       case TYPE.RECEIVE_TICKETS.DESTROY.FAILURE:
         return {
