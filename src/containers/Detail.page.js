@@ -100,8 +100,11 @@ class Detail extends Component {
             window._czc.push(['_trackEvent', '详情页', this.props.shop.shopName, '评论', '点击'])
           }}/>
           {
-            this.props.shop.hasActivity &&
-            <ReceiveTickets show={this.props.ticketsBoxOpen}/>
+            !this.isiOS()
+              ? this.props.shop.hasActivity &&
+                <ReceiveTickets show={this.props.ticketsBoxOpen}/>
+              : (this.props.shop.hasActivity && this.props.ticketsBoxOpen) &&
+                <ReceiveTickets show={true}/>
           }
         </div>
       )
@@ -110,6 +113,11 @@ class Detail extends Component {
       return <Loading/>
     }
   }
+
+  isiOS () {
+    return navigator.userAgent.indexOf('iOS') >= 0
+  }
+
   componentWillMount () {
     document.title = '商家详情'
 

@@ -98,11 +98,11 @@ class UserInfo extends Component {
                     <TicketList
                       tickets={this.props.tickets}
                       onTicketClick={ticket => {
-                        if (ticket.endTime > Date.now()) {
+                        if (ticket.endTime > Date.now() && ticket.valid) {
                           dispatch(replace(`/mine/1`))
                           dispatch(push(`/ticket/${ticket.code}`))
                         } else {
-                          dispatch(throwGlobalAlarm('该卡券已过期!'))
+                          dispatch(throwGlobalAlarm('该卡券已过期 / 被销毁!'))
                         }
                       }}
                       // onRightActionClick={ticket => dispatch(push(`/ticket/${ticket.code}`))}

@@ -15,7 +15,7 @@ const isLocalhost = () =>
 
 export const init = async () => {
   // return await http.get(`${root}/users/status`).then(data => data.status)
-  if (isLocalhost()) {
+  if (isLocalhost() || window.location.href.indexOf('devupick') >= 0) {
     return Promise.resolve()
   }
   await fetch(`api/v2/users/status`, {
@@ -25,7 +25,7 @@ export const init = async () => {
       return new Promise((resolve, reject) => {
         res.json().then(({ data: { status } }) => {
           console.log(status)
-          if (status === true || window.location.href.indexOf('devupick') >= 0) {
+          if (status === true) {
             resolve(status)
           } else {
             window.title = '需要登录！'
