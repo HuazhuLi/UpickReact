@@ -8,7 +8,11 @@ const TicketList = props =>
     {
       (props.tickets || []).map(ticket =>
         <li
-          className={style['single-ticket'] + ' ' + (ticket.endTime < Date.now() ? style['out-of-date'] : '')}
+          className={[
+            style['single-ticket'],
+            (ticket.endTime < Date.now() ? style['out-of-date'] : ''),
+            (!ticket.valid ? style['destroyed'] : '')
+          ].join(' ')}
           key={ticket.id}
           onClick={() => props.onTicketClick(ticket)}
         >

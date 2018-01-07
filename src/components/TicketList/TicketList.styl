@@ -20,7 +20,7 @@
 
     position: relative
 
-    &.out-of-date {
+    &.out-of-date, &.destroyed {
       > .shop-info-wrapper {
         > .text-info{
           opacity 0.5
@@ -47,6 +47,13 @@
         border-radius: 4px
       }
     }
+
+    &.destroyed {
+      &:after {
+        background-image: url('../../assets/destroyed.png')
+      }
+    }
+
     > .shop-info-wrapper {
       height 70%
       margin auto
